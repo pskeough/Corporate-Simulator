@@ -1,0 +1,72 @@
+{
+    "personnel": [
+        {
+            "person":{
+                "name": "Sarah Jenkins",
+                "relationship_to_player": "Your Boss",
+                "department": "Sales",
+                "work_style": [
+                    "Data-Driven",
+                    "Results-Oriented",
+                    "Demanding"
+                ],
+                "metrics": {
+                    "rapport": 65,
+                    "influence": 80,
+                    "trust": 40
+                }
+            }
+        },
+        {
+            "person":{
+                "name": "David Chen",
+                "relationship_to_player": "Mentor",
+                "department": "Engineering",
+                "work_style": [
+                    "Collaborative",
+                    "Patient",
+                    "Experienced"
+                ],
+                "metrics": {
+                    "rapport": 85,
+                    "influence": 70,
+                    "trust": 90
+                }
+            }
+        },
+        {
+            "person":{
+                "name": "Emily Rodriguez",
+                "relationship_to_player": "Rival Manager",
+                "department": "Marketing",
+                "work_style": [
+                    "Ambitious",
+                    "Creative",
+                    "Competitive"
+                ],
+                "metrics": {
+                    "rapport": 30,
+                    "influence": 75,
+                    "trust": 20
+                }
+            }
+        },
+        {
+            "person":{
+                "name": "Michael Brown",
+                "relationship_to_player": "Direct Report",
+                "department": "Your Team",
+                "work_style": [
+                    "Eager",
+                    "Detail-Oriented",
+                    "Inexperienced"
+                ],
+                "metrics": {
+                    "rapport": 70,
+                    "influence": 40,
+                    "trust": 80
+                }
+            }
+        }
+    ]
+}

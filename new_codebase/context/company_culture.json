@@ -1,0 +1,21 @@
+{
+    "stated_values": [
+        "Innovation",
+        "Customer-First",
+        "Integrity",
+        "Collaboration",
+        "Ownership"
+    ],
+    "unspoken_rules": [
+        "Don't contradict your boss in a public meeting",
+        "Always be available online, even after hours",
+        "Success is measured by visibility on high-impact projects",
+        "Lunch is for networking, not for taking a break"
+    ],
+    "hr_violations": [
+        "Sharing confidential company data",
+        "Harassment or discrimination",
+        "Falsifying expense reports"
+    ],
+    "organizational_structure": "Hierarchical with matrixed project teams"
+}

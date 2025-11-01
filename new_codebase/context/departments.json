@@ -1,0 +1,48 @@
+{
+    "departments": [
+        {
+            "department_name": "Engineering",
+            "department_head": "VP of Engineering",
+            "department_morale": 75,
+            "department_headcount_percentage": 30,
+            "department_kpis": [
+                "Launch new feature set by end of Q3",
+                "Reduce bug queue by 15%",
+                "Increase system uptime to 99.95%"
+            ]
+        },
+        {
+            "department_name": "Sales",
+            "department_head": "VP of Sales",
+            "department_morale": 85,
+            "department_headcount_percentage": 20,
+            "department_kpis": [
+                "Achieve 110% of quarterly sales target",
+                "Increase enterprise client acquisition by 5%",
+                "Reduce customer churn by 2%"
+            ]
+        },
+        {
+            "department_name": "Marketing",
+            "department_head": "Chief Marketing Officer",
+            "department_morale": 65,
+            "department_headcount_percentage": 15,
+            "department_kpis": [
+                "Increase lead generation by 20%",
+                "Improve brand sentiment score by 10 points",
+                "Launch new ad campaign for the Q4 product release"
+            ]
+        },
+        {
+            "department_name": "Human Resources",
+            "department_head": "Chief People Officer",
+            "department_morale": 70,
+            "department_headcount_percentage": 10,
+            "department_kpis": [
+                "Reduce time-to-hire by 5 days",
+                "Increase employee satisfaction score by 5%",
+                "Implement new performance management system"
+            ]
+        }
+    ]
+}

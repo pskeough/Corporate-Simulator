@@ -1,0 +1,39 @@
+{
+  "skills_and_tools": [
+    {
+      "id": "skill_data_analysis",
+      "name": "Data Analysis",
+      "description": "Ability to interpret complex data to inform business decisions.",
+      "type": "professional_skill",
+      "unlocks": ["tool_advanced_excel"]
+    },
+    {
+      "id": "tool_advanced_excel",
+      "name": "Advanced Excel",
+      "description": "Proficiency in advanced Excel functions like Pivot Tables, VLOOKUP, and macros.",
+      "type": "software_tool",
+      "prerequisites": ["skill_data_analysis"]
+    },
+    {
+      "id": "cert_scrum_master",
+      "name": "Certified Scrum Master (CSM)",
+      "description": "Certification for Agile project management.",
+      "type": "certification",
+      "unlocks": ["tool_jira"]
+    },
+    {
+      "id": "tool_jira",
+      "name": "JIRA",
+      "description": "Project management software for Agile teams.",
+      "type": "software_tool",
+      "prerequisites": ["cert_scrum_master"]
+    },
+    {
+      "id": "skill_public_speaking",
+      "name": "Public Speaking",
+      "description": "Ability to deliver effective and persuasive presentations.",
+      "type": "professional_skill",
+      "unlocks": []
+    }
+  ]
+}

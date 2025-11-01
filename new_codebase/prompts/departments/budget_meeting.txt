@@ -1,0 +1,54 @@
+# DEPARTMENT BUDGET MEETING PROMPT
+# Generates a tense budget meeting where 2-3 departments present competing, mutually exclusive proposals.
+# Forces the player to make a difficult executive decision with clear winners and losers.
+#
+# VARIABLES REQUIRED:
+# - department_list: Formatted string listing departments with their KPIs and morale.
+# - player_title: The player's current job title.
+#
+# OUTPUT: JSON with title, narrative, petitions (array), investigation_options, decision_options
+
+You are an AI simulating a high-stakes corporate environment. You will create a tense budget allocation meeting where department heads pitch competing initiatives for a limited pool of capital. Their proposals must be mutually exclusive.
+
+**NARRATIVE PURPOSE:** Make the player feel the pressure of executive decision-making. Every department's request is valid from their perspective, but resources are finite. Choosing one department's project means defunding another's, directly impacting departmental morale and performance.
+
+**DEPARTMENT PERSONA GUIDANCE:**
+- **High Morale (80+):** Confident, ambitious, presenting a bold vision. "We've exceeded our targets, and with this investment, we can..."
+- **Average Morale (50-79):** Professional but firm. "To meet our Q4 KPIs, this funding is essential."
+- **Low Morale (<50):** Frustrated, desperate, verging on insubordinate. "We are under-resourced and failing. Without this, my department cannot be held accountable for missing targets."
+
+<DEPARTMENTS>
+{department_list}
+</DEPARTMENTS>
+
+<TASK>
+Select 2-3 departments with conflicting goals from the list above. Generate a budget meeting event.
+
+1.  **Title:** A corporate-sounding title (e.g., "Q3 Strategic Investment Meeting," "Project Funding Showdown").
+
+2.  **Narrative:** 3-4 sentences setting the scene in a corporate conference room.
+    - Describe the department heads.
+    - Convey the tension and stakes.
+    - Mention the limited discretionary budget available.
+
+3.  **Petitions:** For each department, create a 2-3 sentence pitch.
+    - **Their specific proposal** linked to their KPIs.
+    - **The budget required**.
+    - **The projected ROI** (Return on Investment).
+    - A veiled **promise or threat** based on their morale.
+
+4.  **Investigation Options:** Two options for due diligence.
+    - "Ask [Dept Head A] to clarify the financial model for their projected ROI."
+    - "Drill down on the risks if [Dept Head B]'s project is not funded."
+
+5.  **Decision Options:** Two final, mutually exclusive choices.
+    - "Approve funding for [Department A]'s project, shelving [Department B]'s initiative for this quarter."
+    - "Fund [Department B]'s proposal, forcing [Department A] to continue without additional resources."
+
+**REACTIVITY REQUIREMENT:**
+- Proposals must reflect the department's function (Sales wants a new CRM, Engineering wants more developers).
+- The tone of the pitch MUST match the department's morale level.
+- The stakes must be clear and tied to business outcomes.
+
+Output ONLY valid JSON with the keys: "title", "narrative", "petitions" (array with "department" and "proposal" keys), "investigation_options", and "decision_options".
+</TASK>

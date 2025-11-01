@@ -1,0 +1,36 @@
+{
+    "competitors": [
+        {
+            "name": "CyberDyne Systems",
+            "market_position": "Market Leader",
+            "strengths": ["Large market share", "Strong brand recognition"],
+            "weaknesses": ["Slow to innovate", "Legacy technology stack"]
+        },
+        {
+            "name": "Innovate Inc.",
+            "market_position": "Disruptive Startup",
+            "strengths": ["Agile development", "Cutting-edge technology"],
+            "weaknesses": ["Limited funding", "Small customer base"]
+        },
+        {
+            "name": "Global Solutions Corp.",
+            "market_position": "Direct Competitor",
+            "strengths": ["Strong enterprise sales team", "Established customer relationships"],
+            "weaknesses": ["High prices", "Complex product"]
+        }
+    ],
+    "market_landscape": {
+        "sector": "B2B Enterprise SaaS",
+        "conditions": "High-Growth, High-Competition",
+        "opportunities": [
+            "AI Integration",
+            "Emerging Markets in Southeast Asia",
+            "Partnerships with complementary service providers"
+        ],
+        "risks": [
+            "Economic downturn reducing IT budgets",
+            "New disruptive technologies making our product obsolete",
+            "Increased regulation on data privacy"
+        ]
+    }
+}

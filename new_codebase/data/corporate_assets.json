@@ -1,0 +1,50 @@
+{
+  "corporate_assets": [
+    {
+      "id": "asset_crm_license_001",
+      "name": "Enterprise CRM License",
+      "category": "software",
+      "description": "A company-wide license for a Customer Relationship Management tool to boost sales efficiency.",
+      "cost": {
+        "budget": 50000,
+        "turns": 1
+      },
+      "bonuses": {
+        "budget_per_turn": 25000
+      },
+      "requirements": {
+        "min_headcount": 50
+      }
+    },
+    {
+      "id": "asset_project_management_software_001",
+      "name": "Agile Project Management Suite",
+      "category": "software",
+      "description": "Software like JIRA or Asana to improve project tracking and team collaboration.",
+      "cost": {
+        "budget": 20000,
+        "turns": 1
+      },
+      "bonuses": {
+        "innovation_points": 10
+      },
+      "requirements": {
+        "min_headcount": 20
+      }
+    },
+    {
+      "id": "asset_office_upgrade_001",
+      "name": "Office Upgrade",
+      "category": "facilities",
+      "description": "Renovate the office space to improve employee morale and attract new talent.",
+      "cost": {
+        "budget": 100000,
+        "turns": 2
+      },
+      "bonuses": {
+        "employee_morale": 10
+      },
+      "requirements": {}
+    }
+  ]
+}

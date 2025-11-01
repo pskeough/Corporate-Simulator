@@ -1,0 +1,69 @@
+# BUDGET FREEZE CRISIS PROMPT
+# Generates a corporate crisis event: a severe, immediate budget freeze.
+#
+# VARIABLES REQUIRED:
+# - corporation_name: The company's name.
+# - player_name: The player's character name.
+# - headcount: The total number of employees.
+# - budget: The current operational budget (will be very low).
+# - player_title: The player's job title.
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, and updates.
+
+CRITICAL CRISIS: BUDGET FREEZE
+
+**FORMATTING REQUIREMENT:** Use professional, urgent business language.
+- Use **bold** for major financial impacts or critical directives (e.g., **All non-essential spending is frozen**, **15% reduction in force**).
+- Use *italics* for rumors, drops in morale, or political fallout.
+
+**NARRATIVE PURPOSE:** Create a sense of corporate urgency and financial distress. The player must feel the pressure of making tough financial decisions that will impact employees and projects.
+
+Corporation: {corporation_name}
+Employee: {player_name}, {player_title}
+Headcount: {headcount}
+Operational Budget: ${budget} (CRITICALLY LOW)
+
+**EMOTIONAL TONE:** Urgent, professional, stressful. Use imagery of empty whiteboards, cancelled meeting invites, anxious employees whispering by the coffee machine.
+
+Generate an URGENT budget freeze event.
+
+<constraints>
+  <constraint>All decision options must result in a significant, negative short-term impact on either headcount, department morale, or project timelines.</constraint>
+  <constraint>Avoid simple solutions. The choice must be between two difficult cost-cutting measures.</constraint>
+</constraints>
+
+The event should:
+- Convey the severity of the financial situation with specific business terms (e.g., "negative cash flow," "missed quarterly targets," "investor pressure").
+- Show the immediate impact on the workplace.
+- Offer 2 investigation options to understand the crisis.
+- Offer 2 harsh decision options that follow the constraints.
+
+**PLAYER LADDER REQUIREMENT:** The scope of the decision must match the {player_title}.
+- A **Manager** might decide which projects within their department to cut.
+- A **CEO** might decide between across-the-board layoffs and shutting down an entire division.
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+Include an `updates` block with immediate, negative consequences.
+
+Example updates for a budget freeze:
+- Morale drop: "department.Engineering.morale": -20
+- Headcount loss: "corporation.headcount": -50
+
+Output ONLY valid JSON:
+{{
+  "title": "Urgent: Immediate Spending Freeze",
+  "narrative": "An all-hands email from the CFO just went out. Due to severely missing our quarterly targets, **all non-essential spending is frozen, effective immediately.** All project budgets are under review, and a hiring freeze is in effect. Rumors are already spreading about potential layoffs.",
+  "investigation_options": [
+    "Review the financial report to identify the biggest budget overruns.",
+    "Talk to the Head of HR to gauge current employee morale and flight risk."
+  ],
+  "decision_options": [
+    "Implement an immediate 10% cut to all departmental budgets across the board.",
+    "Cancel the three lowest-performing projects to preserve the budget for strategic initiatives."
+  ],
+  "updates": {{
+    "department.Sales.morale": -15,
+    "department.Marketing.morale": -15,
+    "player.political_capital": -20
+  }}
+}}

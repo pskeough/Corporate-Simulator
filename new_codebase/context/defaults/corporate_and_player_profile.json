@@ -1,0 +1,31 @@
+{
+    "corporation": {
+        "name": "OmniCorp Global",
+        "ipo_date": "2015_Q2",
+        "maturity_stage": "growth_phase",
+        "headcount": 1500,
+        "tech_stack_tier": "modern_cloud_native",
+        "budget": 5000000
+    },
+    "player": {
+        "name": "Alex Chen",
+        "years_at_company": 5,
+        "expected_career_length": 20,
+        "title": "Senior Manager",
+        "skills": [
+            "Public Speaking",
+            "Data Analysis",
+            "Project Management"
+        ],
+        "years_in_role": 2,
+        "political_capital": 350
+    },
+    "simulation": {
+        "current_fiscal_quarter": "2025_Q3"
+    },
+    "player_performance_review_scores": {
+        "innovation": 85,
+        "leadership": 60,
+        "efficiency": 75
+    }
+}

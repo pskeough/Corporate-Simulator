@@ -1,0 +1,19 @@
+{
+    "player": {
+        "skill_level": "Expert",
+        "acquired_skills": [
+            "Certified Scrum Master (CSM)",
+            "Advanced Excel (Pivot Tables, VLOOKUP)",
+            "Salesforce Certified Administrator",
+            "Python for Data Science"
+        ]
+    },
+    "corporation": {
+        "internal_tools": [
+            "JIRA for project tracking",
+            "Confluence for documentation",
+            "Slack for internal communication",
+            "Custom-built CRM 'OmniLeads'"
+        ]
+    }
+}
