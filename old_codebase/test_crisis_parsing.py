@@ -29,3 +29,4 @@ prompts = _parse_crisis_prompts(content)
 print(f'\nParsed {len(prompts)} crisis types:')
 for key in prompts.keys():
     print(f'  - {key}: {len(prompts[key])} chars')
+

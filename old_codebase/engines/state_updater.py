@@ -313,3 +313,4 @@ def apply_world_turn_updates(game_state, world_updates):
                             print(f"  - Neighbor '{civ_name}' relationship unchanged ({current_relationship}, change: {relationship_change:+d})")
                     else:
                         print(f"  - Warning: Civilization '{civ_name}' not found in known_peoples")
+

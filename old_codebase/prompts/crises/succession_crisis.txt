@@ -48,3 +48,4 @@ Output JSON:
   "investigation_options": ["Investigation of heirs and support 1", "Investigation of heirs and support 2"],
   "decision_options": ["Succession decision with political risk 1", "Succession decision with political risk 2"]
 }}
+

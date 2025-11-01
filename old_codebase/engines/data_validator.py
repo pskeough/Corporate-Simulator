@@ -88,3 +88,4 @@ def validate_all(game_state):
         'errors': all_errors,
         'warnings': warnings
     }
+

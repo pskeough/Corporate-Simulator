@@ -86,3 +86,4 @@ def get_tendency_description(primary, secondary):
         return f"{primary_desc}, with secondary focus on {secondary_desc}"
     else:
         return primary_desc
+

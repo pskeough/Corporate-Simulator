@@ -264,3 +264,4 @@ def should_generate_crisis(game_state):
             return random.random() < 0.75, crisis_type
 
     return False, None
+

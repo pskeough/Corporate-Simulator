@@ -59,3 +59,4 @@ Output JSON:
   "investigation_options": ["Assess their military strength and readiness", "Investigate if they have allies or support"],
   "decision_options": ["Prepare for war and strike first (risky, military)", "Attempt diplomacy and offer concessions (expensive, peaceful)", "Fortify defenses and prepare to weather their attack (cautious)"]
 }}}}
+

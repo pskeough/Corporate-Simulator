@@ -105,3 +105,4 @@ def generate_callback_event(game_state, callback_type, callback_data):
             "is_callback": True,
             "callback_type": callback_type
         }
+

@@ -130,3 +130,4 @@ class InnerCircleManager:
     def __iter__(self):
         """Allow iteration over characters."""
         return iter(self._characters)
+

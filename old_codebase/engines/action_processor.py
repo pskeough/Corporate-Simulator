@@ -864,3 +864,4 @@ def _infer_decree_effects(major_declaration, game_state):
             effects['religious_effects'] = religious_effects
 
     return effects
+

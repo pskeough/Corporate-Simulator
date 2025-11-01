@@ -700,3 +700,4 @@ def update_settlement_image_async(game_state):
     # Start background thread
     thread = threading.Thread(target=_generate_and_update, daemon=True)
     thread.start()
+

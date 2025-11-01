@@ -139,3 +139,4 @@ def edit_settlement_image(game_state, current_image_path):
     # For now, it will just return the existing image or a placeholder.
     return {"image_path": current_image_path, "success": True, "message": "Image editing not yet implemented, returning current image."}
 
+

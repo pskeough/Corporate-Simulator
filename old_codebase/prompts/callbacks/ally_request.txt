@@ -59,3 +59,4 @@ Output JSON:
   "investigation_options": ["Learn the full extent of their crisis", "Assess what resources and support they need"],
   "decision_options": ["Send aid and honor the alliance (costly but strengthens bond)", "Refuse and abandon them in their need (cheaper but weakens/breaks alliance)"]
 }}}}
+

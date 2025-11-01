@@ -239,3 +239,4 @@ Quantify Outcomes. Whenever possible, AI-generated outcomes should include quant
 
 The Player is an Employee, Not a Monarch. The player does not have absolute power. Decisions may require buy-in from stakeholders (key_personnel), face resistance from departments (departments), or be overruled by a board of directors (a potential high-level crisis event). Prompts should reflect that the player operates within a complex system of constraints and influences, reinforcing the realism of the corporate environment.
 
+

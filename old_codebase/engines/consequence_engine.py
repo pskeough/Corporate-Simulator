@@ -339,3 +339,4 @@ def check_for_callback_opportunity(game_state):
             return True, 'debt_collection', old_debts[0]
 
     return False, None, None
+

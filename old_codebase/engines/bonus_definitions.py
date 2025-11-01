@@ -162,3 +162,4 @@ def is_valid_bonus_type(bonus_type):
         BonusType.RELIGIOUS_INFLUENCE
     ]
     return bonus_type in valid_types
+

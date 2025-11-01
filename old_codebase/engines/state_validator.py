@@ -349,3 +349,4 @@ def print_schema_help():
     print("  - Values clamped to reasonable bounds")
     print("  - Duplicates filtered automatically")
     print("=" * 60)
+

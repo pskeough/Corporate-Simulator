@@ -506,3 +506,4 @@ def generate_event_stage(game_state, player_response):
             "investigation_options": ["Try again", "Ask differently"],
             "decision_options": ["Trust your judgment", "Act with caution"]
         }
+

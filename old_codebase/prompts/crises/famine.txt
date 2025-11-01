@@ -64,3 +64,4 @@ Output JSON:
     "civilization.resources.food": -100
   }}
 }}
+

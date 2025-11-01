@@ -318,3 +318,4 @@ def apply_passive_generation(game_state):
         'base_wealth': production['wealth'],
         'effectiveness': effectiveness
     }
+

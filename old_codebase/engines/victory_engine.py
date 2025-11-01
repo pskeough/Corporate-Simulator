@@ -174,3 +174,4 @@ def get_victory_status_summary(game_state):
         summary['recommendations'].append("Strengthen alliances and diplomatic ties")
 
     return summary
+

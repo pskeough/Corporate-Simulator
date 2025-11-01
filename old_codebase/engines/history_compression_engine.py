@@ -386,3 +386,4 @@ class HistoryCompressionEngine:
                         lines.append(f"    - Year {event['year']}: {event['title']} ({event['type']})")
 
         return "\n".join(lines)
+

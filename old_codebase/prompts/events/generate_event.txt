@@ -156,3 +156,4 @@ CRITICAL:
 - decision_options should be viable but risky early choices (player can decide now or investigate more)
 - All 4 options should be clearly different from each other
 - Use specific names, numbers, and details throughout
+

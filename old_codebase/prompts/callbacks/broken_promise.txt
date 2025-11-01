@@ -56,3 +56,4 @@ Output JSON:
   "investigation_options": ["Learn what consequences they threaten if refused", "Investigate why they need this promise fulfilled NOW"],
   "decision_options": ["Honor the promise despite the cost (expensive but maintains honor)", "Refuse or delay again (cheaper but damages reputation and trust)"]
 }}}}
+

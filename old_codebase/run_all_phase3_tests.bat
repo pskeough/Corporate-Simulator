@@ -44,3 +44,4 @@ echo   3. See examples/add_building_bonus.md for usage
 echo.
 echo Ready for Phase 4: Building and Technology Systems!
 echo ============================================================
+

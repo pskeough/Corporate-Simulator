@@ -210,3 +210,4 @@ class WorldMode(ABC):
             'factions': factions,
             'inner_circle': inner_circle
         }
+

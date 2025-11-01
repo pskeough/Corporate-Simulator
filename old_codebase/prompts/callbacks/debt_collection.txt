@@ -55,3 +55,4 @@ Output JSON:
   "investigation_options": ["Review the exact terms and what you owe", "Investigate what consequences they threaten if you refuse"],
   "decision_options": ["Pay the debt in full (expensive but clears the obligation)", "Negotiate partial payment or delay (ongoing obligation, partial reputation damage)", "Refuse to pay (major reputation damage, possible seizure or violence)"]
 }}}}
+

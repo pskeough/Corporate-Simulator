@@ -490,3 +490,4 @@ class LawEngine:
                 )
 
         return result
+

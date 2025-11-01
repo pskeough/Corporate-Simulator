@@ -495,3 +495,4 @@ def apply_legacy_bonus(game_state, previous_leader):
         legacy['narrative'] += " The leader's faith becomes a cornerstone of society."
 
     return legacy
+

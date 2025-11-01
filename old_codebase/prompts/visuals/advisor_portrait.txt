@@ -68,3 +68,4 @@ This portrait must look like it was painted by the SAME artist in the SAME sessi
 This is {name}, a {role} - make them UNIQUE and RECOGNIZABLE. Their role ({role}), traits ({traits}), and age ({age}) should create a one-of-a-kind portrait that clearly shows who they are and what they do.
 
 Generate a single, museum-quality advisor portrait that tells a story.
+

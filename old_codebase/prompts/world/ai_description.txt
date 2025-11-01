@@ -24,3 +24,4 @@ Cultural Values: {cultural_values}
 Religion: {religion_name}
 
 Make it atmospheric and immersive, setting the stage for the player's journey.
+

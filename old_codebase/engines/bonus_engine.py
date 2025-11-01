@@ -276,3 +276,4 @@ class BonusEngine:
                 lines.append(f"    +{value} from {source_type}: {source_name}")
 
         return "\n".join(lines)
+

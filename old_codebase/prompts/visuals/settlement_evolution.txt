@@ -75,3 +75,4 @@ TECHNICAL REQUIREMENTS:
 This is year {year_marker} of {civ_name}'s history. Show the unique character of THIS civilization - not a generic settlement. Their {era} era technology, {terrain} terrain, and cultural focus should create a distinctive visual identity.
 
 Generate a single, breathtaking settlement vista that showcases civilization's journey through time.
+

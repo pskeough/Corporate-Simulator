@@ -118,3 +118,4 @@ Output ONLY valid JSON:
   "investigation_options": ["Ask [Name] about [specific detail]", "Question [Name] about [specific risk]"],
   "decision_options": ["Side with [Name]: [action], risking [cost]", "Side with [Name]: [action], risking [cost]"]
 }}
+

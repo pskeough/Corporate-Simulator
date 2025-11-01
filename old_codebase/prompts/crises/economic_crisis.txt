@@ -58,3 +58,4 @@ Output JSON:
     "civilization.resources.wealth": -300
   }}
 }}
+

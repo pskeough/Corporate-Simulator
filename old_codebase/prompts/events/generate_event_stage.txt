@@ -101,3 +101,4 @@ Output ONLY valid JSON:
 - All 4 options must be clearly different
 - If player asks similar question twice, acknowledge repetition and pivot to new angles
 </TASK>
+

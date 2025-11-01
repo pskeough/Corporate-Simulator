@@ -71,3 +71,4 @@ def clear_cache():
 def get_cached_prompts():
     """Return list of currently cached prompt paths. Useful for debugging."""
     return list(_prompt_cache.keys())
+

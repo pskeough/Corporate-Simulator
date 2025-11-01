@@ -133,3 +133,4 @@ def test_apply_world_turn_updates():
 
 if __name__ == '__main__':
     test_apply_world_turn_updates()
+

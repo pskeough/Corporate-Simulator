@@ -845,3 +845,4 @@ class HistoricalEarthMode(WorldMode):
             'factions': {"factions": factions},
             'inner_circle': {"characters": inner_circle}
         }
+

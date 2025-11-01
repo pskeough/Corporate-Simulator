@@ -54,3 +54,4 @@ TECHNICAL REQUIREMENTS:
 This is {name} - make them UNIQUE. Their age ({age}), traits ({traits}), and culture ({culture_values}) should create a one-of-a-kind portrait.
 
 Generate a single, museum-quality leader portrait that tells a story.
+

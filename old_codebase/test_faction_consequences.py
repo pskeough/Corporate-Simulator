@@ -107,3 +107,4 @@ def test_faction_consequences():
 if __name__ == "__main__":
     success = test_faction_consequences()
     sys.exit(0 if success else 1)
+

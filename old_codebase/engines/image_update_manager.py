@@ -182,3 +182,4 @@ def reset_tracker():
     """Reset the tracker (useful for testing or new games)."""
     global _tracker
     _tracker = ImageUpdateTracker()
+

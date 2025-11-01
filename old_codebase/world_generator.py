@@ -805,3 +805,4 @@ class WorldGenerator:
         except Exception as e:
             print(f"Error generating AI description: {e}")
             return f"In the {world_data['civilization']['meta']['era']}, your people, known as {world_data['civilization']['meta']['name']}, begin their journey in a land of {world_data['world']['geography']['terrain'].lower()}."
+

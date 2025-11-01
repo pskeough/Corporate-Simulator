@@ -122,3 +122,4 @@ def test_invalid_updates():
 if __name__ == '__main__':
     success = test_invalid_updates()
     sys.exit(0 if success else 1)
+

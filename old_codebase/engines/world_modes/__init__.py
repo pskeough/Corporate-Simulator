@@ -14,3 +14,4 @@ from engines.world_modes.fantasy_mode import FantasyWorldMode
 from engines.world_modes.historical_earth_mode import HistoricalEarthMode
 
 __all__ = ['WorldMode', 'FantasyWorldMode', 'HistoricalEarthMode']
+

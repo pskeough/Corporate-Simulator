@@ -97,3 +97,4 @@ SCENE:
 Style: Political drama painting, showing power struggle. No text or UI.
 
 Generate in 16:9 landscape aspect ratio for banner display.
+

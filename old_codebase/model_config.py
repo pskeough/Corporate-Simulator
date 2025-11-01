@@ -25,3 +25,4 @@ VISUAL_MODEL = 'gemini-2.5-flash-image'
 
 # API Configuration
 API_VERSION = 'v1beta'  # Required for Gemini 2.x models
+
