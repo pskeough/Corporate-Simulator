@@ -1,0 +1,77 @@
+# SETTLEMENT EVOLUTION PROMPT
+# Generates a sweeping, detailed view of a civilization's settlement showing its growth through the ages.
+# This is a visual chronicle of achievement, showing how the settlement has evolved from humble beginnings.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - year_marker: Year for tracking (integer)
+# - size_desc: Settlement size description (string, e.g., "thriving town")
+# - era: Current era (string)
+# - tech_tier: Technology level (string)
+# - population: Population count (integer, with :, formatting)
+# - culture_values: List of top 3 cultural values (comma-separated string)
+# - terrain: Terrain type (string)
+# - climate: Climate type (string)
+# - resources: List of natural resources (comma-separated string)
+# - religion_name: Primary religion name (string)
+# - holy_sites: List of holy sites (comma-separated string)
+# - social_structure: Social structure type (string)
+# - cultural_aesthetic: Cultural aesthetic description with examples (string, optional)
+# - infrastructure_visual: Recent infrastructure to feature prominently (string, optional)
+# - recent_infrastructure: List of last 2 infrastructure items (comma-separated string)
+#
+# OUTPUT: Single landscape image (isometric/elevated view)
+
+Generate a sweeping, detailed view of {civ_name}, a legendary {size_desc} that has evolved through the ages.
+
+**VISUAL NARRATIVE PURPOSE:** This image should tell the story of civilization's PROGRESS. Show how {civ_name} has grown from humble beginnings to its current state in year {year_marker}. This is a visual chronicle of achievement.
+
+SETTLEMENT IDENTITY:
+- Civilization: {civ_name}
+- Year: {year_marker} (show the marks of history and time)
+- Era: {era}
+- Technology Level: {tech_tier} (CRITICAL: architecture style must authentically match this era)
+- Population: {population} souls (settlement size and density MUST reflect this)
+- Primary Cultural Values: {culture_values}
+
+ENVIRONMENTAL CONTEXT:
+- Terrain Type: {terrain} (show this terrain clearly - hills, rivers, forests, plains, mountains, coast)
+- Climate: {climate} (weather, vegetation, and atmosphere must match)
+- Natural Resources: {resources} (show these visually - mines, quarries, farms, forests)
+
+CULTURAL & RELIGIOUS LANDSCAPE:
+- Primary Religion: {religion_name} (religious architecture should be visible)
+- Holy Sites: {holy_sites} (incorporate these into the cityscape)
+- Social Structure: {social_structure} (show class divisions in architecture - palaces vs. common dwellings){cultural_aesthetic}{infrastructure_visual}
+
+VISUAL STORYTELLING REQUIREMENTS:
+1. **Era-Authentic Architecture**: Buildings MUST match {tech_tier} technology level
+   - stone_age: Primitive huts, campfires, basic shelters
+   - bronze_age: Mud brick buildings, early stone structures
+   - iron_age: Solid stone buildings, defensive walls, organized layout
+   - classical: Grand architecture, columns, organized city planning
+   - medieval: Castles, cathedrals, dense urban core
+   - renaissance: Ornate buildings, public squares, artistic flourishes
+
+2. **Population Density**: {population} people means this should be a {size_desc}
+
+3. **Terrain Integration**: Show how the settlement works WITH the {terrain} terrain
+
+4. **Climate Atmosphere**: {climate} climate affects everything - vegetation, sky, weather
+
+5. **Cultural Identity**: The civilization's values should be VISIBLE in the architecture and layout
+
+6. **Recent Progress**: If infrastructure like {recent_infrastructure} was recently built, show it prominently
+
+TECHNICAL REQUIREMENTS:
+- Perspective: Isometric or elevated top-down view showing the full settlement
+- Art Style: Painterly, atmospheric, strategy game aesthetic (Civilization/Age of Empires inspired)
+- Lighting: Appropriate to climate and time of day (suggest golden hour or dramatic sky)
+- Detail Level: Rich detail in foreground, atmospheric depth in background
+- NO text, labels, UI elements, or modern anachronisms
+- Cohesive color palette reflecting era and climate
+
+**REACTIVITY REQUIREMENT:**
+This is year {year_marker} of {civ_name}'s history. Show the unique character of THIS civilization - not a generic settlement. Their {era} era technology, {terrain} terrain, and cultural focus should create a distinctive visual identity.
+
+Generate a single, breathtaking settlement vista that showcases civilization's journey through time.

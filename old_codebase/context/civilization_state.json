@@ -1,0 +1,45 @@
+{
+    "meta": {
+        "name": "The Golden Mountain Clan",
+        "year": -6417,
+        "era": "stone_age",
+        "founding_date": -6417,
+        "world_mode": "historical_earth",
+        "earth_region": "nile_valley",
+        "butterfly_effects_enabled": true,
+        "historical_factions_enabled": false,
+        "butterfly_tracker": {
+            "divergence_score": 0,
+            "timeline_name": "Historical Timeline (Minor Variations)",
+            "key_divergences": [],
+            "total_divergences": 0,
+            "timeline_altered": false
+        }
+    },
+    "leader": {
+        "name": "",
+        "age": 40,
+        "life_expectancy": 55,
+        "role": "Leader",
+        "traits": [
+            "Bold",
+            "Pragmatic",
+            "Charismatic"
+        ],
+        "years_ruled": 0,
+        "portrait": "leader__1761936732.png"
+    },
+    "population": 128,
+    "resources": {
+        "food": 128,
+        "wealth": 256,
+        "tech_tier": "stone_age"
+    },
+    "victory_progress": {
+        "cultural": 44,
+        "technological": 19,
+        "military": 0,
+        "spiritual": 45,
+        "diplomatic": 0
+    }
+}

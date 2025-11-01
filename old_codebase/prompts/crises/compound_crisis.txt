@@ -1,0 +1,60 @@
+# COMPOUND CRISIS PROMPT
+# Generates catastrophic multi-system collapse crisis event.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - population: Population count (integer, will be formatted with comma separator)
+# - food: Food resources (integer)
+# - wealth: Wealth resources (integer)
+# - happiness: Population happiness percentage (float)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, updates
+
+CRITICAL CRISIS: MULTI-SYSTEM COLLAPSE
+
+**FORMATTING REQUIREMENT:** Use markdown for catastrophic cascading failures:
+- Use **bold** for each critical failure point
+- Use *italics* for the overwhelming sense of doom
+- Use line breaks (\n) to separate each system failure for dramatic impact
+
+**NARRATIVE PURPOSE:** Evoke overwhelming systemic failure. Everything is falling apart at once. This is civilization on the brink.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Population: {population:,} (desperate and starving)
+Food: {food} (critically low)
+Wealth: {wealth} (nearly depleted)
+Happiness: {happiness} (civil unrest brewing)
+
+Multiple systems are failing simultaneously. Granaries empty while markets close. Hungry citizens riot as infrastructure crumbles. This is a death spiral.
+
+Generate a compound crisis event showing multiple simultaneous failures with cascading effects. When creating the decision options, you MUST adhere to the following constraints:
+
+<constraints>
+  <constraint>All decision options must result in a significant and immediate loss of either population, wealth, or faction approval.</constraint>
+  <constraint>Avoid simple solutions like "find more food." The choice must be between two difficult, morally ambiguous, or high-risk paths.</constraint>
+</constraints>
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+You MUST include an `updates` block with direct mechanical consequences. Compound crises should cause severe multi-system failures.
+
+Example updates for compound crisis:
+- Severe population loss: "civilization.population": -300 (deaths from multiple causes)
+- Severe food depletion: "civilization.resources.food": -200 (panic consumption)
+- Severe wealth depletion: "civilization.resources.wealth": -400 (economic collapse)
+
+Use the gemini-2.5-flash-lite model for generation.
+
+Output JSON:
+{{
+  "title": "Civilization on the Brink (3-5 words)",
+  "narrative": "3-4 sentences showing simultaneous food, wealth, and civil failures. Use specific visceral details. Multiple crises compounding.",
+  "investigation_options": ["Assess which crisis to address first", "Investigate if any systems can be salvaged"],
+  "decision_options": ["Focus all resources on food (ignore economy)", "Focus on restoring order (ignore food)", "Desperate gamble: borrow heavily to address both (massive debt)"],
+  "updates": {{
+    "civilization.population": -300,
+    "civilization.resources.food": -200,
+    "civilization.resources.wealth": -400
+  }}
+}}

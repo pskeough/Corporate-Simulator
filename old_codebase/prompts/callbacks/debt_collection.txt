@@ -1,0 +1,57 @@
+# DEBT COLLECTION CALLBACK PROMPT
+# Generates callback event when creditors come to collect a debt.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - era: Current era (string)
+# - years_passed: Years since debt was incurred (integer)
+# - debt_description: Description of the original debt agreement (string)
+# - debt_event: Event where debt was incurred (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options
+
+CALLBACK EVENT: Debt Collection
+
+**FORMATTING REQUIREMENT:** Use markdown for cold demands:
+- Use **bold** for exact debt amounts and payment deadlines
+- Use *italics* for veiled threats and loss of patience
+
+**NARRATIVE PURPOSE:** Show that debts MUST be paid. The player borrowed or promised payment, and now the bill is due. This is about financial consequences and reputation.
+
+**EMOTIONAL TONE:** Cold, businesslike, with an undercurrent of threat. Creditors are NOT patient - they want their money NOW.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Era: {era}
+
+THE DEBT COMES DUE:
+- Outstanding debt from: "{debt_event}" ({years_passed} years ago)
+- Original agreement: "{debt_description}"
+- Interest has accumulated. The creditors are NO LONGER patient.
+
+**YOUR TASK:**
+First, in a `<summary>` tag, briefly narrate how the debt has accumulated over the intervening {years_passed} years. Consider how interest has grown, how the creditors' patience has worn thin, or what reminders they may have sent.
+
+Then, generate an event where creditors arrive to collect the debt, informed by the summary you just wrote.
+
+**CHARACTER VOICE:** Embody the creditor or debt collector - cold, calculating, threatening:
+- Reference the exact debt agreement
+- Show they've been patient but patience is EXHAUSTED
+- Make it clear: pay now or face consequences (seizure, reputation ruin, legal action)
+- Use phrases like: "The debt contracted {years_passed} years ago...", "We have been patient long enough...", "Payment is due NOW, or there will be consequences..."
+
+**REACTIVITY REQUIREMENTS:**
+- Quote the original debt agreement: "{debt_description}"
+- Reference when debt was incurred: "{debt_event}" ({years_passed} years ago)
+- Make the consequences of non-payment SPECIFIC (seizure of goods, reputation damage, legal penalties, violence)
+- Investigation reveals terms, interest, and what happens if you don't pay
+- Decisions: pay in full (expensive but clears debt), negotiate (partial payment, ongoing obligation), or refuse (major reputation damage, possible violence)
+
+Output JSON:
+{{{{
+  "title": "Debt collection title (3-6 words)",
+  "narrative": "2-3 sentences. Creditors arrive, cold and demanding. They reference the debt from {years_passed} years ago: '{debt_description}'. Payment is due NOW. The threat is clear.",
+  "investigation_options": ["Review the exact terms and what you owe", "Investigate what consequences they threaten if you refuse"],
+  "decision_options": ["Pay the debt in full (expensive but clears the obligation)", "Negotiate partial payment or delay (ongoing obligation, partial reputation damage)", "Refuse to pay (major reputation damage, possible seizure or violence)"]
+}}}}

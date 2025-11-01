@@ -1,0 +1,31 @@
+{
+    "current_tier": "bronze_age",
+    "discoveries": [
+        "Fire",
+        "Basic Stone Tools",
+        "Spears",
+        "Improved Stone Tools",
+        "Basic Pottery",
+        "Advanced Pottery",
+        "Preservation Techniques",
+        "Advanced Shelters",
+        "Advanced Shelter Construction",
+        "Preserved Foods",
+        "Advanced Hunting Traps",
+        "Bronze Casting"
+    ],
+    "in_progress": [],
+    "infrastructure": [
+        "Central Campfire",
+        "Temporary Shelters",
+        "Permanent Huts",
+        "Stone Walls",
+        "Storage Pits",
+        "Reinforced Palisades",
+        "Ice Shelters",
+        "Watchtowers"
+    ],
+    "science_points": 0,
+    "current_research_id": "tech_agriculture",
+    "research_progress": 0
+}

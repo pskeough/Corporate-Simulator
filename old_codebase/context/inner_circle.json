@@ -1,0 +1,64 @@
+{
+    "characters": [
+        {
+            "name": "Ramesses the Just",
+            "role": "War Chief",
+            "faction_link": "The Elders' Circle",
+            "personality_traits": [
+                "Disciplined",
+                "Strategic",
+                "Brave"
+            ],
+            "dialogue_sample": "I serve our people with disciplined dedication.",
+            "history": [
+                "Appointed as War Chief."
+            ],
+            "metrics": {
+                "relationship": 59,
+                "influence": 47,
+                "loyalty": 58
+            },
+            "portrait": "advisor_ramesses_the_just_1761936741.png"
+        },
+        {
+            "name": "Cleopatra the Great",
+            "role": "Wise Elder",
+            "faction_link": "The Elders' Circle",
+            "personality_traits": [
+                "Wise",
+                "Diplomatic",
+                "Cautious"
+            ],
+            "dialogue_sample": "I serve our people with wise dedication.",
+            "history": [
+                "Appointed as Wise Elder."
+            ],
+            "metrics": {
+                "relationship": 56,
+                "influence": 47,
+                "loyalty": 72
+            },
+            "portrait": "advisor_cleopatra_the_great_1761936748.png"
+        },
+        {
+            "name": "Nefertari the Wise",
+            "role": "Shaman",
+            "faction_link": "The Elders' Circle",
+            "personality_traits": [
+                "Pious",
+                "Contemplative",
+                "Influential"
+            ],
+            "dialogue_sample": "I serve our people with pious dedication.",
+            "history": [
+                "Appointed as Shaman."
+            ],
+            "metrics": {
+                "relationship": 59,
+                "influence": 44,
+                "loyalty": 66
+            },
+            "portrait": "advisor_nefertari_the_wise_1761936756.png"
+        }
+    ]
+}

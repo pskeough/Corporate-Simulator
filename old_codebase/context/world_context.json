@@ -1,0 +1,38 @@
+{
+    "known_peoples": [
+        {
+            "name": "Early Saharan peoples",
+            "relationship": "wary",
+            "strength": "unknown",
+            "distance": "distant",
+            "history": "Historical presence in the Nile River Valley"
+        },
+        {
+            "name": "Proto-Egyptians",
+            "relationship": "neutral",
+            "strength": "unknown",
+            "distance": "several days journey",
+            "history": "Historical presence in the Nile River Valley"
+        }
+    ],
+    "geography": {
+        "region": "Nile River Valley",
+        "terrain": "Narrow fertile corridor along the Nile, surrounded by vast deserts",
+        "climate": "Hot desert - scorching summers, predictable annual floods",
+        "resources": [
+            "Grain",
+            "Papyrus",
+            "Fish",
+            "Gold",
+            "Stone",
+            "Natron",
+            "Linen"
+        ],
+        "threats": [
+            "Desert raiders",
+            "Flooding extremes",
+            "Scorching heat",
+            "Limited arable land"
+        ]
+    }
+}

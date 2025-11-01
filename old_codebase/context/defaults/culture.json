@@ -1,0 +1,42 @@
+{
+    "values": [
+        "Survival",
+        "Community",
+        "Respect for Elders",
+        "Craftsmanship",
+        "Adaptation",
+        "Aggression",
+        "Tradition",
+        "Artistic Expression",
+        "Destruction",
+        "Agriculture",
+        "Resilience",
+        "Generosity",
+        "Wisdom"
+    ],
+    "traditions": [
+        "Oral Storytelling",
+        "Seasonal Hunts",
+        "Seasonal Hunts and Storytelling Festivals",
+        "Seasonal Planting Festivals",
+        "Annual Pottery Fairs",
+        "Annual Stone Carving Festivals",
+        "Order",
+        "Farming Festivals",
+        "Shelter Maintenance",
+        "Farming Innovations",
+        "Winter Survival Techniques",
+        "Ancestral Veneration"
+    ],
+    "taboos": [
+        "Cannibalism",
+        "Harming Kin"
+    ],
+    "social_structure": "Egalitarian tribe led by a chieftain and council of elders.",
+    "recent_changes": [
+        "The Grand Effigy was constructed as a sign of devotion to the spirits of the Whispering Caves."
+    ],
+    "culture_points": 0,
+    "current_civic_id": "civic_tribal_code",
+    "civic_progress": 0
+}

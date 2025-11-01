@@ -1,0 +1,33 @@
+{
+    "known_peoples": [
+        {
+            "name": "The River Clan",
+            "relationship": "allied",
+            "strength": "unknown",
+            "distance": "several days walk",
+            "history": "Rarely seen, traded with once for flint."
+        },
+        {
+            "name": "The Sunstone Nomads",
+            "relationship": "wary",
+            "strength": "unknown",
+            "distance": "many days walk",
+            "history": "Occasionally sighted, known for their swift raids but also for their intricate metalwork."
+        }
+    ],
+    "geography": {
+        "terrain": "Forested valley with a river",
+        "climate": "Temperate",
+        "resources": [
+            "Wild game",
+            "Fresh water",
+            "Flint"
+        ],
+        "threats": [
+            "Cave Bears",
+            "Harsh winters",
+            "Raiders",
+            "Scarcity"
+        ]
+    }
+}

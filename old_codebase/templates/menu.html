@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civilization Simulation - Main Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .menu-container {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #c9a961;
+            border-radius: 10px;
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #c9a961;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #a8a8a8;
+            font-style: italic;
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, #c9a961 0%, #a08040 100%);
+            border: none;
+            color: #1a1a2e;
+            padding: 20px 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-btn:hover {
+            background: linear-gradient(135deg, #d4b56f 0%, #b89550 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-btn.secondary {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: #e2e8f0;
+        }
+
+        .menu-btn.secondary:hover {
+            background: linear-gradient(135deg, #5a6678 0%, #3d4758 100%);
+        }
+
+        .save-info {
+            background: rgba(201, 169, 97, 0.1);
+            border: 1px solid #c9a961;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .save-info p {
+            margin: 5px 0;
+        }
+
+        .save-info strong {
+            color: #c9a961;
+        }
+
+        .no-save {
+            color: #a8a8a8;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid #dc2626;
+            color: #fca5a5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #c9a961;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Civilization</h1>
+        <p class="subtitle">Guide your people through the ages</p>
+
+        <div id="error-message" class="error" style="display: none;"></div>
+
+        <div id="menu-content" class="loading">
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const menuContent = document.getElementById('menu-content');
+            const errorMessage = document.getElementById('error-message');
+
+            try {
+                // Check if there's a saved game
+                const response = await fetch('/api/check_save');
+                const data = await response.json();
+
+                let buttonsHTML = '';
+
+                if (data.has_save) {
+                    // Show save info and resume/new game options
+                    buttonsHTML = `
+                        <div class="save-info">
+                            <p><strong>Saved Game Found</strong></p>
+                            <p>Civilization: ${data.save_info.civilization_name}</p>
+                            <p>Year: ${data.save_info.year}</p>
+                            <p>Era: ${data.save_info.era}</p>
+                            <p>Leader: ${data.save_info.leader_name}</p>
+                        </div>
+                        <div class="menu-buttons">
+                            <button class="menu-btn" onclick="resumeGame()">Resume Game</button>
+                            <button class="menu-btn secondary" onclick="confirmNewGame()">Start New Game</button>
+                            <button class="menu-btn secondary" onclick="customWorld()">Custom World</button>
+                        </div>
+                    `;
+                } else {
+                    // No save found, show new game and custom world options
+                    buttonsHTML = `
+                        <p class="no-save">No saved game found</p>
+                        <div class="menu-buttons">
+                            <button class="menu-btn" onclick="startNewGame()">Start New Game</button>
+                            <button class="menu-btn secondary" onclick="customWorld()">Custom World</button>
+                        </div>
+                    `;
+                }
+
+                menuContent.innerHTML = buttonsHTML;
+
+            } catch (error) {
+                console.error('Error loading menu:', error);
+                errorMessage.textContent = 'Failed to load menu. Please refresh the page.';
+                errorMessage.style.display = 'block';
+                menuContent.innerHTML = '';
+            }
+        });
+
+        function resumeGame() {
+            window.location.href = '/game';
+        }
+
+        function startNewGame() {
+            fetch('/api/new_game', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        window.location.href = '/game';
+                    } else {
+                        showError('Failed to start new game: ' + (data.message || 'Unknown error'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting new game:', error);
+                    showError('Failed to start new game. Check console for details.');
+                });
+        }
+
+        function confirmNewGame() {
+            if (confirm('Starting a new game will overwrite your current save. Are you sure?')) {
+                startNewGame();
+            }
+        }
+
+        function customWorld() {
+            window.location.href = '/custom';
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

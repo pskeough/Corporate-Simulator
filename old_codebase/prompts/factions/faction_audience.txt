@@ -1,0 +1,106 @@
+# FACTION AUDIENCE PROMPT
+# Generates a tense faction audience event where 2-3 competing factions present conflicting demands.
+# Forces the player to make impossible political choices with clear consequences.
+#
+# VARIABLES REQUIRED:
+# - faction_list: Formatted string listing factions with their goals and approval levels (string)
+#
+# OUTPUT: JSON with title, narrative, petitions (array), investigation_options, decision_options
+
+You are a master storyteller and political dramatist. You will create a tense, politically-charged faction audience event where competing groups petition the leader with conflicting demands that CANNOT all be satisfied.
+
+**NARRATIVE PURPOSE:** Make the player feel the complexity of governing competing interests. Each faction should feel like a real political bloc with personalities, grudges, and leverage. This is statecraft - balancing power, making enemies, earning loyalty. The player must understand that choosing one faction means ENRAGING another, with real consequences.
+
+**FACTION PERSONA GUIDANCE (ENHANCED):**
+Give each faction a distinct voice and demeanor based on their approval level. The tone should ESCALATE with anger:
+- **Loyal factions (75+)**: Respectful, supportive, asking favors as trusted allies. Use phrases like "We humbly request..." or "As your loyal supporters..."
+- **Pleased factions (50-75)**: Cordial but firm, presenting reasonable requests with subtle pressure. "We respectfully demand..." or "We have earned the right to ask..."
+- **Discontent factions (25-50)**: Tense, demanding, barely concealing frustration. Voice trembles with anger. "We INSIST..." or "Our patience wears thin..."
+- **Angry factions (<25)**: Confrontational, threatening, issuing ULTIMATUMS. Openly hostile. "You WILL grant us..." or "Deny us and face the consequences..." Include specific threats (withdrawing support, civil unrest, rebellion).
+
+The petitions should be MUTUALLY EXCLUSIVE - what one faction demands should DIRECTLY HARM another faction's interests. This creates impossible choices.
+
+<FACTIONS>
+{faction_list}
+</FACTIONS>
+
+<TASK>
+From the factions above, select 2-3 that have the most CONFLICTING goals and most DRAMATIC approval differences (ideally one angry faction vs. one loyal/pleased faction). Generate a faction audience event.
+
+1. **Title:** A politically evocative title that hints at conflict (e.g., "The Audience of Divided Loyalties," "The Chamber of Competing Demands", "Petitions That Cannot Coexist")
+
+2. **Narrative:** Write 4-5 sentences setting the tense scene with SPECIFIC sensory details:
+   - Describe faction representatives arriving with visual details (Merchants in fine robes, Warriors in battle-worn armor, Priests in ceremonial garb)
+   - Show physical tension in the room (who glares at whom, who refuses to sit near others, weapons visible, guards nervous)
+   - Include atmospheric details (time of day, weather, sounds in the background)
+   - Establish stakes: Make it clear these demands will conflict and the leader must choose
+   - Show approval levels through body language (angry factions are aggressive, loyal factions are respectful)
+
+3. **Petitions (ENHANCED):** For each selected faction, create an in-character petition that is 3-5 sentences and includes:
+   - **Opening statement** matching their approval level (polite request vs. hostile demand vs. threatening ultimatum)
+   - **Their specific demand** tied to their goals
+   - **Why they deserve it** (what they've contributed, how they've been wronged, or what they'll do)
+   - **Veiled or explicit threat/promise**: What happens if granted/denied
+   - **Specific details**: Use numbers, names, timeframes ("within the fortnight", "500 gold pieces", "the last three moons")
+
+   The petition should reflect their personality:
+   - Merchants speak of profit, trade, wealth, opportunity costs
+   - Warriors speak of honor, strength, blood sacrifice, military readiness
+   - Priests speak of divine will, spiritual balance, moral imperatives
+   - Elders speak of tradition, stability, legacy, wisdom of the past
+
+4. **Investigation Options:** EXACTLY 2 investigation actions that dig into faction motives and power:
+   - "Question [Faction Leader Name] about [specific aspect of their demand/threat]"
+   - "Investigate [specific consequence] if you side with [Faction Name]"
+   These should reference SPECIFIC elements from the petitions, not generic intelligence gathering.
+
+5. **Decision Options:** EXACTLY 2 final decision choices that favor different factions:
+   - "Side with [Faction A]: [their specific demand], knowing [Faction B] will [specific consequence]"
+   - "Side with [Faction B]: [their specific demand], risking [specific consequence with Faction A]"
+   Each choice must:
+   * State the EXACT action being taken (not just "favor them")
+   * Name the specific consequence for the opposing faction
+   * Be 15-25 words to capture full context
+
+**REACTIVITY REQUIREMENT (ENHANCED):**
+- Petitions MUST reference faction approval with matching emotional intensity
+- Angry factions (<25) MUST issue specific threats (e.g., "withhold grain shipments," "recall our warriors," "declare you unfit")
+- Show faction personality through vocabulary and priorities
+- Make the conflict SPECIFIC and tangible with concrete stakes (not "we want more influence" but "we demand the right to veto military deployment of our members")
+- Reference actual game state where possible (if faction has history of being ignored, mention it with resentment)
+
+**LENGTH REQUIREMENTS:**
+- Narrative: 4-5 sentences minimum with sensory details
+- Each petition: 3-5 sentences with opening, demand, justification, and threat/promise
+- Investigation options: 12-20 words each
+- Decision options: 15-25 words each
+
+IMPORTANT: You MUST include both "investigation_options" and "decision_options" arrays with exactly 2 items each.
+
+Output ONLY valid JSON with the keys: "title", "narrative", "petitions" (array with "faction" and "demand" keys), "investigation_options", and "decision_options".
+</TASK>
+
+<EXAMPLE_FORMAT>
+{{
+  "title": "The Chamber of Irreconcilable Demands",
+  "narrative": "The great hall falls silent as three faction representatives enter, their footsteps echoing on marble floors. Lysander the Wealthy, draped in silk embroidered with gold thread, takes his place with calculated grace, while across the chamber Warlord Gorok stands rigid in blood-stained armor, hand never leaving his sword hilt. Between them, Elder Maeve clutches a scroll of ancient law, her weathered face twisted with barely concealed fury. The tension is palpable—each faction knows that granting one petition means denying another, and the air crackles with the promise of consequences. Your guards shift nervously at the doors, sensing the threat of violence.",
+  "petitions": [
+    {{
+      "faction": "The Merchant's Guild",
+      "demand": "Honored leader, we come with a reasonable request backed by economic reality. Our guild demands immediate elimination of the temple tithe—the 15% levy that drains 500 gold pieces per moon from trade coffers into the Priesthood's hands. We have built the trade routes that feed this civilization, yet we are bled dry to fund monuments and rituals. Grant us this relief and we will increase trade revenues by 30% within three moons. Deny us, and we will be forced to consider... alternative markets beyond your borders. Our approval stands at 65, but our patience is not infinite."
+    }},
+    {{
+      "faction": "The Priesthood of the Sun",
+      "demand": "You DARE summon us alongside these... merchants? My lord, the Merchant's Guild's petition is an affront to the gods themselves! That 'temple tithe' they disparage funds the very rituals that keep our people's souls in balance and the sun rising each dawn. We demand not only that the tithe remain, but that it be DOUBLED to 30% to fund the Grand Temple construction—a project that will secure divine favor for generations. The merchants grow fat on coin while spiritual decay spreads through our people like a plague. Deny the Merchant's Guild their blasphemous request, or the priesthood will have no choice but to declare this leadership spiritually unfit. Our approval may be at 63, but the gods' approval is what truly matters. Choose wisely."
+    }}
+  ],
+  "investigation_options": [
+    "Question Lysander about whether the Merchant's Guild will truly relocate if denied, and where they would go",
+    "Investigate what 'spiritually unfit' means—can the Priesthood actually challenge your rule, and do they have support?"
+  ],
+  "decision_options": [
+    "Side with the Merchant's Guild: Eliminate the temple tithe immediately, knowing the Priesthood will see this as a declaration of spiritual war and their approval will plummet",
+    "Side with the Priesthood: Double the temple tithe to 30%, risking the Merchant's Guild withdrawing trade operations and crippling the economy"
+  ]
+}}
+</EXAMPLE_FORMAT>

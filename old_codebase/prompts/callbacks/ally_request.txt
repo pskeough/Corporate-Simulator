@@ -1,0 +1,61 @@
+# ALLY REQUEST CALLBACK PROMPT
+# Generates callback event when a past ally asks for help.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - era: Current era (string)
+# - years_passed: Years since alliance formed (integer)
+# - ally_name: Name of the ally (string)
+# - alliance_strength: Alliance strength 0-100 (integer)
+# - alliance_description: Description of alliance (string: 'unbreakable bond', 'strong friendship', or 'tentative alliance')
+# - ally_event: Event where alliance was forged (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options
+
+CALLBACK EVENT: Ally Asks for Help
+
+**FORMATTING REQUIREMENT:** Use markdown for emotional appeals:
+- Use **bold** for alliance bonds and desperate pleas
+- Use *italics* for hopeful faith and underlying fear
+
+**NARRATIVE PURPOSE:** Test the player's loyalty and commitment to alliances. This is about honor, reciprocity, and the cost of friendship. Will they abandon an ally in need?
+
+**EMOTIONAL TONE:** Desperate hope mixed with faith in the alliance. The ally should feel like a REAL friend in dire straits, not just a game mechanic.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Era: {era}
+
+THE ALLY'S PLEA:
+- Ally name: {ally_name}
+- Alliance strength: {alliance_strength}/100 ({alliance_description})
+- Alliance forged during: "{ally_event}" ({years_passed} years ago)
+- Now they call upon that bond in their hour of need
+
+**YOUR TASK:**
+First, in a `<summary>` tag, briefly narrate how the ally's situation has evolved since the alliance was formed. Consider how their needs have grown or what new pressures they face after {years_passed} years.
+
+Then, generate an event where a messenger from {ally_name} arrives asking for help, informed by the summary you just wrote.
+
+**CHARACTER VOICE:** Embody the ally's messenger - desperate but hopeful, appealing to friendship and honor:
+- Reference the alliance and how it was forged
+- Show the ally's crisis is REAL and URGENT
+- Appeal to honor: "They stood with you once, will you stand with them now?"
+- Use phrases like: "Our alliance forged {years_passed} years ago...", "They have not forgotten your friendship...", "In their darkest hour, they turn to you..."
+
+**REACTIVITY REQUIREMENTS:**
+- Reference how alliance was formed: "{ally_event}"
+- Show time passed: "{years_passed} years of friendship"
+- Make the crisis SPECIFIC (famine, invasion, plague, civil war)
+- Alliance strength ({alliance_strength}/100) affects tone: stronger = more confident in your aid
+- Investigation reveals the severity of their crisis and what they need
+- Decisions: help them (expensive but honorable), refuse (cheaper but betrays trust and weakens/breaks alliance)
+
+Output JSON:
+{{{{
+  "title": "Ally's plea title (3-6 words)",
+  "narrative": "2-3 sentences. A messenger from {ally_name} arrives, desperate but hopeful. They reference the alliance forged {years_passed} years ago and plead for aid in their crisis. Appeal to honor and friendship.",
+  "investigation_options": ["Learn the full extent of their crisis", "Assess what resources and support they need"],
+  "decision_options": ["Send aid and honor the alliance (costly but strengthens bond)", "Refuse and abandon them in their need (cheaper but weakens/breaks alliance)"]
+}}}}

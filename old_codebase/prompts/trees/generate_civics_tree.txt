@@ -1,0 +1,21 @@
+Generate a civics tree for a civilization game set in the {era} era with a {genre_control} theme.
+The output should be a JSON array of civic objects.
+Each civic object must have the following keys:
+- "id": A unique identifier string for the civic (e.g., "civic_code_of_laws").
+- "name": The display name of the civic (e.g., "Code of Laws").
+- "description": A brief description of the civic.
+- "cost": An integer representing the research cost in culture points.
+- "prerequisites": A list of civic "id" strings that are required to research this civic. An empty list means no prerequisites.
+- "era": The era this civic belongs to (e.g., "{era}").
+
+Example of a single civic object:
+{{
+    "id": "civic_early_empire",
+    "name": "Early Empire",
+    "description": "Establish the traditions of a hereditary ruling class and a formal military.",
+    "cost": 40,
+    "prerequisites": ["civic_code_of_laws"],
+    "era": "Ancient"
+}}
+
+Please generate a balanced and logical civics tree with approximately 10-15 civics for the specified era.

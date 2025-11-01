@@ -1,0 +1,148 @@
+{
+    "events": [
+        {
+            "year": -20005,
+            "title": "Founding",
+            "action": "",
+            "narrative": "The tribe settled in the valley."
+        },
+        {
+            "year": -19987,
+            "title": "Whispers of the Shaman",
+            "action": "Begin reinforcing shelters and gathering extra firewood.",
+            "narrative": "Heeding Elara's vision, the tribe immediately set to work reinforcing their shelters and gathering an abundance of firewood. The community's proactive efforts have bolstered their readiness for the coming harsh winter."
+        },
+        {
+            "year": -19986,
+            "title": "The Silent Forest",
+            "action": "Increase food rationing and focus on gathering edible plants.",
+            "narrative": "The tribe implemented stricter food rationing and increased their efforts to gather edible plants. While this conserved existing food stores, the lack of fresh game meant their overall food supply remained strained."
+        },
+        {
+            "year": -19985,
+            "title": "The Shadow in the Snow",
+            "action": "Send scouts to observe the predator from a safe distance and learn its habits.",
+            "narrative": "The scouts bravely ventured towards the western edge, their keen eyes tracking the mysterious predator. They observed from a hidden vantage point, noting the creature's size and hunting patterns, and returned with vital intelligence."
+        },
+        {
+            "year": -19984,
+            "title": "The Fading Tracks",
+            "action": "i die",
+            "narrative": "Chieftain Anu, upon hearing the scouts' report and feeling overwhelmed by the unknown, succumbed to despair and passed away. His reign of five years has come to an abrupt end."
+        },
+        {
+            "year": -19983,
+            "title": "The Harsh Winter's Grip",
+            "action": "Venture towards the rumored caves to the north, seeking shelter and potential game.",
+            "narrative": "A small group braved the blizzard, their determination fueled by desperation. After a grueling trek, they discovered a network of ice-rimmed caves, offering a respite from the storm."
+        },
+        {
+            "year": -19982,
+            "title": "Whispers of the Ancients",
+            "action": "Send scouts to observe the cave entrance for any signs of activity.",
+            "narrative": "Scouts were dispatched to the newly discovered caves. They observed no immediate signs of activity, but the entrance to the caves seemed to hum with a faint, unseen energy."
+        },
+        {
+            "year": -39962,
+            "title": "Echoes from the Stone",
+            "action": "Attempt to chip away at the resonating stone to study its properties.",
+            "narrative": "The attempt to chip away at the resonating stone proved futile, as the tools were too crude to make any impression. However, a faint, warm glow emanated from the stone when struck, hinting at its unusual properties."
+        },
+        {
+            "year": -39961,
+            "title": "The Whispering Stone's Secret",
+            "action": "Devote more hunters to finding new sources of flint for better tools.",
+            "narrative": "The tribe dispatched more hunters to search for flint. Their efforts were successful, leading to the discovery of a new, richer source of high-quality flint, which will allow for the creation of superior tools."
+        },
+        {
+            "year": -39960,
+            "title": "The Resonance of the Deep",
+            "action": "Avoid the area entirely until the phenomenon subsides.",
+            "narrative": "The tribe heeded the Shaman's warning, cautiously avoiding the unsettling area near the new flint deposits. The mysterious hum persisted for a few more days before gradually fading, leaving the agitated animals to calm."
+        },
+        {
+            "year": -39939,
+            "title": "The Echoing Tools",
+            "action": "Investigate the source of the new flint for more 'special' stones.",
+            "narrative": "Chieftain Anu, guided by curiosity and caution, led a small expedition to the new flint source. There, amidst the familiar stones, they discovered a vein of particularly lustrous, faintly shimmering flint."
+        },
+        {
+            "year": -39258,
+            "title": "The Whispering Vein",
+            "action": "Attempt to craft a tool from the shimmering stone.",
+            "narrative": "The attempt to craft a tool from the shimmering stone resulted in an unexpected surge of energy, and the stone crumbled into dust. The craftsman was unharmed, but the unique material was lost."
+        },
+        {
+            "year": -38757,
+            "title": "The Curious Luminescence",
+            "action": "Study the fungi for its properties.",
+            "narrative": "The tribe's scholars carefully studied the phosphorescent fungi, meticulously documenting its properties. Their research revealed that the fungi, when processed, could enhance cognitive function, leading to a small but significant increase in knowledge."
+        },
+        {
+            "year": -38756,
+            "title": "The Whispering Gears",
+            "action": "Consult the shaman about the cave's spirit.",
+            "narrative": "The shaman, after communing with the cave's spirit, confirmed that the rhythmic clicking was not malevolent, but rather the song of the earth itself, guiding the artisans towards a deeper understanding of the world's hidden mechanisms."
+        },
+        {
+            "year": -38255,
+            "title": "The Whispering Caves' Divine Mandate",
+            "action": "Construct a grand effigy of the Great Spirit of the Hunt.",
+            "narrative": "The Lumina Tribe labored for weeks, gathering rare stones and carving sacred symbols to construct the grand effigy. Upon its completion, a hushed awe fell over the tribe as they presented it to the Whispering Caves, hoping the spirits would accept this testament to their devotion."
+        },
+        {
+            "year": -37254,
+            "title": "The Unsettling Silence of the Caves",
+            "action": "Reinforce the tribe's defenses, just in case.",
+            "narrative": "Chieftain Lyra ordered the reinforcement of tribal defenses, and the Lumina Tribe spent the day strengthening their palisades and sharpening their spears. While the immediate threat remained unseen, the added vigilance brought a small measure of comfort to the uneasy villagers."
+        },
+        {
+            "year": -37253,
+            "title": "The Whispers Grow Louder",
+            "action": "i paint all the huts red with blood of our enemies",
+            "narrative": "In a bold display of defiance and power, the tribe's huts were painted crimson with the blood of their enemies. This act intensified the unsettling whispers from the caves, causing a split between those who saw it as a powerful omen and those who feared its dark implications."
+        },
+        {
+            "year": -37251,
+            "title": "The Spirits' Discontent",
+            "action": "i say that all houses must be red for the erst of time. this is our soul. red hut.",
+            "narrative": "Chieftain Lyra, seeking to appease the spirits, declared that all future huts would be built with red clay, a color she proclaimed as the tribe's soul. This decree immediately divided the tribe further, as some saw it as a desperate, uninspired measure, while others believed it was a necessary step to restore balance."
+        },
+        {
+            "year": -36750,
+            "title": "The Sacred Echoes",
+            "action": "i burn down all houses in the night, going mad and trying to destroy the group",
+            "narrative": "In a fit of madness, Kaelen the Stone-Shaper set fire to the tribe's homes, plunging the Lumina Tribe into chaos and despair. The Great Effigy at the Whispering Caves, once a symbol of devotion, now stands amidst the ashes of their civilization."
+        },
+        {
+            "year": -36949,
+            "title": "The Unanswered Prayers",
+            "action": "a deep cold age beigns, covering the world in snow for 700 years. I say we must hide from the ever present snow",
+            "narrative": "A harsh, 700-year cold age descended upon the land, blanketing it in perpetual snow. The Lumina Tribe, heeding Kaelen's words, retreated into their reinforced shelters to survive the encroaching frost."
+        },
+        {
+            "year": -35948,
+            "title": "The Whispers of the Effigy",
+            "action": "Send a shaman to commune with the spirits at the Whispering Caves.",
+            "narrative": "The shaman ventured into the Whispering Caves, returning with a profound understanding. The spirits are indeed pleased with the effigy, but their murmurs are a song of abundance, a promise of bountiful seasons to come."
+        },
+        {
+            "year": -35947,
+            "title": "The River's Resonant Song",
+            "action": "i fish",
+            "narrative": "Heeding the river's song and the shaman's vision, the Lumina Tribe engaged in extensive fishing. The abundance promised by the spirits was realized, bringing a significant haul of fish to bolster their stores."
+        },
+        {
+            "year": -35946,
+            "title": "The Whispers of the Great Bear",
+            "action": "Send scouts to observe the bear from a safe distance.",
+            "narrative": "The scouts returned with tales of the great bear, a majestic and powerful creature. Their observation confirmed its peaceful nature, and the elders interpreted this as a positive omen for the tribe's future prosperity and hunting success."
+        },
+        {
+            "year": -35945,
+            "title": "Echoes of the Great Bear",
+            "action": "i kill as many of my people as i can",
+            "narrative": "In a shocking and devastating turn of events, Kaelen II ordered the sacrifice of a significant portion of the Lumina Tribe. This act of self-destruction has plunged the tribe into disarray, leaving them vulnerable and their future uncertain."
+        }
+    ]
+}

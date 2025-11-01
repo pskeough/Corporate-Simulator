@@ -1,0 +1,25 @@
+{
+    "name": "Animism",
+    "type": "Spirit Worship",
+    "primary_deity": "The Great Spirit of the Hunt",
+    "core_tenets": [
+        "All things have a spirit.",
+        "The natural world must be respected."
+    ],
+    "practices": [
+        "Shamanic rituals",
+        "Cave painting",
+        "Spirit Offerings",
+        "Harvest Offerings",
+        "Symbolic Offerings",
+        "Harvest Rituals",
+        "Sun appeasement rituals",
+        "Ancestral Veneration"
+    ],
+    "holy_sites": [
+        "The Great Oak",
+        "Whispering Cave"
+    ],
+    "influence": "dominant",
+    "schisms": []
+}

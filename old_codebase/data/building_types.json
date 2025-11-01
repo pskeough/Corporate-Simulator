@@ -1,0 +1,108 @@
+{
+  "buildings": [
+    {
+      "id": "building_granary_001",
+      "name": "Granary",
+      "category": "food_storage",
+      "description": "A storage facility for preserving surplus food, reducing waste and protecting against famine",
+      "cost": {
+        "wealth": 100,
+        "turns": 2
+      },
+      "bonuses": {
+        "food_per_turn": 10
+      },
+      "requirements": {
+        "era": "stone_age",
+        "technologies": []
+      }
+    },
+    {
+      "id": "building_barracks_001",
+      "name": "Barracks",
+      "category": "military",
+      "description": "A training ground for warriors, improving military readiness and discipline",
+      "cost": {
+        "wealth": 150,
+        "turns": 3
+      },
+      "bonuses": {
+        "military_strength": 5
+      },
+      "requirements": {
+        "era": "bronze_age",
+        "technologies": []
+      }
+    },
+    {
+      "id": "building_market_001",
+      "name": "Market",
+      "category": "economic",
+      "description": "A central trading hub where merchants exchange goods and wealth flows",
+      "cost": {
+        "wealth": 200,
+        "turns": 3
+      },
+      "bonuses": {
+        "wealth_per_turn": 15
+      },
+      "requirements": {
+        "era": "bronze_age",
+        "technologies": []
+      }
+    },
+    {
+      "id": "building_library_001",
+      "name": "Library",
+      "category": "knowledge",
+      "description": "A repository of knowledge where scholars preserve and study ancient texts",
+      "cost": {
+        "wealth": 250,
+        "turns": 4
+      },
+      "bonuses": {
+        "science_per_turn": 8
+      },
+      "requirements": {
+        "era": "bronze_age",
+        "technologies": ["tech_writing"]
+      }
+    },
+    {
+      "id": "building_temple_001",
+      "name": "Temple",
+      "category": "religious",
+      "description": "A sacred place of worship dedicated to the divine, strengthening faith and unity",
+      "cost": {
+        "wealth": 180,
+        "turns": 3
+      },
+      "bonuses": {
+        "happiness": 5,
+        "culture_per_turn": 5
+      },
+      "requirements": {
+        "era": "stone_age",
+        "technologies": []
+      }
+    },
+    {
+      "id": "building_workshop_001",
+      "name": "Workshop",
+      "category": "production",
+      "description": "An artisan's workplace for crafting tools, goods, and innovations",
+      "cost": {
+        "wealth": 120,
+        "turns": 2
+      },
+      "bonuses": {
+        "culture_per_turn": 3,
+        "wealth_per_turn": 5
+      },
+      "requirements": {
+        "era": "bronze_age",
+        "technologies": []
+      }
+    }
+  ]
+}

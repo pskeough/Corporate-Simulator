@@ -1,0 +1,30 @@
+{
+    "available_buildings": [],
+    "constructed_buildings": [
+        {
+            "id": "building_granary_001",
+            "name": "Granary",
+            "turns_remaining": 0
+        },
+        {
+            "id": "building_barracks_001",
+            "name": "Barracks",
+            "turns_remaining": 0
+        },
+        {
+            "id": "building_workshop_001",
+            "name": "Workshop",
+            "turns_remaining": 0
+        },
+        {
+            "id": "building_market_001",
+            "name": "Market",
+            "turns_remaining": 0
+        },
+        {
+            "id": "building_temple_001",
+            "name": "Temple",
+            "turns_remaining": 0
+        }
+    ]
+}

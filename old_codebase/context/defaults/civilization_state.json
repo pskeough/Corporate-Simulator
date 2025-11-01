@@ -1,0 +1,26 @@
+{
+    "meta": {
+        "name": "The Lumina Tribe",
+        "year": -71388,
+        "era": "classical",
+        "founding_date": -20000
+    },
+    "leader": {
+        "name": "Anya, the Seer",
+        "age": 552,
+        "life_expectancy": 1340,
+        "role": "Chieftain",
+        "traits": [
+            "Prophetic",
+            "Diplomatic",
+            "Spiritual"
+        ],
+        "years_ruled": 75
+    },
+    "population": 3800,
+    "resources": {
+        "food": 2500,
+        "wealth": 3200,
+        "tech_tier": "classical"
+    }
+}

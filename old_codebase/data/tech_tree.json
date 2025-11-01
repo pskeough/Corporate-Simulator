@@ -1,0 +1,44 @@
+{
+  "technologies": [
+    {
+      "id": "tech_agriculture",
+      "name": "Agriculture",
+      "description": "The cultivation of crops and domestication of animals for food production",
+      "era": "stone_age",
+      "unlocks_buildings": ["building_granary_001"],
+      "prerequisites": []
+    },
+    {
+      "id": "tech_writing",
+      "name": "Writing",
+      "description": "The ability to record and preserve knowledge through symbols and scripts",
+      "era": "bronze_age",
+      "unlocks_buildings": ["building_library_001"],
+      "prerequisites": []
+    },
+    {
+      "id": "tech_metalworking",
+      "name": "Metalworking",
+      "description": "The knowledge of extracting and shaping metals into tools and weapons",
+      "era": "bronze_age",
+      "unlocks_buildings": ["building_workshop_001", "building_barracks_001"],
+      "prerequisites": []
+    },
+    {
+      "id": "tech_currency",
+      "name": "Currency",
+      "description": "A standardized system of exchange using coins or other tradeable items",
+      "era": "bronze_age",
+      "unlocks_buildings": ["building_market_001"],
+      "prerequisites": []
+    },
+    {
+      "id": "tech_masonry",
+      "name": "Masonry",
+      "description": "The craft of building structures from stone and brick",
+      "era": "bronze_age",
+      "unlocks_buildings": ["building_temple_001"],
+      "prerequisites": []
+    }
+  ]
+}

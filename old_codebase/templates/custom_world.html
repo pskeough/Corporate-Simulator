@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom World Creation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f1f1f1;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #c9a961;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #a8a8a8;
+            font-style: italic;
+        }
+
+        .progress-bar {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #c9a961 0%, #d4b56f 100%);
+            height: 10px;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            color: #c9a961;
+            font-size: 0.9em;
+        }
+
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #c9a961;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-size: 1.8em;
+            color: #c9a961;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .step-description {
+            text-align: center;
+            color: #a8a8a8;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #c9a961;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #c9a961;
+            border-radius: 5px;
+            color: #f1f1f1;
+            font-size: 1em;
+            font-family: 'Georgia', serif;
+        }
+
+        .form-group input::placeholder {
+            color: #a8a8a8;
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-card:hover {
+            background: rgba(201, 169, 97, 0.1);
+            border-color: #c9a961;
+        }
+
+        .option-card.selected {
+            background: rgba(201, 169, 97, 0.2);
+            border-color: #c9a961;
+            box-shadow: 0 0 20px rgba(201, 169, 97, 0.3);
+        }
+
+        .option-card .option-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .option-card .option-title {
+            font-weight: bold;
+            color: #f1f1f1;
+            margin-bottom: 5px;
+        }
+
+        .option-card .option-desc {
+            font-size: 0.85em;
+            color: #a8a8a8;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c9a961 0%, #a08040 100%);
+            color: #1a1a2e;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #d4b56f 0%, #b89550 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #5a6678 0%, #3d4758 100%);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .randomize-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .randomize-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .review-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #c9a961;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .review-section h3 {
+            color: #c9a961;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .review-section p {
+            margin: 5px 0;
+            color: #d1d1d1;
+        }
+
+        .review-section strong {
+            color: #c9a961;
+        }
+
+        .error-message {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid #dc2626;
+            color: #fca5a5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            border: 4px solid rgba(201, 169, 97, 0.3);
+            border-top: 4px solid #c9a961;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #c9a961;
+            font-size: 1.2em;
+        }
+
+        .back-to-menu {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-menu a {
+            color: #c9a961;
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+
+        .back-to-menu a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Create Your World</h1>
+            <p>Shape the destiny of your civilization</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+            <div class="progress-text" id="progress-text">Step 1 of 7</div>
+        </div>
+
+        <div class="form-container">
+            <div id="error-message" class="error-message"></div>
+
+            <!-- Step 1: Era Selection -->
+            <div class="step active" id="step-1">
+                <h2 class="step-title">Choose Your Starting Era</h2>
+                <p class="step-description">The era determines your initial technology and societal development</p>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="stone_age" onclick="selectOption('era', 'stone_age', this)">
+                        <div class="option-icon">🪨</div>
+                        <div class="option-title">Stone Age</div>
+                        <div class="option-desc">Primitive tools, hunter-gatherer society</div>
+                    </div>
+                    <div class="option-card" data-value="bronze_age" onclick="selectOption('era', 'bronze_age', this)">
+                        <div class="option-icon">⚒️</div>
+                        <div class="option-title">Bronze Age</div>
+                        <div class="option-desc">Basic metallurgy, early agriculture</div>
+                    </div>
+                    <div class="option-card" data-value="iron_age" onclick="selectOption('era', 'iron_age', this)">
+                        <div class="option-icon">⚔️</div>
+                        <div class="option-title">Iron Age</div>
+                        <div class="option-desc">Advanced tools, established settlements</div>
+                    </div>
+                    <div class="option-card" data-value="classical" onclick="selectOption('era', 'classical', this)">
+                        <div class="option-icon">🏛️</div>
+                        <div class="option-title">Classical Era</div>
+                        <div class="option-desc">Organized society, trade networks</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Geography -->
+            <div class="step" id="step-2">
+                <h2 class="step-title">Select Your Geography</h2>
+                <p class="step-description">Your environment shapes available resources and challenges</p>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="coastal" onclick="selectOption('terrain', 'coastal', this)">
+                        <div class="option-icon">🌊</div>
+                        <div class="option-title">Coastal</div>
+                        <div class="option-desc">Beaches, fishing, maritime trade</div>
+                    </div>
+                    <div class="option-card" data-value="forest" onclick="selectOption('terrain', 'forest', this)">
+                        <div class="option-icon">🌲</div>
+                        <div class="option-title">Forest</div>
+                        <div class="option-desc">Dense woods, hunting, timber</div>
+                    </div>
+                    <div class="option-card" data-value="mountain" onclick="selectOption('terrain', 'mountain', this)">
+                        <div class="option-icon">⛰️</div>
+                        <div class="option-title">Mountain</div>
+                        <div class="option-desc">Highlands, stone, defensible terrain</div>
+                    </div>
+                    <div class="option-card" data-value="desert" onclick="selectOption('terrain', 'desert', this)">
+                        <div class="option-icon">🏜️</div>
+                        <div class="option-title">Desert</div>
+                        <div class="option-desc">Arid land, oases, harsh conditions</div>
+                    </div>
+                    <div class="option-card" data-value="plains" onclick="selectOption('terrain', 'plains', this)">
+                        <div class="option-icon">🌾</div>
+                        <div class="option-title">Plains</div>
+                        <div class="option-desc">Grasslands, agriculture, open spaces</div>
+                    </div>
+                    <div class="option-card" data-value="river_valley" onclick="selectOption('terrain', 'river_valley', this)">
+                        <div class="option-icon">🏞️</div>
+                        <div class="option-title">River Valley</div>
+                        <div class="option-desc">Fertile land, fresh water, fishing</div>
+                    </div>
+                    <div class="option-card" data-value="island" onclick="selectOption('terrain', 'island', this)">
+                        <div class="option-icon">🏝️</div>
+                        <div class="option-title">Island</div>
+                        <div class="option-desc">Isolated, unique resources, limited space</div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 25px;">
+                    <label>Resource Abundance</label>
+                    <div class="option-grid">
+                        <div class="option-card" data-value="scarce" onclick="selectOption('resource_abundance', 'scarce', this)">
+                            <div class="option-title">Scarce</div>
+                            <div class="option-desc">Limited resources, harder survival</div>
+                        </div>
+                        <div class="option-card" data-value="moderate" onclick="selectOption('resource_abundance', 'moderate', this)">
+                            <div class="option-title">Moderate</div>
+                            <div class="option-desc">Balanced resources</div>
+                        </div>
+                        <div class="option-card" data-value="abundant" onclick="selectOption('resource_abundance', 'abundant', this)">
+                            <div class="option-title">Abundant</div>
+                            <div class="option-desc">Rich resources, easier growth</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Civilization Identity -->
+            <div class="step" id="step-3">
+                <h2 class="step-title">Name Your Civilization</h2>
+                <p class="step-description">Give your people an identity and choose your leader</p>
+
+                <button class="randomize-btn" onclick="randomizeCivName()">🎲 Randomize Name</button>
+                <div class="form-group">
+                    <label>Civilization Name</label>
+                    <input type="text" id="civilization-name" placeholder="The People of..." maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label>Starting Population</label>
+                    <div class="option-grid">
+                        <div class="option-card" data-value="small" onclick="selectOption('population_size', 'small', this)">
+                            <div class="option-title">Small</div>
+                            <div class="option-desc">100-500 people</div>
+                        </div>
+                        <div class="option-card" data-value="medium" onclick="selectOption('population_size', 'medium', this)">
+                            <div class="option-title">Medium</div>
+                            <div class="option-desc">500-2000 people</div>
+                        </div>
+                        <div class="option-card" data-value="large" onclick="selectOption('population_size', 'large', this)">
+                            <div class="option-title">Large</div>
+                            <div class="option-desc">2000-5000 people</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="randomize-btn" onclick="randomizeLeaderName()">🎲 Randomize Leader</button>
+                <div class="form-group">
+                    <label>Leader Name (Optional - leave blank for random)</label>
+                    <input type="text" id="leader-name" placeholder="Your leader's name..." maxlength="50">
+                </div>
+            </div>
+
+            <!-- Step 4: Cultural Foundation -->
+            <div class="step" id="step-4">
+                <h2 class="step-title">Define Your Culture</h2>
+                <p class="step-description">Choose the values and structure that define your people</p>
+
+                <div class="form-group">
+                    <label>Primary Cultural Focus</label>
+                    <div class="option-grid">
+                        <div class="option-card" data-value="martial" onclick="selectOption('cultural_focus', 'martial', this)">
+                            <div class="option-icon">⚔️</div>
+                            <div class="option-title">Martial</div>
+                            <div class="option-desc">Strength, honor, warfare</div>
+                        </div>
+                        <div class="option-card" data-value="spiritual" onclick="selectOption('cultural_focus', 'spiritual', this)">
+                            <div class="option-icon">✨</div>
+                            <div class="option-title">Spiritual</div>
+                            <div class="option-desc">Wisdom, devotion, mysticism</div>
+                        </div>
+                        <div class="option-card" data-value="agricultural" onclick="selectOption('cultural_focus', 'agricultural', this)">
+                            <div class="option-icon">🌾</div>
+                            <div class="option-title">Agricultural</div>
+                            <div class="option-desc">Farming, community, sustainability</div>
+                        </div>
+                        <div class="option-card" data-value="mercantile" onclick="selectOption('cultural_focus', 'mercantile', this)">
+                            <div class="option-icon">💰</div>
+                            <div class="option-title">Mercantile</div>
+                            <div class="option-desc">Trade, prosperity, diplomacy</div>
+                        </div>
+                        <div class="option-card" data-value="scholarly" onclick="selectOption('cultural_focus', 'scholarly', this)">
+                            <div class="option-icon">📚</div>
+                            <div class="option-title">Scholarly</div>
+                            <div class="option-desc">Knowledge, innovation, learning</div>
+                        </div>
+                        <div class="option-card" data-value="artistic" onclick="selectOption('cultural_focus', 'artistic', this)">
+                            <div class="option-icon">🎨</div>
+                            <div class="option-title">Artistic</div>
+                            <div class="option-desc">Beauty, creativity, expression</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Social Structure</label>
+                    <div class="option-grid">
+                        <div class="option-card" data-value="egalitarian" onclick="selectOption('social_structure', 'egalitarian', this)">
+                            <div class="option-title">Egalitarian</div>
+                            <div class="option-desc">Collective decisions, equality</div>
+                        </div>
+                        <div class="option-card" data-value="hierarchical" onclick="selectOption('social_structure', 'hierarchical', this)">
+                            <div class="option-title">Hierarchical</div>
+                            <div class="option-desc">Clear social ranks</div>
+                        </div>
+                        <div class="option-card" data-value="tribal_council" onclick="selectOption('social_structure', 'tribal_council', this)">
+                            <div class="option-title">Tribal Council</div>
+                            <div class="option-desc">Elders and leaders govern</div>
+                        </div>
+                        <div class="option-card" data-value="monarchy" onclick="selectOption('social_structure', 'monarchy', this)">
+                            <div class="option-title">Monarchy</div>
+                            <div class="option-desc">Hereditary rulership</div>
+                        </div>
+                        <div class="option-card" data-value="theocracy" onclick="selectOption('social_structure', 'theocracy', this)">
+                            <div class="option-title">Theocracy</div>
+                            <div class="option-desc">Religious leadership</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Religious Beliefs -->
+            <div class="step" id="step-5">
+                <h2 class="step-title">Choose Your Beliefs</h2>
+                <p class="step-description">What spiritual or philosophical path do your people follow?</p>
+
+                <div class="option-grid">
+                    <div class="option-card" data-value="animism" onclick="selectOption('religion_type', 'animism', this)">
+                        <div class="option-icon">🌿</div>
+                        <div class="option-title">Animism</div>
+                        <div class="option-desc">Spirit worship, nature reverence</div>
+                    </div>
+                    <div class="option-card" data-value="polytheism" onclick="selectOption('religion_type', 'polytheism', this)">
+                        <div class="option-icon">⚡</div>
+                        <div class="option-title">Polytheism</div>
+                        <div class="option-desc">Multiple deities, diverse pantheon</div>
+                    </div>
+                    <div class="option-card" data-value="monotheism" onclick="selectOption('religion_type', 'monotheism', this)">
+                        <div class="option-icon">☀️</div>
+                        <div class="option-title">Monotheism</div>
+                        <div class="option-desc">Single supreme deity</div>
+                    </div>
+                    <div class="option-card" data-value="ancestor_worship" onclick="selectOption('religion_type', 'ancestor_worship', this)">
+                        <div class="option-icon">👻</div>
+                        <div class="option-title">Ancestor Worship</div>
+                        <div class="option-desc">Veneration of the dead</div>
+                    </div>
+                    <div class="option-card" data-value="nature_worship" onclick="selectOption('religion_type', 'nature_worship', this)">
+                        <div class="option-icon">🌳</div>
+                        <div class="option-title">Nature Worship</div>
+                        <div class="option-desc">Earth and natural forces</div>
+                    </div>
+                    <div class="option-card" data-value="none" onclick="selectOption('religion_type', 'none', this)">
+                        <div class="option-icon">🤔</div>
+                        <div class="option-title">Secular</div>
+                        <div class="option-desc">No dominant religion</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: World Challenges -->
+            <div class="step" id="step-6">
+                <h2 class="step-title">Set the Challenge</h2>
+                <p class="step-description">How harsh will your world be?</p>
+
+                <div class="form-group">
+                    <label>Difficulty Level</label>
+                    <div class="option-grid">
+                        <div class="option-card" data-value="peaceful" onclick="selectOption('difficulty', 'peaceful', this)">
+                            <div class="option-icon">🕊️</div>
+                            <div class="option-title">Peaceful</div>
+                            <div class="option-desc">Fewer threats, friendly neighbors</div>
+                        </div>
+                        <div class="option-card" data-value="balanced" onclick="selectOption('difficulty', 'balanced', this)">
+                            <div class="option-icon">⚖️</div>
+                            <div class="option-title">Balanced</div>
+                            <div class="option-desc">Moderate challenges</div>
+                        </div>
+                        <div class="option-card" data-value="challenging" onclick="selectOption('difficulty', 'challenging', this)">
+                            <div class="option-icon">💀</div>
+                            <div class="option-title">Challenging</div>
+                            <div class="option-desc">Hostile world, many threats</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Known Neighbors</label>
+                    <div class="option-grid">
+                        <div class="option-card" data-value="none" onclick="selectOption('neighbor_count', 'none', this)">
+                            <div class="option-title">Isolated</div>
+                            <div class="option-desc">No known neighbors</div>
+                        </div>
+                        <div class="option-card" data-value="few" onclick="selectOption('neighbor_count', 'few', this)">
+                            <div class="option-title">Few</div>
+                            <div class="option-desc">1-2 neighboring groups</div>
+                        </div>
+                        <div class="option-card" data-value="several" onclick="selectOption('neighbor_count', 'several', this)">
+                            <div class="option-title">Several</div>
+                            <div class="option-desc">3-4 neighboring groups</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7: Review and Confirm -->
+            <div class="step" id="step-7">
+                <h2 class="step-title">Review Your World</h2>
+                <p class="step-description">Confirm your choices and begin your journey</p>
+
+                <div id="review-content">
+                    <!-- Review content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="button-group">
+                <button class="btn btn-secondary" id="back-btn" onclick="previousStep()" style="display: none;">← Back</button>
+                <button class="btn btn-primary" id="next-btn" onclick="nextStep()">Next →</button>
+                <button class="btn btn-primary" id="create-btn" onclick="createWorld()" style="display: none;">Create World</button>
+            </div>
+
+            <div class="back-to-menu">
+                <a href="/">← Return to Main Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Generating your world...</div>
+    </div>
+
+    <script>
+        // Configuration state
+        const config = {
+            era: 'bronze_age',
+            terrain: 'forest',
+            civilization_name: '',
+            population_size: 'medium',
+            leader_name: '',
+            cultural_focus: 'spiritual',
+            social_structure: 'egalitarian',
+            religion_type: 'animism',
+            difficulty: 'balanced',
+            neighbor_count: 'few',
+            resource_abundance: 'moderate'
+        };
+
+        let currentStep = 1;
+        const totalSteps = 7;
+
+        // Civilization names for randomization
+        const civNamePrefixes = ['The', 'The Ancient', 'The Noble', 'The Free', 'The Proud', 'The Wise'];
+        const civNameSuffixes = ['People', 'Tribes', 'Clans', 'Kingdom', 'Confederation', 'Alliance', 'Nation', 'Folk'];
+        const civNameMiddle = ['River', 'Mountain', 'Forest', 'Desert', 'Coastal', 'Valley', 'Highland', 'Plains', 'Island', 'Stone', 'Iron', 'Bronze', 'Sun', 'Moon', 'Star', 'Wind'];
+
+        // Leader names for randomization
+        const leaderNames = [
+            'Anya, the Wise', 'Kael, the Bold', 'Theron, the Just', 'Lyra, the Strong',
+            'Darius, the Seer', 'Mira, the Builder', 'Orin, the Diplomat', 'Sera, the Warrior',
+            'Aldric, the Keeper', 'Elara, the Guide', 'Bran, the Brave', 'Nyx, the Cunning',
+            'Finn, the Scholar', 'Rhea, the Healer', 'Cassius, the Strategist', 'Aria, the Visionary'
+        ];
+
+        function selectOption(key, value, element) {
+            config[key] = value;
+
+            // Visual feedback - deselect all siblings
+            const siblings = element.parentElement.querySelectorAll('.option-card');
+            siblings.forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function randomizeCivName() {
+            const prefix = civNamePrefixes[Math.floor(Math.random() * civNamePrefixes.length)];
+            const middle = civNameMiddle[Math.floor(Math.random() * civNameMiddle.length)];
+            const suffix = civNameSuffixes[Math.floor(Math.random() * civNameSuffixes.length)];
+            document.getElementById('civilization-name').value = `${prefix} ${middle} ${suffix}`;
+        }
+
+        function randomizeLeaderName() {
+            const name = leaderNames[Math.floor(Math.random() * leaderNames.length)];
+            document.getElementById('leader-name').value = name;
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = `Step ${currentStep} of ${totalSteps}`;
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+
+            // Update button visibility
+            document.getElementById('back-btn').style.display = step > 1 ? 'block' : 'none';
+            document.getElementById('next-btn').style.display = step < totalSteps ? 'block' : 'none';
+            document.getElementById('create-btn').style.display = step === totalSteps ? 'block' : 'none';
+
+            // If on review step, populate review content
+            if (step === totalSteps) {
+                populateReview();
+            }
+        }
+
+        function nextStep() {
+            // Validate current step
+            if (currentStep === 3) {
+                config.civilization_name = document.getElementById('civilization-name').value.trim();
+                if (!config.civilization_name) {
+                    showError('Please enter a civilization name');
+                    return;
+                }
+                config.leader_name = document.getElementById('leader-name').value.trim();
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+                updateProgress();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                updateProgress();
+            }
+        }
+
+        function populateReview() {
+            const eraNames = {
+                'stone_age': 'Stone Age',
+                'bronze_age': 'Bronze Age',
+                'iron_age': 'Iron Age',
+                'classical': 'Classical Era'
+            };
+
+            const terrainNames = {
+                'coastal': 'Coastal', 'forest': 'Forest', 'mountain': 'Mountain',
+                'desert': 'Desert', 'plains': 'Plains', 'river_valley': 'River Valley', 'island': 'Island'
+            };
+
+            const focusNames = {
+                'martial': 'Martial', 'spiritual': 'Spiritual', 'agricultural': 'Agricultural',
+                'mercantile': 'Mercantile', 'scholarly': 'Scholarly', 'artistic': 'Artistic'
+            };
+
+            const religionNames = {
+                'animism': 'Animism', 'polytheism': 'Polytheism', 'monotheism': 'Monotheism',
+                'ancestor_worship': 'Ancestor Worship', 'nature_worship': 'Nature Worship', 'none': 'Secular/No Religion'
+            };
+
+            const reviewHTML = `
+                <div class="review-section">
+                    <h3>Civilization</h3>
+                    <p><strong>Name:</strong> ${config.civilization_name}</p>
+                    <p><strong>Era:</strong> ${eraNames[config.era]}</p>
+                    <p><strong>Population:</strong> ${config.population_size.charAt(0).toUpperCase() + config.population_size.slice(1)}</p>
+                    <p><strong>Leader:</strong> ${config.leader_name || 'Random'}</p>
+                </div>
+                <div class="review-section">
+                    <h3>Geography</h3>
+                    <p><strong>Terrain:</strong> ${terrainNames[config.terrain]}</p>
+                    <p><strong>Resources:</strong> ${config.resource_abundance.charAt(0).toUpperCase() + config.resource_abundance.slice(1)}</p>
+                </div>
+                <div class="review-section">
+                    <h3>Culture & Religion</h3>
+                    <p><strong>Focus:</strong> ${focusNames[config.cultural_focus]}</p>
+                    <p><strong>Structure:</strong> ${config.social_structure.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+                    <p><strong>Religion:</strong> ${religionNames[config.religion_type]}</p>
+                </div>
+                <div class="review-section">
+                    <h3>World Settings</h3>
+                    <p><strong>Difficulty:</strong> ${config.difficulty.charAt(0).toUpperCase() + config.difficulty.slice(1)}</p>
+                    <p><strong>Neighbors:</strong> ${config.neighbor_count.charAt(0).toUpperCase() + config.neighbor_count.slice(1)}</p>
+                </div>
+            `;
+
+            document.getElementById('review-content').innerHTML = reviewHTML;
+        }
+
+        async function createWorld() {
+            // Show loading overlay
+            document.getElementById('loading-overlay').classList.add('active');
+
+            try {
+                const response = await fetch('/api/custom_game', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    // World created successfully, redirect to game
+                    window.location.href = '/game';
+                } else {
+                    showError('Failed to create world: ' + (data.message || 'Unknown error'));
+                    document.getElementById('loading-overlay').classList.remove('active');
+                }
+            } catch (error) {
+                console.error('Error creating world:', error);
+                showError('Failed to create world. Check console for details.');
+                document.getElementById('loading-overlay').classList.remove('active');
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('error-message');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            setTimeout(() => {
+                errorEl.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize
+        updateProgress();
+
+        // Set initial selections
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select default options visually
+            document.querySelector('[data-value="bronze_age"]').classList.add('selected');
+            document.querySelector('[data-value="forest"]').classList.add('selected');
+            document.querySelector('[data-value="moderate"]').classList.add('selected');
+            // Step 3 defaults will be set when navigating to that step
+        });
+    </script>
+</body>
+</html>

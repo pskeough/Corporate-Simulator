@@ -1,0 +1,70 @@
+# ADVISOR PORTRAIT PROMPT
+# Generates a masterfully composed portrait painting of an Inner Circle advisor.
+# Must maintain visual consistency with leader portraits (same artistic style, lighting, technique).
+#
+# VARIABLES REQUIRED:
+# - name: Advisor's name (string)
+# - age: Advisor's age (integer)
+# - age_desc: Age description (e.g., "mature", "elderly") (string)
+# - age_visual: Detailed visual age cues (string)
+# - role: Advisor's role/title (string)
+# - era: Era name (string)
+# - trait_text: Comma-separated visual trait descriptions (string)
+# - role_visual: Role-specific visual elements description (string)
+# - era_style: Cultural aesthetic description for the era (string)
+# - culture_values: List of cultural values (for joining, first 2 used) (string)
+# - traits: List of trait names for conditional logic (comma-separated string)
+#
+# OUTPUT: Single portrait image
+
+Generate a masterfully composed portrait painting of {name}, a {age_desc} {role} from the {era} era.
+
+**VISUAL NARRATIVE PURPOSE:** This portrait should capture CHARACTER and ROLE. Show the essence of a trusted advisor - someone with expertise, wisdom, and presence. This is a member of the Inner Circle, a key figure in the civilization's leadership.
+
+**UNIFIED STYLE REQUIREMENT:** This portrait MUST match the exact same artistic style as other leader/advisor portraits in this civilization:
+- Painterly, regal portrait painting style
+- 3:4 portrait aspect ratio
+- Dramatic but dignified lighting
+- Museum-quality composition
+- Era-appropriate but CONSISTENT artistic technique across all portraits
+
+SUBJECT DETAILS:
+- Name: {name}
+- Role: {role}
+- Age: {age} years old ({age_desc})
+- Age-specific visual cues: {age_visual}
+- Personality traits reflected visually: {trait_text}
+- Role-specific elements: {role_visual}
+- Cultural aesthetic: {era_style}
+- Cultural values influencing composition: {culture_values}
+
+VISUAL STORYTELLING:
+- Role identity is PRIMARY: A {role} should LOOK like their role (warriors are martial, priests are serene, spymasters are enigmatic)
+- Personality traits shape expression and bearing: {trait_text}
+- If "Cunning" or "Discreet": Subtle, intelligent gaze, hint of mystery
+- If "Disciplined" or "Stern": Strong bearing, serious expression, commanding presence
+- If "Pious" or "Compassionate": Serene or warm expression, gentle features
+- Age {age}: {age_visual}
+
+CULTURAL AESTHETIC:
+- The portrait style must reflect {era} era artistic techniques (SAME as leader portraits)
+- Clothing, jewelry, and symbols must match {era_style}
+- Background hints: council chamber, office, or symbolic setting appropriate to their role
+- Cultural values like "{culture_values}" should influence symbolism
+
+TECHNICAL REQUIREMENTS:
+- Aspect ratio: 3:4 (portrait orientation) - EXACT SAME as leader portraits
+- Composition: Bust or head-and-shoulders
+- Style: Painterly, regal portrait painting - UNIFIED STYLE with other portraits
+- Lighting: Dramatic but dignified (torchlight, natural light, or golden hour) - CONSISTENT with leader portrait lighting
+- Detail focus: Face should be primary focus with clear, detailed features
+- NO text, labels, UI elements, or modern elements
+- Color palette appropriate to {era} era art styles - CONSISTENT across all portraits
+
+**CONSISTENCY REQUIREMENT:**
+This portrait must look like it was painted by the SAME artist in the SAME session as the leader's portrait. Maintain visual unity: same brush technique, same lighting approach, same color palette temperature, same level of detail.
+
+**REACTIVITY REQUIREMENT:**
+This is {name}, a {role} - make them UNIQUE and RECOGNIZABLE. Their role ({role}), traits ({traits}), and age ({age}) should create a one-of-a-kind portrait that clearly shows who they are and what they do.
+
+Generate a single, museum-quality advisor portrait that tells a story.

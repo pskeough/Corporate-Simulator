@@ -1,0 +1,62 @@
+# SEVERE FOOD SHORTAGE CRISIS PROMPT
+# Generates active-tier severe food shortage crisis event.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - population: Population count (integer, will be formatted with comma separator)
+# - food: Food resources (integer)
+# - days_of_food: Calculated days remaining (integer)
+# - era: Current era (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, updates
+
+WARNING CRISIS: SEVERE FOOD SHORTAGE
+
+**FORMATTING REQUIREMENT:** Use markdown for urgency:
+- Use **bold** for desperate conditions and active suffering
+- Use *italics* for whispered pleas and growing panic
+
+**NARRATIVE PURPOSE:** Create urgent tension. This is beyond a warning - active suffering is occurring. Not yet catastrophic famine, but people are hungry NOW.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Population: {population:,} (many going hungry)
+Food: {food} (dangerously low - perhaps {days_of_food} days remaining)
+Era: {era}
+
+**EMOTIONAL TONE:** Urgent, desperate, edge of panic. Use imagery of hollow-eyed faces, rationed meals, empty markets, desperate foraging.
+
+Generate a severe food shortage event. When creating the decision options, you MUST adhere to the following constraints:
+
+<constraints>
+  <constraint>All decision options must result in a significant and immediate loss of either population, wealth, or faction approval.</constraint>
+  <constraint>Avoid simple solutions like "find more food." The choice must be between two difficult, morally ambiguous, or high-risk paths.</constraint>
+</constraints>
+
+The event should:
+- Show active suffering through specific details (thin faces, ribs showing through tunics, parents giving their portions to children, desperate people foraging)
+- Convey the urgency - action NOW can prevent catastrophe
+- Offer 2 urgent investigation options (assess how many days of food remain, investigate if any emergency food sources exist)
+- Offer 2 urgent decision options that follow the rules in the constraints block.
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+You MUST include an `updates` block with direct mechanical consequences. Severe food shortages should cause significant food depletion and notable population impact.
+
+Example updates for severe food shortage:
+- Food depletion: "civilization.resources.food": -150 (desperate consumption)
+- Population impact: "civilization.population": -100 (hunger-related deaths)
+
+Use the gemini-2.5-flash-lite model for generation.
+
+Output JSON:
+{{
+  "title": "Urgent shortage title (3-6 words)",
+  "narrative": "2-3 sentences about active hunger and suffering with specific details. Address {leader_name}. Show: hollow eyes, empty markets, desperate hunger.",
+  "investigation_options": ["Urgent investigation 1", "Urgent investigation 2"],
+  "decision_options": ["Urgent decision with immediate cost 1", "Urgent decision with immediate cost 2"],
+  "updates": {{
+    "civilization.resources.food": -150,
+    "civilization.population": -100
+  }}
+}}

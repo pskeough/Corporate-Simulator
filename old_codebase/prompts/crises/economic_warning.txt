@@ -1,0 +1,57 @@
+# ECONOMIC WARNING PROMPT
+# Generates early warning-tier economic strain event.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - wealth: Wealth resources (integer)
+# - era: Current era (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, updates
+
+WARNING: ECONOMIC STRAIN
+
+**FORMATTING REQUIREMENT:** Use markdown for warning tone:
+- Use **bold** for budget concerns and merchant warnings
+- Use *italics* for worried discussions and hesitations
+
+**NARRATIVE PURPOSE:** Create merchant anxiety and economic concern. This is a warning - the treasury is running low. Action now can prevent crisis.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Wealth: {wealth} (running low - less than 300)
+Era: {era}
+
+**EMOTIONAL TONE:** Concerned, tense, merchants worried. Use imagery of fewer goods in markets, traders discussing concerns, creditors asking questions.
+
+Generate an economic warning event. When creating the decision options, you MUST adhere to the following constraints:
+
+<constraints>
+  <constraint>All decision options must result in a significant and immediate loss of either population, wealth, or faction approval.</constraint>
+  <constraint>Avoid simple solutions like "find more food." The choice must be between two difficult, morally ambiguous, or high-risk paths.</constraint>
+</constraints>
+
+The event should:
+- Show economic concern through specific details (merchants hesitating on deals, fewer goods in markets, advisors expressing concern about the budget)
+- Convey that preventive action can avoid crisis
+- Offer 2 investigation options (examine where wealth is being spent, investigate potential revenue sources)
+- Offer 2 preventive decision options that follow the rules in the constraints block.
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+You MUST include an `updates` block with direct mechanical consequences. Economic warnings should cause minor wealth depletion.
+
+Example updates for economic warning:
+- Minor wealth depletion: "civilization.resources.wealth": -150 (economic slowdown)
+
+Use the gemini-2.5-flash-lite model for generation.
+
+Output JSON:
+{{
+  "title": "Economic concern title (3-6 words)",
+  "narrative": "2-3 sentences about economic concerns and merchant worry. Address {leader_name}. Show: hesitant merchants, budget concerns, economic anxiety.",
+  "investigation_options": ["Investigation of spending 1", "Investigation of revenue 2"],
+  "decision_options": ["Preventive decision with modest cost 1", "Preventive decision with modest cost 2"],
+  "updates": {{
+    "civilization.resources.wealth": -150
+  }}
+}}

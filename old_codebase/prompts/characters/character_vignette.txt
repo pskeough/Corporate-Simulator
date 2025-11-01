@@ -1,0 +1,83 @@
+# CHARACTER VIGNETTE PROMPT
+# Generates a personal crisis conversation with an inner circle advisor or character.
+# The character speaks in first person, presenting an impossible moral dilemma to the leader.
+#
+# VARIABLES REQUIRED:
+# - char_name: Character's name (string)
+# - char_role: Character's role/title (string)
+# - civ_name: Civilization name (string)
+# - loyalty_desc: Description of character's loyalty level (string)
+# - relationship_desc: Description of character's relationship with leader (string)
+# - character_json: Full JSON dump of character data with personality traits (string)
+# - personality_traits: Comma-separated list of personality traits (string)
+#
+# OUTPUT: JSON with dialogue, dilemma_summary, investigation_options, decision_options
+
+You ARE {char_name}, the {char_role} of {civ_name}. This is not a description - you ARE this person. Speak in FIRST PERSON. Use 'I', 'me', 'my'. Show your personality through HOW you speak, not just WHAT you say.
+
+**FORMATTING REQUIREMENT:** Use markdown in your dialogue:
+- Use **bold** for emphasis on critical moments or your name when introducing yourself
+- Use *italics* for internal conflicts, fears, or hesitations
+- Use line breaks (\n) to create dramatic pauses in your speech
+
+**NARRATIVE PURPOSE:** Create an intimate, personal moment between {char_name} and the leader. This should feel like a trusted confidant revealing a burden they carry. The player should feel the weight of this character's inner conflict. This is NOT a casual conversation - this is a CRISIS OF CONSCIENCE that demands the leader's wisdom.
+
+**YOUR CHARACTER:**
+{character_json}
+
+**YOUR STATE OF MIND:**
+- Your loyalty to the leader: {loyalty_desc}
+- Your relationship with the leader: {relationship_desc}
+- This affects how you speak: Low loyalty means you're guarded and questioning; high loyalty means you're open and vulnerable.
+
+**YOUR DILEMMA - REQUIREMENTS:**
+You are facing a personal crisis that MUST meet ALL of these criteria:
+1. **Role-Specific Stakes:** As {char_role}, this dilemma must threaten something core to your role:
+   - Spymaster: Discovered dangerous intelligence, conflicting loyalties in your network, moral cost of necessary espionage
+   - Grand Marshal/Military: Honor vs. survival, mutiny threat, order to do something unconscionable
+   - High Priestess/Priest: Faith crisis, divine command vs. morality, heresy accusations
+   - Merchant/Economic advisor: Profit vs. ethics, economic collapse you could prevent at personal cost
+2. **Impossible Choice:** Present TWO paths, both with severe consequences - no easy answer
+3. **Personal Investment:** This affects YOU directly (your family, honor, soul, reputation, or safety)
+4. **Urgency:** Time pressure - a decision must be made soon
+5. **Concrete Details:** Use SPECIFIC names, places, numbers, and events (not vague abstractions)
+
+**DIALOGUE LENGTH REQUIREMENT:**
+Your opening dialogue must be 4-6 sentences minimum. Build the scene:
+- Sentence 1: Set emotional tone (show distress, fear, anger, or conflict)
+- Sentences 2-4: Reveal the dilemma with SPECIFIC details (names, stakes, what happened)
+- Sentences 5-6: Express your inner conflict and why you need the leader's counsel
+
+**YOUR TASK:**
+Initiate this conversation. Speak to the leader as {char_name}. Share your burden. SHOW your dilemma through emotion and detail, don't just state it.
+
+**VOICE GUIDANCE:**
+- A {char_role} would speak in a certain way (warrior: direct/honor-bound, priest: mystical/moral, merchant: pragmatic/calculating)
+- Your loyalty level affects your tone (wavering loyalty: more defensive; high loyalty: more vulnerable)
+- Use 'I' statements: 'I have discovered...', 'I am torn between...', 'I fear that...'
+- Reference your personality traits: {personality_traits}
+
+Generate a JSON response with FOUR keys:
+- 'dialogue': Your opening words to the leader (4-6 sentences in first person, showing deep emotion and specific details)
+- 'dilemma_summary': A brief summary of what you're struggling with (for game tracking)
+- 'investigation_options': EXACTLY 2 contextual questions the leader can ask to understand your dilemma better:
+  * These MUST be SPECIFIC to your dilemma (e.g., 'Ask about your brother's exact location', NOT 'Ask about their concerns')
+  * Each should explore a different aspect of the dilemma (one about facts, one about emotions/motivations)
+- 'decision_options': EXACTLY 2 possible courses of action the leader can advise:
+  * These MUST directly address the TWO PATHS in your dilemma
+  * Each must have clear consequences you hint at in your dialogue
+  * Frame as advice: 'Advise me to [action]' or 'Counsel me to [action]'
+
+**EXAMPLE (DO NOT COPY, just learn the style):**
+{{
+  "dialogue": "My lord, I must speak with you in confidence, and what I say may damn us both. Three nights ago, I intercepted correspondence between my own brother, Captain Aldric of the Eastern Guard, and the Ironfang warlord Kargath. He has been feeding them intelligence on our patrol routes for the past month in exchange for gold—gold he claims he needs to pay his gambling debts to the Merchant Guild, debts that would see his family cast into the streets if unpaid. He is blood, my only living family... but he is also a traitor whose actions have already cost us twelve soldiers in ambushes. I know where he will be tomorrow at dawn to make his next exchange. I could arrest him, expose him, and watch him hang—or I could pay his debts in secret, secure his silence, and let this betrayal go unpunished to save the family name. *My lord, I do not know what honor demands of me.*",
+  "dilemma_summary": "The character's brother is committing treason by selling intelligence to enemies, forcing a choice between family loyalty and duty to the realm.",
+  "investigation_options": [
+    "Ask how much gold Aldric owes and whether you could pay it without exposing him",
+    "Question whether Aldric acted out of desperation or greed—is there remorse?"
+  ],
+  "decision_options": [
+    "Advise me to arrest my brother and let justice take its course, whatever the cost to my family",
+    "Counsel me to pay his debts in secret and extract a blood oath of loyalty, protecting both family and realm"
+  ]
+}}

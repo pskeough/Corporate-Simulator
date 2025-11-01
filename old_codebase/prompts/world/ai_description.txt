@@ -1,0 +1,26 @@
+# WORLD AI DESCRIPTION PROMPT
+# Generates a brief, atmospheric opening description for a newly generated world.
+# Used once at game start to set the tone and introduce the player to their civilization.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - era: Era name (string)
+# - terrain: Terrain type (string)
+# - climate: Climate type (string)
+# - leader_name: Leader name (string)
+# - cultural_values: Comma-separated list of top 3 cultural values (string)
+# - religion_name: Religion name (string)
+#
+# OUTPUT: Plain text (2-3 sentences)
+
+Generate a brief, evocative opening description (2-3 sentences) for a civilization game with these characteristics:
+
+Civilization: {civ_name}
+Era: {era}
+Terrain: {terrain}
+Climate: {climate}
+Leader: {leader_name}
+Cultural Values: {cultural_values}
+Religion: {religion_name}
+
+Make it atmospheric and immersive, setting the stage for the player's journey.

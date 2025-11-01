@@ -1,0 +1,66 @@
+# FAMINE CRISIS PROMPT
+# Generates catastrophic famine crisis event with immediate consequences.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - population: Population count (integer, will be formatted with comma separator)
+# - food: Food resources (integer)
+# - days_of_food: Calculated days remaining (integer)
+# - era: Current era (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, updates
+
+CRITICAL CRISIS: FAMINE
+
+**FORMATTING REQUIREMENT:** Use markdown formatting to heighten the crisis atmosphere:
+- Use **bold** for dramatic emphasis on death tolls, urgent warnings, or critical moments
+- Use *italics* for whispered fears, desperate prayers, or haunting descriptions
+- Use line breaks (\n) to create dramatic pauses between horrific details
+
+**NARRATIVE PURPOSE:** Evoke visceral desperation and urgency. The player should FEEL the weight of starvation and death. This is a civilization on the brink of collapse.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Population: {population:,} souls (many dying)
+Food: {food} (CRITICAL - perhaps {days_of_food} days remaining at best)
+Era: {era}
+
+**EMOTIONAL TONE:** Desperate, visceral, haunting. Use imagery of gaunt faces, skeletal children, empty granaries, and hollow-eyed survivors.
+
+Generate an URGENT famine event. When creating the decision options, you MUST adhere to the following constraints:
+
+<constraints>
+  <constraint>All decision options must result in a significant and immediate loss of either population, wealth, or faction approval.</constraint>
+  <constraint>Avoid simple solutions like "find more food." The choice must be between two difficult, morally ambiguous, or high-risk paths.</constraint>
+</constraints>
+
+The event should:
+- Convey the desperate situation through specific, vivid details (dried riverbeds, skeletal livestock, corpses in marketplaces, bread riots)
+- Show the human cost: families torn apart, merchants hoarding, desperate measures being taken
+- Offer 2 desperate investigation options that reveal hard truths (inspect the granaries to see how dire it truly is, question the grain merchants who may be hoarding)
+- Offer 2 harsh decision options that follow the rules in the constraints block.
+
+**REACTIVITY REQUIREMENT:**
+Reference that this famine threatens the core of what makes {civ_name} great. Use language that reflects the {era} era (stone age: "the hunting grounds are barren", iron age: "even our plows cannot till the hardened earth").
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+You MUST include an `updates` block with direct mechanical consequences to the game state. The famine should cause immediate population loss and food depletion.
+
+Example updates for famine:
+- Population loss: "civilization.population": -250 (deaths from starvation)
+- Food depletion: "civilization.resources.food": -100 (continued consumption of dwindling reserves)
+
+Use the gemini-2.5-flash-lite model for generation.
+
+Output JSON:
+{{
+  "title": "Urgent, evocative crisis title (3-6 words)",
+  "narrative": "2-3 sentences describing the dire famine with visceral, specific details. Address {leader_name} directly. Show don't tell: gaunt faces, desperate eyes, bodies.",
+  "investigation_options": ["Specific urgent action revealing hard truth 1", "Specific urgent action revealing hard truth 2"],
+  "decision_options": ["Desperate decision 1 (harsh, immediate cost)", "Desperate decision 2 (risky gamble with high stakes)"],
+  "updates": {{
+    "civilization.population": -250,
+    "civilization.resources.food": -100
+  }}
+}}

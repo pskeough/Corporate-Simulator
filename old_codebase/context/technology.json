@@ -1,0 +1,16 @@
+{
+    "current_tier": "stone_age",
+    "discoveries": [
+        "Fire",
+        "Stone Tools",
+        "Spears",
+        "Basic Agriculture",
+        "Pottery"
+    ],
+    "in_progress": [],
+    "infrastructure": [
+        "Central Hearth",
+        "Temporary Shelters",
+        "Food Storage"
+    ]
+}

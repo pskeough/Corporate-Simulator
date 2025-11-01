@@ -1,0 +1,56 @@
+# LEADER PORTRAIT PROMPT
+# Generates a masterfully composed portrait painting of a civilization leader.
+# Used for leader visualization in the game interface.
+#
+# VARIABLES REQUIRED:
+# - name: Leader's name (string)
+# - age: Leader's age (integer)
+# - age_desc: Age description (e.g., "young", "elderly") (string)
+# - age_visual: Detailed visual age cues (string)
+# - role: Leader's role/title (string)
+# - era: Era name (string)
+# - trait_text: Comma-separated traits (string)
+# - era_style: Cultural aesthetic description for the era (string)
+# - culture_values: List of cultural values (for joining, first 2 used) (string)
+# - traits: List of trait names for conditional logic (comma-separated string)
+#
+# OUTPUT: Single portrait image
+
+Generate a masterfully composed portrait painting of {name}, a {age_desc} {role} from the {era} era.
+
+**VISUAL NARRATIVE PURPOSE:** This portrait should capture not just appearance, but CHARACTER. Show the weight of leadership, the mark of their traits, and the influence of their civilization's culture.
+
+SUBJECT DETAILS:
+- Name: {name}
+- Age: {age} years old ({age_desc})
+- Age-specific visual cues: {age_visual}
+- Personality traits reflected visually: {trait_text}
+- Cultural aesthetic: {era_style}
+- Cultural values influencing composition: {culture_values}
+
+VISUAL STORYTELLING:
+- If traits include "Warrior" or "Brave": Battle scars, strong jawline, hardened gaze, military bearing
+- If traits include "Wise" or "Scholar": Thoughtful expression, scrolls or books visible, contemplative eyes
+- If traits include "Pious" or "Mystic": Serene or otherworldly expression, religious symbols, ethereal quality
+- If traits include "Ruthless": Cold, calculating eyes, stern expression, imposing presence
+- If traits include "Ancient" (age 70+): Deeply weathered face, white hair, dignified fragility, wisdom etched in wrinkles
+
+CULTURAL AESTHETIC:
+- The portrait style should reflect {era} era artistic techniques
+- Clothing, jewelry, and symbols must match {era_style}
+- Background hints: throne room, council chamber, or symbolic setting appropriate to culture
+- Cultural values like "{culture_values}" should influence symbolism (e.g., martial culture = weapons visible, scholarly culture = books)
+
+TECHNICAL REQUIREMENTS:
+- Aspect ratio: 3:4 (portrait orientation)
+- Composition: Bust or head-and-shoulders
+- Style: Painterly, regal portrait painting suitable for historical strategy game
+- Lighting: Dramatic but dignified (torchlight, natural light, or golden hour)
+- Detail focus: Face should be primary focus with clear, detailed features
+- NO text, labels, UI elements, or modern elements
+- Color palette appropriate to {era} era art styles
+
+**REACTIVITY REQUIREMENT:**
+This is {name} - make them UNIQUE. Their age ({age}), traits ({traits}), and culture ({culture_values}) should create a one-of-a-kind portrait.
+
+Generate a single, museum-quality leader portrait that tells a story.

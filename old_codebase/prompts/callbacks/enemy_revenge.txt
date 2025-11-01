@@ -1,0 +1,61 @@
+# ENEMY REVENGE CALLBACK PROMPT
+# Generates callback event when a past enemy returns seeking revenge.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - era: Current era (string)
+# - years_passed: Years since original conflict (integer)
+# - enemy_name: Name of the enemy (string)
+# - hostility_level: Hostility level 0-100 (integer)
+# - hostility_description: Description of hostility (string: 'seething with rage', 'deeply hostile', or 'harboring grudges')
+# - enemy_event: Original conflict event description (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options
+
+CALLBACK EVENT: Enemy Seeks Revenge
+
+**FORMATTING REQUIREMENT:** Use markdown for menace:
+- Use **bold** for threats, enemy names, and military forces
+- Use *italics* for sinister preparations and dark intentions
+
+**NARRATIVE PURPOSE:** Make the player feel that past enemies don't just disappear - they remember, they fester, they plan. This is about the long-term consequences of making enemies. Violence begets violence.
+
+**EMOTIONAL TONE:** Threatening, ominous, with the weight of unfinished business. The enemy should feel DANGEROUS and PERSONAL.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Era: {era}
+
+THE ENEMY RETURNS:
+- Enemy name: {enemy_name}
+- Hostility level: {hostility_level}/100 ({hostility_description})
+- Original conflict: "{enemy_event}" ({years_passed} years ago)
+- They have NOT forgiven. They have PREPARED.
+
+**YOUR TASK:**
+First, in a `<summary>` tag, briefly narrate how the enemy has spent the intervening {years_passed} years preparing for revenge. Consider how their anger has festered, what alliances they've built, or what forces they've gathered.
+
+Then, generate an event where the enemy returns seeking revenge, informed by the summary you just wrote.
+
+**CHARACTER VOICE:** Embody the enemy (or their messenger). They should:
+- Reference the original conflict with bitter detail
+- Show they've been planning this revenge
+- Make their threat CREDIBLE (military force, alliances, sabotage)
+- Use phrases like: "You thought we had forgotten...", "The debt of blood remains unpaid...", "Your actions {years_passed} years ago sealed your fate..."
+
+**REACTIVITY REQUIREMENTS:**
+- Reference the original conflict: "{enemy_event}"
+- Show time passed: "{years_passed} years of preparation"
+- Make the threat SPECIFIC (army size, alliance, sabotage plan)
+- Hostility level ({hostility_level}/100) should affect tone: higher = more violent and personal
+- Investigation reveals their strength/plans/allies
+- Decisions: military response (risky), diplomacy (expensive), or defensive measures (cautious)
+
+Output JSON:
+{{{{
+  "title": "Ominous enemy return title (3-6 words)",
+  "narrative": "2-3 sentences. The enemy {enemy_name} returns with threats or force. Reference the original conflict from {years_passed} years ago. Show their preparation and intent. Make it PERSONAL and THREATENING.",
+  "investigation_options": ["Assess their military strength and readiness", "Investigate if they have allies or support"],
+  "decision_options": ["Prepare for war and strike first (risky, military)", "Attempt diplomacy and offer concessions (expensive, peaceful)", "Fortify defenses and prepare to weather their attack (cautious)"]
+}}}}

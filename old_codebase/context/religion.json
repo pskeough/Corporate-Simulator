@@ -1,0 +1,21 @@
+{
+    "name": "Animism",
+    "type": "Spirit Worship",
+    "primary_deity": "The Nile Spirit",
+    "core_tenets": [
+        "All things have a spirit",
+        "The natural world must be respected",
+        "Balance must be maintained"
+    ],
+    "practices": [
+        "Shamanic rituals",
+        "Spirit offerings",
+        "Nature veneration"
+    ],
+    "holy_sites": [
+        "The Sacred Spring",
+        "The Ancient Shrine"
+    ],
+    "influence": "significant",
+    "schisms": []
+}

@@ -1,0 +1,58 @@
+# BROKEN PROMISE CALLBACK PROMPT
+# Generates callback event when a past promise is unfulfilled.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - era: Current era (string)
+# - years_passed: Years since promise was made (integer)
+# - promise_text: The exact promise that was made (string)
+# - promise_event: Event where promise was made (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options
+
+CALLBACK EVENT: Broken Promise Returns
+
+**FORMATTING REQUIREMENT:** Use markdown to emphasize consequences:
+- Use **bold** for the broken promise quote and demands
+- Use *italics* for underlying hurt or veiled threats
+
+**NARRATIVE PURPOSE:** Create a sense of consequence and the weight of unkept promises. The player should feel that the world REMEMBERS their words, and broken trust has a price. This is about reputation, honor, and the long shadow of the past.
+
+**EMOTIONAL TONE:** Tense, accusatory, with an undercurrent of betrayal. The NPC should feel REAL - hurt, angry, or coldly demanding.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Era: {era}
+
+BROKEN PROMISE:
+- Original promise: "{promise_text}"
+- Made during event: "{promise_event}"
+- Time passed: {years_passed} years ago (they have NOT forgotten)
+
+**YOUR TASK:**
+First, in a `<summary>` tag, briefly narrate what has happened in the intervening {years_passed} years since the promise was made. Consider how the situation has worsened or how the promisee's patience has eroded.
+
+Then, generate an event where someone returns to collect on the broken promise, informed by the summary you just wrote.
+
+**CHARACTER VOICE:** Embody the voice of the person (or their representative) who was promised something. They should:
+- Reference the SPECIFIC promise word-for-word
+- Show emotion: hurt betrayal, cold anger, or threatening impatience
+- Make it clear they've WAITED and now demand fulfillment
+- Use phrases like: "You promised...", "It has been {years_passed} years...", "We have not forgotten..."
+
+**REACTIVITY REQUIREMENTS:**
+- Quote the exact promise: "{promise_text}"
+- Reference the original event: "{promise_event}"
+- Show the passage of time: "{years_passed} years of waiting"
+- Make the NPC feel like a REAL person, not a plot device
+- Investigation should reveal what they'll do if refused (threats, reputation damage, violence)
+- Decisions should have real weight: honor the promise (expensive) vs. break faith (reputation damage)
+
+Output JSON:
+{{{{
+  "title": "Evocative callback title referencing the promise (3-6 words)",
+  "narrative": "2-3 sentences. A representative arrives, referencing the exact promise from {years_passed} years ago. Show their emotion - betrayal, anger, or cold demand. Quote the promise. Address {leader_name}.",
+  "investigation_options": ["Learn what consequences they threaten if refused", "Investigate why they need this promise fulfilled NOW"],
+  "decision_options": ["Honor the promise despite the cost (expensive but maintains honor)", "Refuse or delay again (cheaper but damages reputation and trust)"]
+}}}}

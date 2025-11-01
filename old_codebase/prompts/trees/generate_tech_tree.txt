@@ -1,0 +1,21 @@
+Generate a technology tree for a civilization game set in the {era} era with a {genre_control} theme.
+The output should be a JSON array of technology objects.
+Each technology object must have the following keys:
+- "id": A unique identifier string for the technology (e.g., "tech_archery").
+- "name": The display name of the technology (e.g., "Archery").
+- "description": A brief description of the technology.
+- "cost": An integer representing the research cost in science points.
+- "prerequisites": A list of technology "id" strings that are required to research this technology. An empty list means no prerequisites.
+- "era": The era this technology belongs to (e.g., "{era}").
+
+Example of a single technology object:
+{{
+    "id": "tech_pottery",
+    "name": "Pottery",
+    "description": "The art of creating vessels from clay, allowing for better storage of food and water.",
+    "cost": 25,
+    "prerequisites": [],
+    "era": "Ancient"
+}}
+
+Please generate a balanced and logical technology tree with approximately 10-15 technologies for the specified era.

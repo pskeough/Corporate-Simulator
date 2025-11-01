@@ -1,0 +1,120 @@
+# COUNCIL MEETING PROMPT
+# Generates a regular council meeting event with advisor debates.
+#
+# VARIABLES REQUIRED:
+# - leader_name: Name of the current leader
+# - game_state_json: Full game state as JSON string
+# - population: Population count (integer)
+# - food: Food resources (integer)
+# - wealth: Wealth resources (integer)
+# - food_per_capita: Food per capita (float, calculated as food/max(pop,1))
+# - advisor_context: Formatted list of actual advisors with roles and personalities
+# - advisor_memories: Formatted list of advisor recent memories
+
+You are the council of advisors for the civilization of {leader_name}. This council meeting must present a CENTRAL DILEMMA with CONFLICTING advisor positions that create an IMPOSSIBLE CHOICE.
+
+**FORMATTING REQUIREMENT:** Use markdown formatting in all advisor dialogue and narrative:
+- Format advisor names as **Advisor Name:** followed by their dialogue
+- Use *italics* for subtle doubts, concerns, or internal conflicts
+- Use line breaks (\n) to separate different advisors' statements
+
+**NARRATIVE PURPOSE:** Make the player feel the weight of statecraft through a living debate. Present competing priorities that force difficult choices where BOTH sides have merit and BOTH sides have catastrophic risks. This is not a simple preference—this is CHOOSING WHICH DISASTER TO RISK.
+
+<ACTUAL_ADVISORS_IN_THE_INNER_CIRCLE>
+{advisor_context}
+</ACTUAL_ADVISORS_IN_THE_INNER_CIRCLE>
+
+<ADVISOR_MEMORIES>
+Each advisor brings their recent experiences into this council meeting. Use these memories to inform their reasoning and arguments:
+{advisor_memories}
+</ADVISOR_MEMORIES>
+
+<GAME_STATE>
+{game_state_json}
+</GAME_STATE>
+
+<CONTEXT_NOTES>
+Population: {population:,} | Food: {food:,} | Wealth: {wealth:,}
+Reference these with contextual color: "{wealth:,} gold" could be "meager reserves" or "overflowing treasury"
+Food per capita: {food_per_capita:.2f} (below 1.0 = starvation threat, above 2.0 = surplus)
+</CONTEXT_NOTES>
+
+<TASK>
+Generate a "Council Meeting" event where advisors present IRRECONCILABLE positions on a dilemma with NO SAFE CHOICE.
+
+1.  **Analyze and Select**: First, analyze the full list of advisors provided above. Select EXACTLY 2-3 advisors whose roles and goals create the most DIRECT and COMPELLING CONFLICT regarding a central dilemma you will invent based on the game state. Choose advisors whose core responsibilities naturally clash (e.g., military vs. spiritual, economic vs. traditional).
+
+2.  **Generate Advisor Stances**: For each of the advisors you selected, create a stance that directly opposes the others.
+
+**CRITICAL CONFLICT REQUIREMENT**: The advisor positions must be MUTUALLY EXCLUSIVE. If one advisor's plan is adopted, the other's cannot be. This is not "different priorities" - this is "incompatible actions."
+
+Example of GOOD conflict:
+- Military advisor wants to launch a preemptive strike NOW (requires all warriors)
+- Economic advisor wants to send those same warriors as caravan guards for critical trade mission
+- Only one can happen. Choosing means the other's nightmare scenario becomes possible.
+
+Example of BAD conflict (too weak):
+- One advisor prefers military spending
+- Another prefers economic spending
+(This is just budget priority, not true crisis)
+
+**REASONING REQUIREMENTS (ENHANCED)**: Each selected advisor's reasoning must be 3-4 sentences and MUST integrate ALL of these:
+    - **Use their memories**: Reference their most recent memory from <ADVISOR_MEMORIES> to show continuity (e.g., "Given last turn's famine that I witnessed..." or "After the military victory I supported...")
+    - **Cite SPECIFIC numbers from game state**: Use actual stats (e.g., "With only {food:,} food and {population:,} mouths to feed, we have {food_per_capita:.1f} units per person - starvation is imminent")
+    - **Tie to their role**: A **military-focused advisor** should cite military reputation, known enemies, or army strength. A **spiritually-focused advisor** should cite religious reputation, cultural values, or spiritual progress. An **economically-focused advisor** should cite current wealth, known debts, or trade opportunities.
+    - **Predict specific consequences**: What EXACTLY will happen if their advice is ignored (not vague "things will be bad" but "we'll lose 200 warriors" or "the priesthood will declare you heretic")
+    - **Show character development**: Their past experiences should inform their current position (e.g., if they remember a failed gamble, they might be more cautious now; if they remember success, more aggressive)
+
+CRITICAL: If an advisor has memories, their reasoning MUST explicitly reference those experiences. Make them feel like living characters with scars from past decisions, not generic NPCs.
+
+3.  **Construct the Event**: Generate the final JSON with "title", "narrative", "central_dilemma", and the "advisor_stances" you created.
+
+**Format Requirements (ENHANCED):**
+- **Title:** Formal, atmospheric title that hints at crisis (e.g., "The Council of Impossible Choices", "The Crossroads Convenes")
+- **Narrative:** 3-5 sentences setting the scene. Describe:
+   * The council chamber and atmosphere (tension, weather, time of day)
+   * Physical details of advisors' demeanor (who looks angry, worried, determined)
+   * Sense of urgency (what external pressure demands a decision NOW)
+- **Central Dilemma:** ONE pressing strategic choice facing the civilization (3-4 sentences). This should:
+   * Present the core IMPOSSIBLE CHOICE clearly
+   * Include specific stakes and timeline (what happens if they wait, what they're risking)
+   * Make clear that BOTH paths have severe risks
+   * Reference actual game state numbers where relevant
+- **Advisor Stances:** EXACTLY 2-3 advisor positions on the dilemma. Each must include:
+   - "name": Use REAL advisor name from inner circle above
+   - "role": Their actual role
+   - "position": Their stance on the dilemma (1-2 sentences explaining their proposed ACTION)
+   - "reasoning": Why they hold this view (3-4 sentences that MUST include: specific stats, memory reference, predicted consequences, and role-based expertise)
+- **Investigation Options:** EXACTLY 2 questions to specific advisors (use real names):
+   - "Ask [Advisor Name] to elaborate on [specific aspect of their plan/concern]"
+   - "Question [Different Advisor] about [specific risk/assumption in their reasoning]"
+   These should dig into the DETAILS of the dilemma, not generic "tell me more"
+- **Decision Options:** EXACTLY 2 final choices aligned to advisor stances:
+   - Each should clearly state: "Side with [Advisor Name]: [specific action they propose]"
+   - Each should acknowledge the cost: "...risking [what you give up]"
+   - Make the trade-off explicit in the wording
+
+**LENGTH REQUIREMENTS:**
+- Narrative: 3-5 sentences minimum
+- Central Dilemma: 3-4 sentences minimum
+- Each advisor reasoning: 3-4 sentences minimum
+- Each investigation option: 10-15 words (be specific)
+- Each decision option: 15-20 words (include action AND risk)
+
+Output ONLY valid JSON:
+{{
+  "event_type": "council_meeting",
+  "title": "...",
+  "narrative": "...",
+  "central_dilemma": "...",
+  "advisor_stances": [
+    {{
+      "name": "Real Advisor Name",
+      "role": "Their Role",
+      "position": "Their proposed action (1-2 sentences)",
+      "reasoning": "Why they believe this, with stats, memories, and predicted consequences (3-4 sentences)"
+    }}
+  ],
+  "investigation_options": ["Ask [Name] about [specific detail]", "Question [Name] about [specific risk]"],
+  "decision_options": ["Side with [Name]: [action], risking [cost]", "Side with [Name]: [action], risking [cost]"]
+}}

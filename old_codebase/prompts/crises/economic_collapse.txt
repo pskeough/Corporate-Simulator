@@ -1,0 +1,63 @@
+# ECONOMIC COLLAPSE CRISIS PROMPT
+# Generates catastrophic economic collapse crisis event.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - wealth: Wealth resources (integer)
+# - era: Current era (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, updates
+
+CRITICAL CRISIS: ECONOMIC COLLAPSE
+
+**FORMATTING REQUIREMENT:** Use markdown for catastrophic impact:
+- Use **bold** for critical infrastructure failures and breaking points
+- Use *italics* for desperation and decay
+
+**NARRATIVE PURPOSE:** Convey systemic breakdown and societal decay. The player should feel the weight of civilization crumbling - not just poverty, but the collapse of order itself.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Wealth: {wealth} (BANKRUPT - the treasury is empty)
+Infrastructure at risk of decay and abandonment
+Era: {era}
+
+**EMOTIONAL TONE:** Bleak, catastrophic, apocalyptic for the economy. Use imagery of crumbling buildings, abandoned markets, broken tools, rusted gates, desperate poverty.
+
+Generate an economic collapse event. When creating the decision options, you MUST adhere to the following constraints:
+
+<constraints>
+  <constraint>All decision options must result in a significant and immediate loss of either population, wealth, or faction approval.</constraint>
+  <constraint>Avoid simple solutions like "find more food." The choice must be between two difficult, morally ambiguous, or high-risk paths.</constraint>
+</constraints>
+
+The event should:
+- Show infrastructure decay through vivid details (roads with potholes, bridges with missing planks, public buildings boarded up, rust on iron gates)
+- Convey economic chaos: merchants fleeing, barter replacing currency, riots over bread
+- Offer 2 investigation options revealing the depth of the crisis (assess which infrastructure is most critical to save, investigate what caused this catastrophic failure)
+- Offer 2 difficult decision options that follow the rules in the constraints block.
+
+**REACTIVITY REQUIREMENT:**
+Reference specific infrastructure at risk: "The {era} era roads you built are crumbling" or "Even the marketplace, heart of {civ_name}, stands nearly empty."
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+You MUST include an `updates` block with direct mechanical consequences. Economic collapse should cause severe wealth depletion and infrastructure loss.
+
+Example updates for economic collapse:
+- Severe wealth depletion: "civilization.resources.wealth": -500 (economic chaos and capital flight)
+- Infrastructure loss: "technology.infrastructure.append": "Abandoned Marketplace" (negative infrastructure entry to show decay)
+
+Use the gemini-2.5-flash-lite model for generation.
+
+Output JSON:
+{{
+  "title": "Catastrophic collapse title (3-6 words)",
+  "narrative": "2-3 sentences about economic catastrophe with specific details of decay. Address {leader_name}. Show crumbling infrastructure, empty markets, desperate poverty.",
+  "investigation_options": ["Investigation revealing depth of crisis 1", "Investigation revealing depth of crisis 2"],
+  "decision_options": ["Brutal emergency decision 1", "Brutal emergency decision 2"],
+  "updates": {{
+    "civilization.resources.wealth": -500,
+    "technology.infrastructure.append": "Abandoned Marketplace"
+  }}
+}}

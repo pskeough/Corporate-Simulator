@@ -1,0 +1,60 @@
+# ECONOMIC CRISIS PROMPT
+# Generates warning-tier economic crisis event.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - wealth: Wealth resources (integer)
+# - era: Current era (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, updates
+
+WARNING CRISIS: ECONOMIC CRISIS
+
+**FORMATTING REQUIREMENT:** Use markdown to convey economic tension:
+- Use **bold** for merchant demands and financial breaking points
+- Use *italics* for worried negotiations and anxious whispers
+
+**NARRATIVE PURPOSE:** Create merchant panic and economic anxiety. The player should feel markets tightening, trade slowing, and wealth slipping away.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Wealth: {wealth} (very low - the coffers are nearly empty)
+Era: {era}
+
+**EMOTIONAL TONE:** Anxious, strained, merchants in heated arguments. Use imagery of closed shop stalls, worried traders, debts being called in, angry creditors.
+
+Generate an economic crisis event. When creating the decision options, you MUST adhere to the following constraints:
+
+<constraints>
+  <constraint>All decision options must result in a significant and immediate loss of either population, wealth, or faction approval.</constraint>
+  <constraint>Avoid simple solutions like "find more food." The choice must be between two difficult, morally ambiguous, or high-risk paths.</constraint>
+</constraints>
+
+The event should:
+- Show economic strain through specific details (merchants closing stalls, trade goods sitting unsold, workers demanding payment, suppliers refusing credit)
+- Convey merchant panic and complaints: "The Merchant Guild is furious", "Traders whisper of taking their business elsewhere"
+- Offer 2 investigation options (examine market conditions and trade flows, investigate who still has wealth and why)
+- Offer 2 corrective decision options that follow the rules in the constraints block.
+
+**REACTIVITY REQUIREMENT:**
+Reference the mercantile state: "The traders who once made {civ_name} prosperous now fear for their livelihoods" or "Your {era} era economy cannot sustain this drain on the treasury."
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+You MUST include an `updates` block with direct mechanical consequences. Economic crisis should cause moderate wealth depletion.
+
+Example updates for economic crisis:
+- Moderate wealth depletion: "civilization.resources.wealth": -300 (merchant flight and economic contraction)
+
+Use the gemini-2.5-flash-lite model for generation.
+
+Output JSON:
+{{
+  "title": "Economic strain title (3-6 words)",
+  "narrative": "2-3 sentences about economic troubles with specific merchant panic. Address {leader_name}. Show: angry merchants, closed stalls, worried traders.",
+  "investigation_options": ["Investigation into economic conditions 1", "Investigation into economic conditions 2"],
+  "decision_options": ["Corrective decision with cost 1", "Corrective decision with cost 2"],
+  "updates": {{
+    "civilization.resources.wealth": -300
+  }}
+}}

@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civilization Simulation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+    .council-meeting .advisor-reports {
+        margin-top: 15px;
+    }
+    .council-meeting .report {
+        margin-bottom: 10px;
+        padding-left: 15px;
+        border-left: 3px solid #555;
+    }
+    .faction-audience .petitions-container {
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        margin-top: 15px;
+    }
+    .faction-audience .petition {
+        flex: 1;
+        padding: 15px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        background-color: #2a2a2a;
+    }
+    </style>
+</head>
+<body>
+    <!-- Exit to Main Menu Button (Top Right) -->
+    <button id="exit-menu-btn" class="exit-menu-btn" onclick="returnToMenu()">🏠 Main Menu</button>
+
+    <div id="game-container">
+        <!-- LEFT PANEL: Settlement Image & Quick Stats -->
+        <div id="left-panel" class="side-panel">
+            <div class="panel-header">
+                <h2 id="civ-name">Your Settlement</h2>
+                <span id="era-badge" class="era-badge">Ancient Era</span>
+            </div>
+
+            <div id="leader-profile">
+                <h3>Current Leader</h3>
+                <div class="leader-info">
+                    <div class="leader-name" id="leader-name">Unknown</div>
+                    <div class="leader-role" id="leader-role">Chieftain</div>
+                    <div class="leader-portrait-overlay">
+                        <img id="leader-portrait" src="{{ url_for('static', filename='placeholder.png') }}" alt="Leader Portrait">
+                    </div>
+                    <div class="leader-stats">
+                        <span>Age: <strong id="leader-age">0</strong></span>
+                        <span>Ruled: <strong id="years-ruled">0</strong> years</span>
+                    </div>
+                    <div class="leader-progress">
+                        <div class="progress-label">Life Progress</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="leader-life-progress"></div>
+                        </div>
+                        <div class="progress-text"><span id="leader-age-text">0</span> / <span id="leader-life-exp">0</span></div>
+                    </div>
+                    <div class="leader-traits" id="leader-traits">
+                        <!-- Traits will be added dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="settlement-image-container">
+                <img id="settlement-image" src="{{ url_for('static', filename='placeholder.png') }}" alt="Settlement Image">
+                <div class="image-overlay">
+                    <span id="year-overlay">Year 0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE PANEL: Event Log & Interaction (CENTER) -->
+        <div id="middle-panel" class="center-panel">
+            <!-- Quick Stats Bar -->
+            <div id="quick-stats-bar">
+                <div class="stat-item">
+                    <span class="stat-icon">👥</span>
+                    <div class="stat-content">
+                        <div class="stat-label">Population</div>
+                        <div class="stat-value" id="population-stat">0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🌾</span>
+                    <div class="stat-content">
+                        <div class="stat-label">Food</div>
+                        <div class="stat-value" id="food-stat">0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">💰</span>
+                    <div class="stat-content">
+                        <div class="stat-label">Wealth</div>
+                        <div class="stat-value" id="wealth-stat">0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">📅</span>
+                    <div class="stat-content">
+                        <div class="stat-label">Year</div>
+                        <div class="stat-value" id="year-stat">0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">😊</span>
+                    <div class="stat-content">
+                        <div class="stat-label">Happiness</div>
+                        <div class="stat-value" id="happiness-stat">0%</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🔬</span>
+                    <div class="stat-content">
+                        <div class="stat-label">Science</div>
+                        <div class="stat-value" id="science-stat">+0</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🎭</span>
+                    <div class="stat-content">
+                        <div class="stat-label">Culture</div>
+                        <div class="stat-value" id="culture-stat">+0</div>
+                    </div>
+                </div>
+            </div>
+            <div id="event-log">
+                <!-- Events appear here -->
+            </div>
+            <div id="interaction-area">
+                <div id="action-grid">
+                    <!-- Action buttons appear here -->
+                </div>
+                <div id="player-input-area">
+                    <input type="text" id="player-input" placeholder="Or type your own response...">
+                    <button id="submit-investigate" class="submit-investigate">Ask/Investigate</button>
+                    <button id="submit-decide" class="submit-decide">Make Decision</button>
+                </div>
+                <button id="continue-btn" class="hidden">Continue</button>
+                <div id="game-controls">
+                    <button id="timeskip-btn" class="game-control-btn">⏭️ 500-Year Timeskip</button>
+                    <button id="abdicate-btn" class="game-control-btn">👑 Abdicate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: Civilization Dashboard (Collapsible) -->
+        <div id="right-panel" class="collapsed">
+            <!-- Toggle Button -->
+            <button id="dashboard-toggle" class="dashboard-toggle" aria-label="Toggle Dashboard">
+                <span class="toggle-icon">◀</span>
+            </button>
+
+            <!-- Abbreviated Info (Visible when collapsed) -->
+            <div class="dashboard-abbreviated">
+                <div class="abbreviated-header">
+                    <h3>INFO</h3>
+                </div>
+                <div class="abbreviated-tabs">
+                    <button class="tab-icon-btn" data-tab="overview" title="Overview">
+                        <span class="tab-emoji">📊</span>
+                    </button>
+                    <button class="tab-icon-btn" data-tab="inner-circle" title="Inner Circle">
+                        <span class="tab-emoji">👑</span>
+                    </button>
+                    <button class="tab-icon-btn" data-tab="culture" title="Culture">
+                        <span class="tab-emoji">🎭</span>
+                    </button>
+                    <button class="tab-icon-btn" data-tab="religion" title="Religion">
+                        <span class="tab-emoji">⛪</span>
+                    </button>
+                    <button class="tab-icon-btn" data-tab="technology" title="Technology">
+                        <span class="tab-emoji">🔬</span>
+                    </button>
+                    <button class="tab-icon-btn" data-tab="history" title="History">
+                        <span class="tab-emoji">📜</span>
+                    </button>
+                    <button class="tab-icon-btn" data-tab="factions" title="Factions">
+                        <span class="tab-emoji">🤝</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Full Dashboard Content (Visible when expanded) -->
+            <div class="dashboard-full">
+                <div class="panel-header">
+                    <h2>Civilization Dashboard</h2>
+                </div>
+
+            <div class="tab-navigation">
+                <button class="tab-btn active" data-tab="overview">📊 Overview</button>
+                <button class="tab-btn" data-tab="inner-circle">👑 Inner Circle</button>
+                <button class="tab-btn" data-tab="culture">🎭 Culture</button>
+                <button class="tab-btn" data-tab="religion">⛪ Religion</button>
+                <button class="tab-btn" data-tab="technology">🔬 Technology</button>
+                <button class="tab-btn" data-tab="history">📜 History</button>
+                <button class="tab-btn" data-tab="factions">🤝 Factions</button>
+            </div>
+
+            <div class="tab-content-container">
+                <!-- OVERVIEW TAB -->
+                <div class="tab-content active" id="overview-tab">
+                    <div class="overview-grid">
+                        <div class="info-card">
+                            <h4>🏛️ Civilization Info</h4>
+                            <div class="info-item">
+                                <span class="info-label">Name:</span>
+                                <span class="info-value" id="overview-civ-name">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Current Year:</span>
+                                <span class="info-value" id="overview-year">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Era:</span>
+                                <span class="info-value" id="overview-era">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Founded:</span>
+                                <span class="info-value" id="overview-founded">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Civilization Age:</span>
+                                <span class="info-value" id="overview-age">-</span>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h4>🎯 Player Tendency</h4>
+                            <div class="tendency-display">
+                                <div class="tendency-badge" id="tendency-primary">-</div>
+                                <div class="tendency-description" id="tendency-description">Analyzing your decisions...</div>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h4>📜 Active Policy</h4>
+                            <div class="policy-display">
+                                <div class="policy-badge" id="active-policy-badge">General Governance</div>
+                                <div class="policy-description" id="active-policy-description">Balanced approach to civilization management</div>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h4>📈 Demographics</h4>
+                            <div class="info-item">
+                                <span class="info-label">Population:</span>
+                                <span class="info-value" id="overview-population">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Social Structure:</span>
+                                <span class="info-value" id="overview-social">-</span>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h4>💎 Resources</h4>
+                            <div class="info-item">
+                                <span class="info-label">Food Stores:</span>
+                                <span class="info-value" id="overview-food">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Wealth:</span>
+                                <span class="info-value" id="overview-wealth">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Tech Tier:</span>
+                                <span class="info-value" id="overview-tech-tier">-</span>
+                            </div>
+                        </div>
+
+                        <div class="info-card full-width">
+                            <h4>👑 Inner Circle</h4>
+                            <div id="inner-circle-list" class="inner-circle-list">
+                                <!-- Inner circle members will be added dynamically -->
+                                <span class="empty-state">No trusted advisors yet.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INNER CIRCLE TAB -->
+                <div class="tab-content" id="inner-circle-tab">
+                    <h4>👑 Your Trusted Advisors</h4>
+                    <div id="inner-circle-briefs">
+                        <!-- Inner circle character briefs will be added dynamically -->
+                        <div class="empty-state">No trusted advisors have emerged yet.</div>
+                    </div>
+                </div>
+
+                <!-- CULTURE TAB -->
+                <div class="tab-content" id="culture-tab">
+                    <div class="culture-section">
+                        <h4>💫 Core Values</h4>
+                        <div class="tag-list" id="culture-values">
+                            <!-- Values will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="culture-section">
+                        <h4>🎉 Traditions</h4>
+                        <div class="tag-list" id="culture-traditions">
+                            <!-- Traditions will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="culture-section">
+                        <h4>🚫 Taboos</h4>
+                        <div class="tag-list" id="culture-taboos">
+                            <!-- Taboos will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="culture-section">
+                        <h4>📰 Recent Cultural Changes</h4>
+                        <ul class="change-list" id="culture-changes">
+                            <!-- Changes will be added dynamically -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RELIGION TAB -->
+                <div class="tab-content" id="religion-tab">
+                    <div class="religion-header">
+                        <h3 id="religion-name">Unknown Religion</h3>
+                        <span class="religion-type" id="religion-type">Type Unknown</span>
+                    </div>
+
+                    <div class="religion-section">
+                        <h4>✨ Primary Deity</h4>
+                        <p class="deity-name" id="religion-deity">-</p>
+                    </div>
+
+                    <div class="religion-section">
+                        <h4>📖 Core Tenets</h4>
+                        <ul class="tenet-list" id="religion-tenets">
+                            <!-- Tenets will be added dynamically -->
+                        </ul>
+                    </div>
+
+                    <div class="religion-section">
+                        <h4>🕯️ Religious Practices</h4>
+                        <div class="tag-list" id="religion-practices">
+                            <!-- Practices will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="religion-section">
+                        <h4>🏔️ Holy Sites</h4>
+                        <div class="holy-sites-list" id="religion-sites">
+                            <!-- Sites will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="religion-section">
+                        <h4>📊 Religious Influence</h4>
+                        <div class="influence-indicator">
+                            <span class="influence-badge" id="religion-influence">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TECHNOLOGY TAB -->
+                <div class="tab-content" id="technology-tab">
+                    <div class="tech-header">
+                        <h4>Current Technological Tier: <span id="tech-tier">Unknown</span></h4>
+                    </div>
+
+                    <div class="tech-section">
+                        <h4>✅ Discovered Technologies</h4>
+                        <div class="tech-grid" id="tech-discoveries">
+                            <!-- Discoveries will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="tech-section" id="tech-in-progress-section">
+                        <h4>🔄 Research In Progress</h4>
+                        <div class="tech-grid" id="tech-in-progress">
+                            <!-- In-progress tech will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="tech-section">
+                        <h4>🏗️ Infrastructure</h4>
+                        <div class="tech-grid" id="tech-infrastructure">
+                            <!-- Infrastructure will be added dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HISTORY TAB -->
+                <div class="tab-content" id="history-tab">
+                    <h4>📜 Recent Events</h4>
+                    <div class="timeline" id="history-timeline">
+                        <!-- History events will be added dynamically -->
+                    </div>
+                </div>
+
+                <!-- FACTIONS TAB -->
+                <div class="tab-content" id="factions-tab">
+                    <h4>🤝 Factions & Power Blocs</h4>
+                    <div id="faction-cards-container">
+                        <!-- Faction cards will be added dynamically -->
+                        <div class="empty-state">No organized factions have emerged yet.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- Markdown Rendering Utility ---
+    function markdownToHTML(text) {
+        if (!text) return '';
+
+        // Convert bold: **text** → <strong>text</strong>
+        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+        // Convert italics: *text* → <em>text</em> (but not ** that was already processed)
+        text = text.replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, '<em>$1</em>');
+
+        // Convert line breaks: \n → <br>
+        text = text.replace(/\n/g, '<br>');
+
+        // Convert bullet lists: - item → <li>item</li>
+        // First, identify lines starting with "- "
+        text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
+        // Then wrap consecutive <li> tags in <ul>
+        text = text.replace(/(<li>.*?<\/li>(?:<br>)?)+/g, match => {
+            const items = match.replace(/<br>/g, '');
+            return '<ul>' + items + '</ul>';
+        });
+
+        return text;
+    }
+
+    // --- Global Functions (accessible to inline onclick) ---
+    function returnToMenu() {
+        if (confirm('Return to main menu? Your progress will be saved.')) {
+            window.location.href = '/';
+        }
+    }
+
+    async function chooseSuccessor(candidate) { // Changed from 'index'
+        try {
+            const response = await fetch('/api/choose_successor', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ successor: candidate }) // Send the whole object
+            });
+
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const result = await response.json();
+
+            const legacyHTML = `
+                <div class="event-card">
+                    <h3>A New Era Begins</h3>
+                    <p><strong>${result.new_leader.name}</strong> takes the throne at age ${result.new_leader.age}.</p>
+                    <p>Traits: ${result.new_leader.traits.join(', ')}</p>
+                    ${result.legacy.narrative ? `<p class="legacy-text">${result.legacy.narrative}</p>` : ''}
+                    ${result.legacy.bonuses_applied.length > 0 ? `
+                        <div class="legacy-bonuses">
+                            <h4>Legacy Bonuses:</h4>
+                            <ul>
+                                ${result.legacy.bonuses_applied.map(bonus => `<li>${bonus}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            const eventLog = document.getElementById('event-log');
+            eventLog.innerHTML = legacyHTML;
+
+            // Dispatch custom event so the main code can handle UI updates
+            window.dispatchEvent(new CustomEvent('successorChosen'));
+        } catch (error) {
+            console.error("Error choosing successor:", error);
+            alert("Failed to choose successor. Please try again.");
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- State ---
+        let onContinue = getNewEvent;
+        let currentTab = 'overview';
+        let previousStats = {
+            population: 0,
+            food: 0,
+            wealth: 0
+        };
+        let currentEventStage = 0;
+        let eventConversationHistory = [];
+        let isInvestigating = false;
+
+        // --- Dashboard Change Tracking ---
+        let previousDashboardState = {
+            culture: { values: [], traditions: [], taboos: [], recent_changes: [] },
+            religion: { core_tenets: [], practices: [], holy_sites: [] },
+            technology: { discoveries: [], in_progress: [], infrastructure: [] },
+            civilization: { population: 0, resources: { food: 0, wealth: 0, tech_tier: '' } }
+        };
+
+        // --- Element Selectors ---
+        const yearEl = document.getElementById('year-overlay');
+        const yearStatEl = document.getElementById('year-stat');
+        const populationEl = document.getElementById('population-stat');
+        const foodEl = document.getElementById('food-stat');
+        const wealthEl = document.getElementById('wealth-stat');
+        const leaderNameEl = document.getElementById('leader-name');
+        const leaderAgeEl = document.getElementById('leader-age');
+        const leaderAgeTextEl = document.getElementById('leader-age-text');
+        const leaderLifeExpEl = document.getElementById('leader-life-exp');
+        const leaderRoleEl = document.getElementById('leader-role');
+        const yearsRuledEl = document.getElementById('years-ruled');
+        const leaderLifeProgressEl = document.getElementById('leader-life-progress');
+        const leaderTraitsEl = document.getElementById('leader-traits');
+        const leaderPortraitEl = document.getElementById('leader-portrait');
+        const civNameEl = document.getElementById('civ-name');
+        const eraBadgeEl = document.getElementById('era-badge');
+        const eventLog = document.getElementById('event-log');
+        const playerInput = document.getElementById('player-input');
+        const submitInvestigateBtn = document.getElementById('submit-investigate');
+        const submitDecideBtn = document.getElementById('submit-decide');
+        const continueBtn = document.getElementById('continue-btn');
+        const playerInputArea = document.getElementById('player-input-area');
+        const actionGrid = document.getElementById('action-grid');
+        const settlementImageEl = document.getElementById('settlement-image');
+        const timeskipBtn = document.getElementById('timeskip-btn');
+        const abdicateBtn = document.getElementById('abdicate-btn');
+
+        // --- Tab Switching ---
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.dataset.tab;
+                switchTab(tabName);
+            });
+        });
+
+        function switchTab(tabName) {
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            currentTab = tabName;
+        }
+
+        // --- Core Functions ---
+
+        function detectChanges(previous, current) {
+            const changes = {
+                stats: {},
+                culture: { values: [], traditions: [], taboos: [] },
+                religion: { tenets: [], practices: [], sites: [] },
+                technology: { discoveries: [], infrastructure: [] }
+            };
+
+            // Detect stat changes
+            if (current.civilization.population !== previous.civilization.population) {
+                changes.stats.population = current.civilization.population - previous.civilization.population;
+            }
+            if (current.civilization.resources.food !== previous.civilization.resources.food) {
+                changes.stats.food = current.civilization.resources.food - previous.civilization.resources.food;
+            }
+            if (current.civilization.resources.wealth !== previous.civilization.resources.wealth) {
+                changes.stats.wealth = current.civilization.resources.wealth - previous.civilization.resources.wealth;
+            }
+            if (current.civilization.resources.tech_tier !== previous.civilization.resources.tech_tier) {
+                changes.stats.tech_tier = current.civilization.resources.tech_tier;
+            }
+
+            // Detect new culture values
+            current.culture.values.forEach(val => {
+                if (!previous.culture.values.includes(val)) {
+                    changes.culture.values.push(val);
+                }
+            });
+
+            // Detect new traditions
+            current.culture.traditions.forEach(trad => {
+                if (!previous.culture.traditions.includes(trad)) {
+                    changes.culture.traditions.push(trad);
+                }
+            });
+
+            // Detect new taboos
+            current.culture.taboos.forEach(tab => {
+                if (!previous.culture.taboos.includes(tab)) {
+                    changes.culture.taboos.push(tab);
+                }
+            });
+
+            // Detect new religious tenets
+            current.religion.core_tenets.forEach(tenet => {
+                if (!previous.religion.core_tenets.includes(tenet)) {
+                    changes.religion.tenets.push(tenet);
+                }
+            });
+
+            // Detect new practices
+            current.religion.practices.forEach(prac => {
+                if (!previous.religion.practices.includes(prac)) {
+                    changes.religion.practices.push(prac);
+                }
+            });
+
+            // Detect new holy sites
+            current.religion.holy_sites.forEach(site => {
+                if (!previous.religion.holy_sites.includes(site)) {
+                    changes.religion.sites.push(site);
+                }
+            });
+
+            // Detect new discoveries
+            current.technology.discoveries.forEach(disc => {
+                if (!previous.technology.discoveries.includes(disc)) {
+                    changes.technology.discoveries.push(disc);
+                }
+            });
+
+            // Detect new infrastructure
+            current.technology.infrastructure.forEach(infra => {
+                if (!previous.technology.infrastructure.includes(infra)) {
+                    changes.technology.infrastructure.push(infra);
+                }
+            });
+
+            return changes;
+        }
+
+        function highlightChangedElements(changes) {
+            // Clear previous highlights
+            document.querySelectorAll('.highlight-new, .highlight-changed').forEach(el => {
+                el.classList.remove('highlight-new', 'highlight-changed');
+            });
+
+            // Highlight new culture values
+            changes.culture.values.forEach(value => {
+                const tags = document.querySelectorAll('#culture-values .tag');
+                tags.forEach(tag => {
+                    if (tag.textContent === value) {
+                        tag.classList.add('highlight-new');
+                    }
+                });
+            });
+
+            // Highlight new traditions
+            changes.culture.traditions.forEach(tradition => {
+                const tags = document.querySelectorAll('#culture-traditions .tag');
+                tags.forEach(tag => {
+                    if (tag.textContent === tradition) {
+                        tag.classList.add('highlight-new');
+                    }
+                });
+            });
+
+            // Highlight new taboos
+            changes.culture.taboos.forEach(taboo => {
+                const tags = document.querySelectorAll('#culture-taboos .tag');
+                tags.forEach(tag => {
+                    if (tag.textContent === taboo) {
+                        tag.classList.add('highlight-new');
+                    }
+                });
+            });
+
+            // Highlight new discoveries
+            changes.technology.discoveries.forEach(discovery => {
+                const items = document.querySelectorAll('#tech-discoveries .tech-item');
+                items.forEach(item => {
+                    if (item.textContent.includes(discovery)) {
+                        item.classList.add('highlight-new');
+                    }
+                });
+            });
+
+            // Highlight new infrastructure
+            changes.technology.infrastructure.forEach(infra => {
+                const items = document.querySelectorAll('#tech-infrastructure .tech-item');
+                items.forEach(item => {
+                    if (item.textContent.includes(infra)) {
+                        item.classList.add('highlight-new');
+                    }
+                });
+            });
+
+            // Highlight new religion elements
+            changes.religion.practices.forEach(practice => {
+                const tags = document.querySelectorAll('#religion-practices .tag');
+                tags.forEach(tag => {
+                    if (tag.textContent === practice) {
+                        tag.classList.add('highlight-new');
+                    }
+                });
+            });
+
+            changes.religion.sites.forEach(site => {
+                const sites = document.querySelectorAll('#religion-sites .holy-site');
+                sites.forEach(siteEl => {
+                    if (siteEl.textContent.includes(site)) {
+                        siteEl.classList.add('highlight-new');
+                    }
+                });
+            });
+
+            // Auto-remove highlights after 5 seconds
+            setTimeout(() => {
+                document.querySelectorAll('.highlight-new, .highlight-changed').forEach(el => {
+                    el.classList.add('fade-out');
+                    setTimeout(() => {
+                        el.classList.remove('highlight-new', 'highlight-changed', 'fade-out');
+                    }, 500);
+                });
+            }, 5000);
+        }
+
+        async function updateGameStateUI() {
+            try {
+                const response = await fetch('/api/game_state');
+                const state = await response.json();
+
+                // Update quick stats with animations
+                const year = state.civilization.meta.year;
+                yearEl.textContent = `Year ${year}`;
+                yearStatEl.textContent = year;
+
+                // Animate stat changes
+                animateStatChange(populationEl, previousStats.population, state.civilization.population);
+                animateStatChange(foodEl, previousStats.food, state.civilization.resources.food);
+                animateStatChange(wealthEl, previousStats.wealth, state.civilization.resources.wealth);
+
+                // Update previous stats
+                previousStats.population = state.civilization.population;
+                previousStats.food = state.civilization.resources.food;
+                previousStats.wealth = state.civilization.resources.wealth;
+
+                populationEl.textContent = state.civilization.population.toLocaleString();
+                foodEl.textContent = state.civilization.resources.food.toLocaleString();
+                wealthEl.textContent = state.civilization.resources.wealth.toLocaleString();
+
+                // Update leader info
+                const leader = state.civilization.leader || {};
+                leaderNameEl.textContent = leader.name || state.civilization?.leader?.name || 'Unknown';
+                leaderRoleEl.textContent = leader.role || 'Leader';
+                leaderAgeEl.textContent = leader.age || 0;
+                leaderAgeTextEl.textContent = leader.age || 0;
+                leaderLifeExpEl.textContent = leader.life_expectancy || 60;
+                yearsRuledEl.textContent = leader.years_ruled || 0;
+
+                // Update leader life progress bar
+                const lifePercent = ((leader.age || 0) / (leader.life_expectancy || 60)) * 100;
+                leaderLifeProgressEl.style.width = `${Math.min(lifePercent, 100)}%`;
+
+                // Update progress bar color based on age
+                leaderLifeProgressEl.className = 'progress-fill';
+                if (lifePercent > 90) {
+                    leaderLifeProgressEl.style.backgroundColor = '#e74c3c'; // Red for very old
+                } else if (lifePercent > 70) {
+                    leaderLifeProgressEl.style.backgroundColor = '#f39c12'; // Orange for old
+                } else {
+                    leaderLifeProgressEl.style.backgroundColor = '#3498db'; // Blue for healthy
+                }
+
+                // Update leader traits
+                leaderTraitsEl.innerHTML = leader.traits.map(trait =>
+                    `<span class="trait-badge">${trait}</span>`
+                ).join('');
+
+                // Update leader portrait
+                const portraitFilename = leader.portrait || 'placeholder.png';
+                const portraitPath = portraitFilename.startsWith('leader_')
+                    ? `{{ url_for('static', filename='') }}images/leaders/${portraitFilename}`
+                    : `{{ url_for('static', filename='') }}${portraitFilename}`;
+                leaderPortraitEl.src = `${portraitPath}?v=${new Date().getTime()}`;
+
+                // Update civilization name and era
+                civNameEl.textContent = state.civilization.meta.name;
+                eraBadgeEl.textContent = state.civilization.meta.era;
+
+                // Update settlement image
+                const newSrc = `{{ url_for('static', filename='settlement.png') }}?v=${new Date().getTime()}`;
+                settlementImageEl.src = newSrc;
+
+                // Update dashboard
+                await updateDashboard();
+
+            } catch (error) {
+                console.error("Failed to update game state:", error);
+            }
+        }
+
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/api/dashboard');
+                const data = await response.json();
+
+                // Detect changes before updating UI
+                const changes = detectChanges(previousDashboardState, data);
+
+                // Update Overview Tab
+                document.getElementById('overview-civ-name').textContent = data.civilization.name;
+                document.getElementById('overview-year').textContent = data.civilization.year;
+                document.getElementById('overview-era').textContent = data.civilization.era;
+                document.getElementById('overview-founded').textContent = data.civilization.founding_date;
+                document.getElementById('overview-age').textContent = `${data.history.age} years`;
+                document.getElementById('overview-population').textContent = data.civilization.population.toLocaleString();
+                document.getElementById('overview-social').textContent = data.culture.social_structure;
+                document.getElementById('overview-food').textContent = data.civilization.resources.food.toLocaleString();
+                document.getElementById('overview-wealth').textContent = data.civilization.resources.wealth.toLocaleString();
+                document.getElementById('overview-tech-tier').textContent = data.civilization.resources.tech_tier.replace('_', ' ');
+
+                // Update Inner Circle - Simplified version for Overview tab
+                const innerCircleContainer = document.getElementById('inner-circle-list');
+                if (data.inner_circle && data.inner_circle.length > 0) {
+                    innerCircleContainer.innerHTML = `
+                        <div class="inner-circle-summary">
+                            ${data.inner_circle.map(char => `<span class="member-name-tag">${char.name}</span>`).join('')}
+                        </div>
+                        <p class="inner-circle-hint">View full details in the 👑 Inner Circle tab</p>
+                    `;
+                } else {
+                    innerCircleContainer.innerHTML = '<span class="empty-state">No trusted advisors yet.</span>';
+                }
+
+                // Update Inner Circle Tab - Detailed briefs
+                const innerCircleBriefs = document.getElementById('inner-circle-briefs');
+                if (data.inner_circle && data.inner_circle.length > 0) {
+                    innerCircleBriefs.innerHTML = data.inner_circle.map(char => {
+                        // Calculate metric percentages - handle both direct metrics and nested metrics object
+                        const metrics = char.metrics || {};
+                        const loyaltyPercent = Math.min(Math.max(char.loyalty || metrics.loyalty || 50, 0), 100);
+                        const influencePercent = Math.min(Math.max(char.influence || metrics.influence || 50, 0), 100);
+                        const relationshipPercent = Math.min(Math.max(char.relationship || metrics.relationship || 50, 0), 100);
+
+                        // Get color based on value
+                        const getBarColor = (value) => {
+                            if (value >= 70) return '#2ecc71';
+                            if (value >= 40) return '#f39c12';
+                            return '#e74c3c';
+                        };
+
+                        // Get most recent history entry
+                        const recentHistory = char.history && char.history.length > 0
+                            ? char.history[char.history.length - 1]
+                            : null;
+
+                        // Get portrait path (check if exists, fallback to placeholder)
+                        const portraitPath = char.portrait && char.portrait !== 'placeholder.png'
+                            ? `{{ url_for('static', filename='') }}images/advisors/${char.portrait}`
+                            : `{{ url_for('static', filename='placeholder.png') }}`;
+
+                        return `
+                            <div class="inner-circle-brief">
+                                <div class="brief-header">
+                                    <div class="brief-name-section">
+                                        <h4 class="brief-name">${char.name}</h4>
+                                        <span class="brief-role">${char.role}</span>
+                                    </div>
+                                    <img src="${portraitPath}?v=${new Date().getTime()}" alt="${char.name}" class="advisor-portrait-thumbnail" onerror="this.src='{{ url_for('static', filename='placeholder.png') }}';">
+                                    ${char.faction_link ? `<span class="brief-faction">🤝 ${char.faction_link}</span>` : ''}
+                                </div>
+
+                                <div class="brief-metrics">
+                                    <div class="metric-row">
+                                        <span class="metric-label">Loyalty</span>
+                                        <div class="metric-bar-container">
+                                            <div class="metric-bar" style="width: ${loyaltyPercent}%; background-color: ${getBarColor(loyaltyPercent)};"></div>
+                                        </div>
+                                        <span class="metric-value">${loyaltyPercent}</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span class="metric-label">Influence</span>
+                                        <div class="metric-bar-container">
+                                            <div class="metric-bar" style="width: ${influencePercent}%; background-color: ${getBarColor(influencePercent)};"></div>
+                                        </div>
+                                        <span class="metric-value">${influencePercent}</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span class="metric-label">Relationship</span>
+                                        <div class="metric-bar-container">
+                                            <div class="metric-bar" style="width: ${relationshipPercent}%; background-color: ${getBarColor(relationshipPercent)};"></div>
+                                        </div>
+                                        <span class="metric-value">${relationshipPercent}</span>
+                                    </div>
+                                </div>
+
+                                ${recentHistory ? `
+                                    <div class="brief-history">
+                                        <div class="history-label">Recent Activity:</div>
+                                        <div class="history-text">${recentHistory}</div>
+                                    </div>
+                                ` : ''}
+
+                                <button class="audience-btn" data-character-name="${char.name}">
+                                    💬 Request Audience
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    innerCircleBriefs.innerHTML = '<div class="empty-state">No trusted advisors have emerged yet.</div>';
+                }
+
+
+                // Update Player Tendency
+                if (data.player_tendency) {
+                    const tendencyBadge = document.getElementById('tendency-primary');
+                    const tendencyDesc = document.getElementById('tendency-description');
+                    tendencyBadge.textContent = data.player_tendency.primary.toUpperCase();
+                    tendencyBadge.className = `tendency-badge tendency-${data.player_tendency.primary}`;
+                    tendencyDesc.textContent = data.player_tendency.description;
+                }
+
+                // Update Active Policy
+                if (data.active_policy) {
+                    const policyDescriptions = {
+                        'military_expansion': 'Focus on building a strong military and expanding through conquest',
+                        'economic_growth': 'Prioritize trade, wealth generation, and economic prosperity',
+                        'religious_devotion': 'Strengthen faith, build temples, and honor the divine',
+                        'scientific_advancement': 'Pursue knowledge, research, and technological progress',
+                        'cultural_development': 'Foster arts, traditions, and cultural identity',
+                        'territorial_expansion': 'Expand borders and establish new settlements',
+                        'exploration': 'Discover new lands and uncover mysteries',
+                        'general_governance': 'Balanced approach to civilization management'
+                    };
+
+                    const policyBadge = document.getElementById('active-policy-badge');
+                    const policyDesc = document.getElementById('active-policy-description');
+                    const policyDisplay = data.active_policy.replace(/_/g, ' ');
+
+                    policyBadge.textContent = policyDisplay.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                    policyBadge.className = `policy-badge policy-${data.active_policy}`;
+                    policyDesc.textContent = policyDescriptions[data.active_policy] || 'No active policy set';
+                }
+
+                // Update Culture Tab
+                const valuesContainer = document.getElementById('culture-values');
+                valuesContainer.innerHTML = data.culture.values.map(v =>
+                    `<span class="tag tag-value">${v}</span>`
+                ).join('');
+
+                const traditionsContainer = document.getElementById('culture-traditions');
+                traditionsContainer.innerHTML = data.culture.traditions.map(t =>
+                    `<span class="tag tag-tradition">${t}</span>`
+                ).join('');
+
+                const taboosContainer = document.getElementById('culture-taboos');
+                taboosContainer.innerHTML = data.culture.taboos.length > 0
+                    ? data.culture.taboos.map(t => `<span class="tag tag-taboo">${t}</span>`).join('')
+                    : '<span class="empty-state">No taboos established</span>';
+
+                const changesContainer = document.getElementById('culture-changes');
+                changesContainer.innerHTML = data.culture.recent_changes.length > 0
+                    ? data.culture.recent_changes.map(c => `<li>${c}</li>`).join('')
+                    : '<li class="empty-state">No recent changes</li>';
+
+                // Update Religion Tab
+                document.getElementById('religion-name').textContent = data.religion.name;
+                document.getElementById('religion-type').textContent = data.religion.type;
+                document.getElementById('religion-deity').textContent = data.religion.primary_deity;
+
+                const tenetsContainer = document.getElementById('religion-tenets');
+                tenetsContainer.innerHTML = data.religion.core_tenets.map(t =>
+                    `<li>${t}</li>`
+                ).join('');
+
+                const practicesContainer = document.getElementById('religion-practices');
+                practicesContainer.innerHTML = data.religion.practices.map(p =>
+                    `<span class="tag tag-practice">${p}</span>`
+                ).join('');
+
+                const sitesContainer = document.getElementById('religion-sites');
+                sitesContainer.innerHTML = data.religion.holy_sites.length > 0
+                    ? data.religion.holy_sites.map(s => `<div class="holy-site">⛰️ ${s}</div>`).join('')
+                    : '<span class="empty-state">No holy sites established</span>';
+
+                document.getElementById('religion-influence').textContent = data.religion.influence;
+                document.getElementById('religion-influence').className = `influence-badge influence-${data.religion.influence}`;
+
+                // Update Technology Tab
+                document.getElementById('tech-tier').textContent = data.technology.current_tier.replace('_', ' ');
+
+                const discoveriesContainer = document.getElementById('tech-discoveries');
+                discoveriesContainer.innerHTML = data.technology.discoveries.map(d =>
+                    `<div class="tech-item tech-discovered">✅ ${d}</div>`
+                ).join('');
+
+                const inProgressContainer = document.getElementById('tech-in-progress');
+                const inProgressSection = document.getElementById('tech-in-progress-section');
+                if (data.technology.in_progress.length > 0) {
+                    inProgressSection.style.display = 'block';
+                    inProgressContainer.innerHTML = data.technology.in_progress.map(t =>
+                        `<div class="tech-item tech-progress">🔄 ${t}</div>`
+                    ).join('');
+                } else {
+                    inProgressSection.style.display = 'none';
+                }
+
+                const infrastructureContainer = document.getElementById('tech-infrastructure');
+                infrastructureContainer.innerHTML = data.technology.infrastructure.map(i =>
+                    `<div class="tech-item tech-infrastructure">🏗️ ${i}</div>`
+                ).join('');
+
+                // Update History Tab
+                const timelineContainer = document.getElementById('history-timeline');
+                if (data.history.recent_events.length > 0) {
+                    timelineContainer.innerHTML = data.history.recent_events.map(event => `
+                        <div class="timeline-event">
+                            <div class="timeline-year">${event.year || 'Unknown'}</div>
+                            <div class="timeline-content">
+                                <strong>${event.title || 'Event'}</strong>
+                                <p>${event.description || event.narrative || ''}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    timelineContainer.innerHTML = '<div class="empty-state">No recorded history yet. Your story begins now...</div>';
+                }
+
+                // Update Factions Tab - Redesigned with detailed cards
+                const factionsContainer = document.getElementById('faction-cards-container');
+                if (data.factions && data.factions.length > 0) {
+                    // Helper to format faction bonuses
+                    const getFactionEffects = (factionId, bonuses) => {
+                        const effects = [];
+
+                        // Check if this faction has active effects based on its ID
+                        if (factionId.includes('merchant') && bonuses.wealth_multiplier) {
+                            const percent = ((bonuses.wealth_multiplier - 1.0) * 100).toFixed(0);
+                            if (percent > 0) {
+                                effects.push(`💰 +${percent}% Wealth Generation`);
+                            } else if (percent < 0) {
+                                effects.push(`💰 ${percent}% Wealth Generation`);
+                            }
+                        }
+
+                        if ((factionId.includes('warrior') || factionId.includes('military')) && bonuses.military_effectiveness) {
+                            const percent = ((bonuses.military_effectiveness - 1.0) * 100).toFixed(0);
+                            if (percent > 0) {
+                                effects.push(`⚔️ +${percent}% Military Effectiveness`);
+                            } else if (percent < 0) {
+                                effects.push(`⚔️ ${percent}% Military Effectiveness`);
+                            }
+                        }
+
+                        if ((factionId.includes('priest') || factionId.includes('religious')) && bonuses.happiness_modifier) {
+                            const value = bonuses.happiness_modifier;
+                            if (value > 0) {
+                                effects.push(`😊 +${value} Happiness`);
+                            } else if (value < 0) {
+                                effects.push(`😊 ${value} Happiness`);
+                            }
+                        }
+
+                        return effects;
+                    };
+
+                    factionsContainer.innerHTML = data.factions.map(f => {
+                        const approval = f.approval || 50;
+                        const approvalColor = approval < 30 ? '#e74c3c' : approval < 70 ? '#f39c12' : '#2ecc71';
+                        const approvalStatus = approval >= 75 ? 'Loyal' : approval >= 50 ? 'Pleased' : approval >= 25 ? 'Discontent' : 'Hostile';
+
+                        // Get faction effects
+                        const effects = getFactionEffects(f.id || '', data.faction_bonuses || {});
+                        const effectsHTML = effects.length > 0
+                            ? `<div class="faction-effects">
+                                   <div class="effects-label">Active Effects:</div>
+                                   ${effects.map(effect => `<div class="effect-item">${effect}</div>`).join('')}
+                               </div>`
+                            : '<div class="faction-effects"><div class="effect-item no-effect">No active bonuses or penalties</div></div>';
+
+                        // Get history
+                        const history = f.history || [];
+                        const historyHTML = history.length > 0
+                            ? `<div class="faction-history">
+                                   <div class="history-label">Recent History:</div>
+                                   <div class="history-list">
+                                       ${history.slice(-5).reverse().map(entry =>
+                                           `<div class="history-entry">${entry}</div>`
+                                       ).join('')}
+                                   </div>
+                               </div>`
+                            : '<div class="faction-history"><div class="history-entry">No recorded history yet</div></div>';
+
+                        return `
+                            <div class="faction-card">
+                                <div class="faction-card-header">
+                                    <div class="faction-name-section">
+                                        <h5 class="faction-name">${f.name}</h5>
+                                        <span class="faction-leader">Led by ${f.leader}</span>
+                                    </div>
+                                    <span class="faction-status" style="background-color: ${approvalColor};">${approvalStatus}</span>
+                                </div>
+
+                                <div class="faction-metrics">
+                                    <div class="metric-group">
+                                        <div class="metric-label-row">
+                                            <span>Approval</span>
+                                            <span class="metric-value-text">${approval}%</span>
+                                        </div>
+                                        <div class="approval-bar-container">
+                                            <div class="approval-bar-fill" style="width: ${approval}%; background-color: ${approvalColor};"></div>
+                                        </div>
+                                    </div>
+                                    <div class="metric-group">
+                                        <div class="metric-label-row">
+                                            <span>Population Support</span>
+                                            <span class="metric-value-text">${f.support_percentage}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                ${effectsHTML}
+                                ${historyHTML}
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    factionsContainer.innerHTML = '<div class="empty-state">No organized factions have emerged yet.</div>';
+                }
+
+                // Update new stats in quick-stats-bar
+                // Happiness (as percentage)
+                const happinessEl = document.getElementById('happiness-stat');
+                if (happinessEl && data.population_happiness !== undefined) {
+                    happinessEl.textContent = `${data.population_happiness}%`;
+                }
+
+                // Science (as signed integer rate)
+                const scienceEl = document.getElementById('science-stat');
+                if (scienceEl && data.active_bonuses && data.active_bonuses.science_per_turn) {
+                    const scienceRate = data.active_bonuses.science_per_turn.total || 0;
+                    scienceEl.textContent = scienceRate >= 0 ? `+${scienceRate}` : `${scienceRate}`;
+                }
+
+                // Culture (as signed integer rate)
+                const cultureEl = document.getElementById('culture-stat');
+                if (cultureEl && data.active_bonuses && data.active_bonuses.culture_per_turn) {
+                    const cultureRate = data.active_bonuses.culture_per_turn.total || 0;
+                    cultureEl.textContent = cultureRate >= 0 ? `+${cultureRate}` : `${cultureRate}`;
+                }
+
+                // Abbreviated dashboard no longer needs updates (static tab icons)
+
+                // Apply highlights to changed elements
+                highlightChangedElements(changes);
+
+                // Update previous state for next comparison
+                previousDashboardState = {
+                    culture: {
+                        values: [...data.culture.values],
+                        traditions: [...data.culture.traditions],
+                        taboos: [...data.culture.taboos],
+                        recent_changes: [...data.culture.recent_changes]
+                    },
+                    religion: {
+                        core_tenets: [...data.religion.core_tenets],
+                        practices: [...data.religion.practices],
+                        holy_sites: [...data.religion.holy_sites]
+                    },
+                    technology: {
+                        discoveries: [...data.technology.discoveries],
+                        in_progress: [...data.technology.in_progress],
+                        infrastructure: [...data.technology.infrastructure]
+                    },
+                    civilization: {
+                        population: data.civilization.population,
+                        resources: {
+                            food: data.civilization.resources.food,
+                            wealth: data.civilization.resources.wealth,
+                            tech_tier: data.civilization.resources.tech_tier
+                        }
+                    }
+                };
+
+            } catch (error) {
+                console.error("Failed to update dashboard:", error);
+            }
+        }
+
+        function showActionUI() {
+            actionGrid.classList.remove('hidden');
+            playerInputArea.classList.remove('hidden');
+            document.getElementById('game-controls').classList.remove('hidden');
+            continueBtn.classList.add('hidden');
+            playerInput.placeholder = "Or type your own response...";
+            playerInput.focus();
+        }
+
+        function showContinueUI(continueText = "Continue to Next Event", nextAction = getNewEvent) {
+            actionGrid.innerHTML = '';
+            actionGrid.classList.add('hidden');
+            playerInputArea.classList.add('hidden');
+            document.getElementById('game-controls').classList.add('hidden');
+
+            continueBtn.textContent = continueText;
+            onContinue = nextAction;
+
+            continueBtn.classList.remove('hidden');
+            continueBtn.focus();
+        }
+
+        function displayEvent(event) {
+            // Validate event structure
+            if (!event || typeof event !== 'object') {
+                console.error('Invalid event object:', event);
+                eventLog.innerHTML = '<p class="error">⚠️ Error: Invalid event data received. Please try again.</p>';
+                showContinueUI("Try Again", getNewEvent);
+                return;
+            }
+
+            // Ensure required fields exist
+            if (!event.title || !event.narrative) {
+                console.error('Event missing required fields (title/narrative):', event);
+                eventLog.innerHTML = '<p class="error">⚠️ Error: Event is missing essential information. Please try again.</p>';
+                showContinueUI("Try Again", getNewEvent);
+                return;
+            }
+
+            // Validate and fix options arrays
+            if (!Array.isArray(event.investigation_options)) {
+                console.warn('investigation_options is not an array, fixing:', event.investigation_options);
+                event.investigation_options = [];
+            }
+
+            if (!Array.isArray(event.decision_options)) {
+                console.warn('decision_options is not an array, fixing:', event.decision_options);
+                event.decision_options = [];
+            }
+
+            // Ensure we have at least some options
+            if (event.investigation_options.length === 0 && event.decision_options.length === 0) {
+                console.error('Event has no options:', event);
+                // Add fallback options
+                event.investigation_options = ['Ask for more information', 'Consult with advisors'];
+                event.decision_options = ['Proceed cautiously', 'Act decisively'];
+            }
+
+            // Escape HTML entities for data attributes
+            const escapeHtml = (text) => {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            };
+
+            // Reset event state
+            currentEventStage = 0;
+            eventConversationHistory = [];
+            isInvestigating = false;
+
+
+            // Check if this is a crisis event
+            const isCrisis = event.is_crisis || false;
+            const crisisClass = isCrisis ? 'crisis-event' : '';
+            const crisisBadge = isCrisis ? `<span class="crisis-badge">⚠️ CRISIS</span>` : '';
+
+            // Add crisis visual if available
+            let crisisVisual = '';
+            if (isCrisis && event.crisis_image) {
+                const crisisImagePath = event.crisis_image.startsWith('crisis_')
+                    ? `{{ url_for('static', filename='') }}images/crises/${event.crisis_image}`
+                    : `{{ url_for('static', filename='') }}${event.crisis_image}`;
+                crisisVisual = `
+                    <div class="crisis-visual">
+                        <img src="${crisisImagePath}?v=${new Date().getTime()}" alt="Crisis">
+                    </div>
+                `;
+            }
+
+            // Add advisor portrait if this is a character vignette
+            let advisorPortrait = '';
+            if (event.event_type === 'character_vignette' && event.character_name) {
+                // Find the character in inner_circle to get their portrait
+                const character = previousDashboardState?.inner_circle?.find(c => c.name === event.character_name);
+                if (character && character.portrait && character.portrait !== 'placeholder.png') {
+                    const portraitPath = `{{ url_for('static', filename='') }}images/advisors/${character.portrait}`;
+                    advisorPortrait = `
+                        <div class="advisor-portrait-display">
+                            <img src="${portraitPath}" alt="${event.character_name}" class="advisor-portrait-large" onerror="this.style.display='none';">
+                        </div>
+                    `;
+                }
+            }
+
+            const stageIndicator = `<div class="stage-indicator">Stage ${currentEventStage + 1} - Initial Situation</div>`;
+            const progressBar = `
+                <div class="event-progress">
+                    <div class="progress-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <div class="progress-label">Investigation Depth</div>
+                </div>
+            `;
+            const eventHTML = `
+                <div class="event-card ${crisisClass}" data-event-title="${escapeHtml(event.title)}" data-event-narrative="${escapeHtml(event.narrative)}">
+                    ${crisisVisual}
+                    <h3>${event.title} ${crisisBadge}</h3>
+                    <div class="event-header-meta">
+                        ${stageIndicator}
+                        ${progressBar}
+                    </div>
+                    ${advisorPortrait}
+                    <p>${markdownToHTML(event.narrative)}</p>
+                    <div class="conversation-history"></div>
+                </div>
+            `;
+            eventLog.innerHTML = eventHTML;
+
+            renderActionButtons(
+                event.investigation_options || [],
+                event.decision_options || []
+            );
+            showActionUI();
+        }
+
+        function renderActionButtons(investigationOptions, decisionOptions) {
+            actionGrid.innerHTML = '';
+
+            // Ensure we have arrays and sanitize input
+            const investigations = Array.isArray(investigationOptions) ? investigationOptions : [];
+            const decisions = Array.isArray(decisionOptions) ? decisionOptions : [];
+
+            // Helper function to validate and sanitize action text
+            const sanitizeActionText = (text, index, type) => {
+                if (typeof text === 'string' && text.trim().length > 0) {
+                    return text.trim();
+                }
+
+                // Handle non-string or invalid types
+                console.warn(`Invalid ${type} option at index ${index}:`, text);
+
+                // Try to extract text from object
+                if (text && typeof text === 'object') {
+                    if (text.text) return String(text.text);
+                    if (text.action) return String(text.action);
+                    if (text.description) return String(text.description);
+                }
+
+                // Last resort: return fallback text
+                return `${type === 'investigation' ? 'Investigate' : 'Decide'} Option ${index + 1}`;
+            };
+
+            // Top row: 2 investigation buttons
+            investigations.slice(0, 2).forEach((rawText, index) => {
+                const actionText = sanitizeActionText(rawText, index, 'investigation');
+
+                const button = document.createElement('button');
+                button.innerHTML = `<span class="btn-icon">?</span> ${actionText}`;
+                button.className = 'action-btn action-investigate';
+                button.dataset.action = actionText;
+                button.dataset.isFinal = 'false';
+
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.action-btn').forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    playerInput.value = actionText;
+                    handleEventInteraction(actionText);
+                };
+                actionGrid.appendChild(button);
+            });
+
+            // Bottom row: 2 decision buttons
+            decisions.slice(0, 2).forEach((rawText, index) => {
+                const actionText = sanitizeActionText(rawText, index, 'decision');
+
+                const button = document.createElement('button');
+                button.innerHTML = `<span class="btn-icon">⚡</span> ${actionText}`;
+                button.className = 'action-btn action-decision';
+                button.dataset.action = actionText;
+                button.dataset.isFinal = 'true';
+
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.action-btn').forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    playerInput.value = actionText;
+                    handlePlayerAction();
+                };
+                actionGrid.appendChild(button);
+            });
+        }
+
+        function displayOutcome(playerAction, outcome) {
+            // Build impact summary from changes
+            let impactHTML = '';
+            const changes = [];
+
+            // Check for stat changes in the outcome
+            if (outcome.updates) {
+                Object.keys(outcome.updates).forEach(key => {
+                    const value = outcome.updates[key];
+
+                    if (key.includes('population')) {
+                        changes.push(`Population ${value > 0 ? '+' : ''}${value}`);
+                    } else if (key.includes('food')) {
+                        changes.push(`Food ${value > 0 ? '+' : ''}${value}`);
+                    } else if (key.includes('wealth')) {
+                        changes.push(`Wealth ${value > 0 ? '+' : ''}${value}`);
+                    } else if (key.includes('.append')) {
+                        const category = key.split('.')[1];
+                        if (category === 'discoveries') {
+                            changes.push(`New Discovery: ${value}`);
+                        } else if (category === 'traditions') {
+                            changes.push(`New Tradition: ${value}`);
+                        } else if (category === 'infrastructure') {
+                            changes.push(`New Infrastructure: ${value}`);
+                        } else if (category === 'values') {
+                            changes.push(`New Value: ${value}`);
+                        }
+                    }
+                });
+            }
+
+            // Add resource warnings
+            let warningsHTML = '';
+            if (outcome.resource_warnings && outcome.resource_warnings.length > 0) {
+                const warningMessages = {
+                    'FAMINE_CRITICAL': '☠️ CRITICAL FAMINE - People are starving!',
+                    'FAMINE_WARNING': '⚠️ Food shortage approaching',
+                    'FOOD_LOW': '🌾 Food supplies running low',
+                    'BANKRUPTCY': '💸 BANKRUPTCY - Infrastructure collapsing!',
+                    'WEALTH_LOW': '💰 Wealth reserves depleted'
+                };
+
+                const warnings = outcome.resource_warnings.map(w =>
+                    `<div class="resource-warning warning-${w.toLowerCase()}">${warningMessages[w] || w}</div>`
+                ).join('');
+
+                warningsHTML = `<div class="resource-warnings">${warnings}</div>`;
+            }
+
+            // Add consumption effects
+            if (outcome.consumption_effects) {
+                if (outcome.consumption_effects.population_loss) {
+                    changes.push(`☠️ Deaths from starvation: -${outcome.consumption_effects.population_loss}`);
+                }
+                if (outcome.consumption_effects.infrastructure_lost) {
+                    outcome.consumption_effects.infrastructure_lost.forEach(infra => {
+                        changes.push(`🏚️ Lost: ${infra}`);
+                    });
+                }
+            }
+
+            if (changes.length > 0) {
+                impactHTML = `
+                    <div class="impact-summary">
+                        <h4>📊 Impact</h4>
+                        <div class="impact-items">
+                            ${changes.map(change => `<span class="impact-tag">${change}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            const outcomeHTML = `
+                <div class="player-action">
+                    <strong>&gt; ${playerAction}</strong>
+                </div>
+                <div class="outcome-narrative">
+                    <p>${markdownToHTML(outcome.narrative)}</p>
+                </div>
+                ${warningsHTML}
+                ${impactHTML}
+            `;
+            const eventCard = eventLog.querySelector('.event-card');
+            if(eventCard) eventCard.innerHTML += outcomeHTML;
+            showContinueUI("Continue to Next Event", getNewEvent);
+        }
+
+        async function handleEventInteraction(playerResponse) {
+            if (!playerResponse.trim()) {
+                alert('Please select an action or type your response.');
+                return;
+            }
+
+            isInvestigating = true;
+            const eventCard = eventLog.querySelector('.event-card');
+            const conversationHistoryEl = eventCard.querySelector('.conversation-history');
+
+            // Show loading state
+            const loadingEl = document.createElement('div');
+            loadingEl.className = 'loading-indicator';
+            loadingEl.innerHTML = '<p><em>Investigating...</em></p>';
+            conversationHistoryEl.appendChild(loadingEl);
+
+            // Disable inputs
+            document.querySelectorAll('#interaction-area button').forEach(b => b.disabled = true);
+            playerInput.disabled = true;
+
+            try {
+                const response = await fetch('/api/event_interaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ response: playerResponse })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.status === 'error') {
+                    alert(`Error: ${result.message}`);
+                    loadingEl.remove();
+                    return;
+                }
+
+                // Remove loading indicator
+                loadingEl.remove();
+
+                // Update stage
+                currentEventStage = result.stage;
+
+                // Update progress dots
+                const progressDots = eventCard.querySelectorAll('.progress-dots .dot');
+                progressDots.forEach((dot, index) => {
+                    if (index <= currentEventStage) {
+                        dot.classList.add('active');
+                    }
+                });
+
+                // Add conversation exchange
+                const exchangeHTML = `
+                    <div class="conversation-exchange">
+                        <div class="player-query"><strong>&gt; ${playerResponse}</strong></div>
+                        <div class="ai-response">${markdownToHTML(result.response.narrative)}</div>
+                    </div>
+                `;
+                conversationHistoryEl.insertAdjacentHTML('beforeend', exchangeHTML);
+
+                // Update stage indicator
+                const stageIndicator = eventCard.querySelector('.stage-indicator');
+                if (stageIndicator) {
+                    stageIndicator.textContent = `Stage ${currentEventStage + 1} - Investigation`;
+                }
+
+                // Render new 2x2 button grid
+                renderActionButtons(
+                    result.response.investigation_options || [],
+                    result.response.decision_options || []
+                );
+
+                // Clear input
+                playerInput.value = '';
+
+            } catch (error) {
+                console.error("Error in event interaction:", error);
+                alert(`Failed to process interaction: ${error.message}`);
+                loadingEl.remove();
+            } finally {
+                document.querySelectorAll('#interaction-area button').forEach(b => b.disabled = false);
+                playerInput.disabled = false;
+                isInvestigating = false;
+            }
+        }
+
+        async function getNewEvent() {
+            try {
+                eventLog.innerHTML = "<p><em>The spirits are whispering a new story...</em></p>";
+                const response = await fetch('/api/event');
+                const event = await response.json();
+
+                // Check for game over
+                if (event.game_over) {
+                    displayGameOver(event);
+                    return;
+                }
+
+                displayEvent(event);
+            } catch (error) {
+                console.error("Failed to fetch new event:", error);
+                eventLog.innerHTML = "<p class='error'>Failed to receive a story from the spirits. Check the console.</p>";
+            }
+        }
+
+        function displayGameOver(gameOverData) {
+            const isVictory = gameOverData.outcome === 'victory';
+            const outcomeClass = isVictory ? 'victory' : 'defeat';
+            const outcomeIcon = isVictory ? '🏆' : '💀';
+
+            const gameOverHTML = `
+                <div class="game-over-card ${outcomeClass}">
+                    <div class="game-over-icon">${outcomeIcon}</div>
+                    <h2>${gameOverData.title}</h2>
+                    <p class="game-over-narrative">${markdownToHTML(gameOverData.narrative)}</p>
+                    <div class="game-over-actions">
+                        <button onclick="returnToMenu()" class="game-over-btn">Return to Menu</button>
+                    </div>
+                </div>
+            `;
+
+            eventLog.innerHTML = gameOverHTML;
+
+            // Hide interaction controls
+            actionGrid.classList.add('hidden');
+            playerInputArea.classList.add('hidden');
+            document.getElementById('game-controls').classList.add('hidden');
+            continueBtn.classList.add('hidden');
+        }
+
+        async function handlePlayerAction() {
+            const actionText = playerInput.value.trim();
+            if (!actionText) {
+                alert('Please select an action or type your response.');
+                return;
+            }
+
+            const currentEventCard = eventLog.querySelector('.event-card');
+            if (!currentEventCard) {
+                console.error('No event card found');
+                return;
+            }
+
+            const eventTitle = currentEventCard.dataset.eventTitle;
+            const eventNarrative = currentEventCard.dataset.eventNarrative;
+
+            // Show loading state
+            const originalContent = eventLog.innerHTML;
+            eventLog.innerHTML += '<div class="loading-indicator"><p><em>Processing your decision...</em></p></div>';
+
+            document.querySelectorAll('#interaction-area button').forEach(b => b.disabled = true);
+            playerInput.disabled = true;
+
+            try {
+                const response = await fetch('/api/action', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: actionText, event_title: eventTitle, event_narrative: eventNarrative }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.status === 'error') {
+                    alert(`Error: ${result.message || 'Failed to process action'}`);
+                    eventLog.innerHTML = originalContent;
+                    return;
+                }
+
+                // Remove loading indicator
+                const loadingIndicator = eventLog.querySelector('.loading-indicator');
+                if (loadingIndicator) loadingIndicator.remove();
+
+                displayOutcome(actionText, result.outcome);
+                await updateGameStateUI();
+            } catch (error) {
+                console.error("Error submitting action:", error);
+                alert(`Failed to process your action: ${error.message}. Please try again.`);
+                eventLog.innerHTML = originalContent;
+            } finally {
+                document.querySelectorAll('#interaction-area button').forEach(b => b.disabled = false);
+                playerInput.value = '';
+                playerInput.disabled = false;
+            }
+        }
+
+        async function handleTimeskip() {
+            eventLog.innerHTML = "<p><em>The years begin to flow, seasons turn to decades, decades to centuries...</em></p>";
+            document.querySelectorAll('#interaction-area button').forEach(b => b.disabled = true);
+            playerInput.disabled = true;
+
+            try {
+                const response = await fetch('/api/timeskip', { method: 'POST' });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const result = await response.json();
+
+                const timeskipHTML = `
+                    <div class="event-card">
+                        <h3>An Era Passes</h3>
+                        <p>${markdownToHTML(result.narrative)}</p>
+                    </div>
+                `;
+                eventLog.innerHTML = timeskipHTML;
+                await updateGameStateUI();
+                showContinueUI("Begin the New Era", getNewEvent);
+            } catch (error) {
+                console.error("Error during timeskip:", error);
+                eventLog.innerHTML = "<p class='error'>Time stands still. The timeskip failed. Check the console.</p>";
+                showContinueUI("Try Again", getNewEvent);
+            } finally {
+                 document.querySelectorAll('#interaction-area button').forEach(b => b.disabled = false);
+                 playerInput.disabled = false;
+            }
+        }
+
+        async function handleAbdication() {
+            try {
+                const response = await fetch('/api/die', { method: 'POST' });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const result = await response.json();
+
+                if (result.requires_choice && result.candidates) {
+                    displaySuccessorChoice(result.summary, result.candidates);
+                } else {
+                    // Fallback to old behavior
+                    const summaryHTML = `
+                        <div class="event-card">
+                            <h3>A Leader's End</h3>
+                            <p>${result.summary}</p>
+                        </div>
+                    `;
+                    eventLog.innerHTML = summaryHTML;
+                    showContinueUI("Start the Next Generation's Story", handleTimeskip);
+                }
+            } catch (error) {
+                console.error("Error during abdication:", error);
+            }
+        }
+
+        function displaySuccessorChoice(summary, candidates) {
+            const candidatesHTML = candidates.map((candidate, index) => {
+                const portraitFilename = candidate.portrait || 'placeholder.png';
+                const portraitPath = portraitFilename.startsWith('leader_')
+                    ? `{{ url_for('static', filename='') }}images/leaders/${portraitFilename}`
+                    : `{{ url_for('static', filename='') }}${portraitFilename}`;
+
+                return `
+                <div class="successor-card" onclick='chooseSuccessor(${JSON.stringify(candidate)})'>
+                    <div class="successor-portrait">
+                        <img src="${portraitPath}?v=${new Date().getTime()}" alt="${candidate.name}">
+                    </div>
+                    <h4>${candidate.name}</h4>
+                    <div class="successor-type">${candidate.type} Leader</div>
+                    <div class="successor-age">Age: ${candidate.age}</div>
+                    <div class="successor-traits">
+                        ${candidate.traits.map(trait => `<span class="trait-badge">${trait}</span>`).join('')}
+                    </div>
+                    <p class="successor-desc">${candidate.description}</p>
+                </div>
+            `}).join('');
+
+            const successionHTML = `
+                <div class="succession-event">
+                    <h3>👑 Choose Your Successor</h3>
+                    <p class="succession-summary">${summary}</p>
+                    <div class="succession-candidates">
+                        ${candidatesHTML}
+                    </div>
+                </div>
+            `;
+
+            eventLog.innerHTML = successionHTML;
+
+            // Hide controls
+            actionGrid.classList.add('hidden');
+            playerInputArea.classList.add('hidden');
+            document.getElementById('game-controls').classList.add('hidden');
+            continueBtn.classList.add('hidden');
+        }
+
+        function animateStatChange(element, oldValue, newValue) {
+            if (oldValue === 0) return; // Skip animation on first load
+
+            element.classList.remove('increased', 'decreased');
+
+            if (newValue > oldValue) {
+                element.classList.add('increased');
+            } else if (newValue < oldValue) {
+                element.classList.add('decreased');
+            }
+
+            // Remove animation class after it completes
+            setTimeout(() => {
+                element.classList.remove('increased', 'decreased');
+            }, 600);
+        }
+
+        async function startCharacterVignette(characterName) {
+            try {
+                eventLog.innerHTML = `<p><em>Requesting an audience with ${characterName}...</em></p>`;
+                const response = await fetch('/api/start_character_vignette', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ character_name: characterName })
+                });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const event = await response.json();
+                displayEvent(event);
+            } catch (error) {
+                console.error("Failed to start character vignette:", error);
+                eventLog.innerHTML = `<p class='error'>${characterName} is unavailable. Check the console.</p>`;
+            }
+        }
+
+        // --- Event Listeners & Initial Load ---
+        // Use event delegation for audience buttons since they are dynamic
+        document.getElementById('right-panel').addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('audience-btn')) {
+                const characterName = e.target.dataset.characterName;
+                startCharacterVignette(characterName);
+            }
+        });
+
+        submitInvestigateBtn.addEventListener('click', () => {
+            const actionText = playerInput.value.trim();
+            if (!actionText) {
+                alert('Please type your question or action.');
+                return;
+            }
+            handleEventInteraction(actionText);
+        });
+
+        submitDecideBtn.addEventListener('click', () => {
+            const actionText = playerInput.value.trim();
+            if (!actionText) {
+                alert('Please type your final decision.');
+                return;
+            }
+            handlePlayerAction();
+        });
+
+        playerInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                // Default to investigation on Enter
+                const actionText = playerInput.value.trim();
+                if (!actionText) return;
+                handleEventInteraction(actionText);
+            }
+        });
+
+        continueBtn.addEventListener('click', () => onContinue());
+        timeskipBtn.addEventListener('click', handleTimeskip);
+        abdicateBtn.addEventListener('click', handleAbdication);
+
+        // Dashboard toggle functionality
+        const dashboardToggle = document.getElementById('dashboard-toggle');
+        const rightPanel = document.getElementById('right-panel');
+
+        function toggleDashboard() {
+            rightPanel.classList.toggle('collapsed');
+            const toggleIcon = dashboardToggle.querySelector('.toggle-icon');
+            toggleIcon.textContent = rightPanel.classList.contains('collapsed') ? '◀' : '▶';
+        }
+
+        dashboardToggle.addEventListener('click', toggleDashboard);
+
+        // Tab icon buttons - expand and switch to tab
+        const tabIconButtons = document.querySelectorAll('.tab-icon-btn');
+        tabIconButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.dataset.tab;
+
+                // If collapsed, expand first
+                if (rightPanel.classList.contains('collapsed')) {
+                    rightPanel.classList.remove('collapsed');
+                    const toggleIcon = dashboardToggle.querySelector('.toggle-icon');
+                    toggleIcon.textContent = '▶';
+                }
+
+                // Switch to the selected tab
+                switchTab(tabName);
+            });
+        });
+
+        // Listen for successor choice event from global function
+        window.addEventListener('successorChosen', async () => {
+            await updateGameStateUI();
+            showContinueUI("Begin New Reign", getNewEvent);
+        });
+
+        // Initial game start
+        updateGameStateUI();
+        getNewEvent();
+    });
+</script>
+</body>
+</html>

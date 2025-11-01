@@ -1,0 +1,52 @@
+{
+    "factions": [
+        {
+            "name": "The Hunter Band",
+            "leader": "Chief Hunter",
+            "approval": 62,
+            "support_percentage": 20,
+            "status": "Neutral",
+            "goals": [
+                "Advance hunting and gathering",
+                "Increase influence",
+                "Secure resources"
+            ]
+        },
+        {
+            "name": "The Elders' Circle",
+            "leader": "Wise Elder",
+            "approval": 61,
+            "support_percentage": 22,
+            "status": "Neutral",
+            "goals": [
+                "Advance tradition and wisdom",
+                "Increase influence",
+                "Secure resources"
+            ]
+        },
+        {
+            "name": "The Toolmakers",
+            "leader": "Master Craftsman",
+            "approval": 61,
+            "support_percentage": 29,
+            "status": "Neutral",
+            "goals": [
+                "Advance tool creation",
+                "Increase influence",
+                "Secure resources"
+            ]
+        },
+        {
+            "name": "The Spirit Speakers",
+            "leader": "Shaman",
+            "approval": 55,
+            "support_percentage": 23,
+            "status": "Neutral",
+            "goals": [
+                "Advance spiritual guidance",
+                "Increase influence",
+                "Secure resources"
+            ]
+        }
+    ]
+}

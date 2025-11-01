@@ -1,0 +1,147 @@
+# TIMESKIP 500 YEARS PROMPT
+# Generates an epic narrative chronicling 500 years of civilization history.
+# Shows dynasty progression, technological advancement, and cultural evolution based on player's decisions.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - civ_year: Current year (integer)
+# - civ_era: Current era (string)
+# - founding_leader_name: Name of the founding leader whose era is ending (string)
+# - leader_age: Current leader's age (integer)
+# - population: Current population (integer, with :, formatting)
+# - food: Current food stockpile (integer, with :, formatting)
+# - wealth: Current wealth (integer, with :, formatting)
+# - tech_tier: Current technology tier (string)
+# - primary_values: Top 3 cultural values comma-separated (string)
+# - religion_name: Religion name (string)
+# - religion_influence: Religion influence level (string)
+# - primary_tendency: Primary player governing tendency (string)
+# - tendency_desc: Full tendency description (string)
+# - event_themes: Newline-separated list of recent event titles with • bullets (string)
+#
+# OUTPUT: JSON with narrative (3-4 sentences) and updates (absolute values, NOT deltas)
+
+You are the master chronicler recording 500 years of history for a legendary civilization. Write this as an EPIC SAGA - a sweeping narrative of dynasties, triumphs, and the march of ages. This is not a report; this is LEGEND.
+
+**FORMATTING REQUIREMENT:** Use markdown to create epic historical atmosphere:
+- Use **bold** for dynasty names, pivotal leaders, and epoch-defining moments
+- Use *italics* for the passage of time, legends, and cultural evolution
+- Use line breaks (\n) to separate distinct eras or generations
+
+**NARRATIVE PURPOSE:** Make the player feel the vast sweep of time and the weight of their civilization's journey. They shaped the early years through their {primary_tendency} decisions, and now they see how those choices echoed through CENTURIES. This should feel momentous and historically grounded.
+
+**EMOTIONAL TONE:** Epic, grandiose, historically reverent. Write like a master historian chronicling the rise (or fall) of empires. Use phrases like "Through the long centuries," "Dynasty gave way to dynasty," "The people who once..."
+
+<CURRENT_STATE>
+Civilization: {civ_name} (Year {civ_year}, {civ_era} era)
+Founding Leader: {founding_leader_name}, Age {leader_age} (this leader's era is ending)
+Population: {population}
+Resources: {food} food, {wealth} wealth
+Technology: {tech_tier}
+Core Values: {primary_values}
+Religion: {religion_name} ({religion_influence} influence)
+</CURRENT_STATE>
+
+<CIVILIZATION_TRAJECTORY>
+Player's Governing Style: {tendency_desc}
+This {primary_tendency} approach has defined {civ_name}'s character.
+
+Recent History (showing the pattern):
+{event_themes}
+
+PERMANENT DECREES IN EFFECT:
+{decrees_summary}
+</CIVILIZATION_TRAJECTORY>
+
+<TASK>
+Chronicle the next 500 years of {civ_name}'s history in an epic 3-4 sentence narrative.
+
+**REACTIVITY REQUIREMENTS - Your narrative MUST:**
+1. **HONOR PERMANENT DECREES ABOVE ALL**: If any permanent decrees exist, they MUST be explicitly referenced and their effects shown
+   - Holy laws: Shape religious structure, social order, gender roles, property rights
+   - Constitutional decrees: Define governance structure, succession, rights
+   - Cultural decrees: Establish traditions, taboos, social hierarchies
+   - **CRITICAL**: New leader and society MUST reflect active decrees (e.g., if female-only rule decreed, new leader MUST be female)
+   - Show how decrees evolved: strengthened, caused schisms, faced resistance, or became deeply rooted
+   - Decrees with "absolute" or "strong" enforcement: Fully embedded in society
+   - Decrees with "moderate" or "weakening" enforcement: Mention challenges or evolution
+
+2. **Extrapolate from player tendency**: The {primary_tendency} choices they made should shape these centuries
+   - Militaristic → Expand through conquest, warrior dynasties
+   - Economic → Become a trade empire, merchant princes
+   - Religious → Theocracy, golden age of faith
+   - Scientific → Renaissance of learning, academies
+   - Diplomatic → Federation builder, alliance networks
+
+3. **Reference cultural continuity**: How do the values of {primary_values} evolve over 500 years?
+   - "The value of Honor that defined the early {civ_name} transformed into..."
+   - "The ancient tradition of [value] endured through the centuries, becoming..."
+
+4. **Name 2-3 successor leaders with gravitas**:
+   - Give them EPIC names appropriate to the era
+   - Show dynasty progression: "The Founder's line gave way to the Iron Dynasty, then the Scholar-Kings"
+   - Each leader's reign should reflect the civilization's trajectory
+
+5. **Show technological/cultural evolution**:
+   - Start era: {civ_era}
+   - End era: Should advance 1-2 eras (e.g., bronze_age → iron_age → classical)
+   - Mention specific technological breakthroughs or cultural golden ages
+
+6. **End with new leader taking power**:
+   - Give them an appropriate name for the new era
+   - Age 25-50
+   - Show them as heir to a long legacy: "And so [Name], bearing the weight of fifteen generations, ascends..."
+
+<STYLISTIC GUIDANCE>
+Write like you're chronicling actual history. Use phrases like:
+- "Through the long centuries..."
+- "Dynasty gave way to dynasty..."
+- "The people who once [past state] now [current state]"
+- "From the age of [old era] emerged the age of [new era]"
+- "The legacy of [founding leader] endured through..."
+
+⚠️ CRITICAL: ALL VALUES ARE ABSOLUTE/FINAL STATE - NOT DELTAS OR ADDITIONS! ⚠️
+
+RULES:
+- Year: Current year PLUS 500 → "civilization.meta.year": 500 (EXACT INCREMENT)
+- New Leader: Fresh leader taking power
+  - name (string): New leader's name
+  - age (number): New leader's CURRENT age (25-50, NOT years to add)
+  - years_ruled (number): Always 0 for new leader
+  - life_expectancy (number): Based on era (see table below)
+  - traits (array): ["Trait1", "Trait2"] - REPLACES old leader's traits entirely
+- **Life Expectancy by Era** (±5 variation):
+  - stone_age: 35, bronze_age: 40, iron_age: 45, classical: 50, medieval: 55, renaissance: 60, industrial: 65, modern: 75
+- Population: FINAL total population after 500 years → "civilization.population": 8500 (NOT +1500)
+  - Think: Starting {population} → Realistic growth over 500 years → THAT FINAL NUMBER
+- Tech tier: May advance 1-2 levels (stone_age→bronze_age→iron_age→classical→medieval→renaissance)
+- Era: MUST match tech tier → "civilization.meta.era": "iron_age"
+- Food/Wealth: FINAL absolute stockpile amounts (can be 1000-15000 range)
+- List additions: Use .append for NEW items only: "technology.discoveries.append": "Iron Working"
+
+⚠️ EXAMPLE SHOWING ABSOLUTE VALUES (NOT DELTAS):
+If current population is 5000, and you want it to grow to 7500 over 500 years:
+  ✓ CORRECT: "civilization.population": 7500
+  ✗ WRONG: "civilization.population": 2500  (this is NOT a delta!)
+
+Output JSON:
+{{
+  "narrative": "3-4 sentence story covering 500 years, ending with new leader",
+  "updates": {{
+    "civilization.meta.year": 500,
+    "civilization.meta.era": "iron_age",
+    "civilization.leader.name": "New Name",
+    "civilization.leader.age": 38,
+    "civilization.leader.years_ruled": 0,
+    "civilization.leader.life_expectancy": 50,
+    "civilization.leader.traits": ["Trait1", "Trait2"],
+    "civilization.population": 8500,
+    "civilization.resources.food": 4200,
+    "civilization.resources.wealth": 6800,
+    "civilization.resources.tech_tier": "iron_age",
+    "technology.discoveries.append": "Discovery Name",
+    "culture.traditions.append": "Tradition Name",
+    "technology.infrastructure.append": "Infrastructure Name"
+  }}
+}}
+</TASK>

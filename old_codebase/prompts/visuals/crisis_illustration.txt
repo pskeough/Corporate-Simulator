@@ -1,0 +1,99 @@
+# CRISIS ILLUSTRATION PROMPT
+# Generates a dramatic illustration for crisis events (famine, economic collapse, etc.).
+# Uses a dictionary-based selection to match the crisis type.
+#
+# NOTE: This prompt is loaded as a DICTIONARY mapping crisis types to prompts.
+# The engine will select the appropriate prompt based on crisis_type.
+#
+# VARIABLES REQUIRED:
+# - era: Era name (string)
+# - terrain: Terrain type (string)
+# - crisis_type: Type of crisis (determines which prompt to use) (string)
+#
+# OUTPUT: Single landscape image (16:9 aspect ratio)
+
+# This file contains multiple crisis-specific prompts.
+# The crisis_engine will select the correct one based on crisis_type.
+
+## FAMINE
+A dramatic scene depicting famine in a {era} era settlement on {terrain} terrain.
+
+SCENE:
+- Barren fields with withered crops
+- Emaciated people gathering around empty granaries
+- Desperate atmosphere, dust and drought
+- Visible suffering but maintaining dignity
+- {era} era architecture showing neglect
+- Muted, desaturated colors conveying despair
+
+Style: Dramatic, painterly, wide-angle view of the settlement in crisis. No text or UI.
+
+Generate in 16:9 landscape aspect ratio for banner display.
+
+---
+
+## FOOD_SHORTAGE
+A tense scene showing food shortage in a {era} era settlement.
+
+SCENE:
+- Worried crowds gathering at market/granary
+- Half-empty storage areas
+- People rationing food, long lines
+- Anxious but not desperate atmosphere
+- {era} era architecture, period-appropriate
+- Warm but slightly desaturated tones
+
+Style: Dramatic scene painting, showing tension and concern. No text or UI.
+
+Generate in 16:9 landscape aspect ratio for banner display.
+
+---
+
+## ECONOMIC_COLLAPSE
+A scene of economic collapse in a {era} era civilization.
+
+SCENE:
+- Crumbling infrastructure, damaged buildings
+- Abandoned marketplaces, broken carts
+- People in poverty, tattered clothing
+- Debris and decay visible
+- {era} era architecture in disrepair
+- Dark, gloomy atmosphere
+
+Style: Dramatic painting showing urban decay and economic ruin. No text or UI.
+
+Generate in 16:9 landscape aspect ratio for banner display.
+
+---
+
+## ECONOMIC_CRISIS
+A scene depicting economic crisis in a {era} era settlement.
+
+SCENE:
+- Struggling merchants, closed shops
+- Worried traders and empty market stalls
+- Signs of economic strain, fewer goods
+- People concerned but still functioning
+- {era} era marketplace architecture
+- Slightly muted, tense atmosphere
+
+Style: Dramatic scene showing economic tension. No text or UI.
+
+Generate in 16:9 landscape aspect ratio for banner display.
+
+---
+
+## SUCCESSION_CRISIS
+A tense scene of succession crisis in a {era} era civilization.
+
+SCENE:
+- Palace or throne room in tension
+- Multiple factions, divided loyalties
+- Symbols of competing claims (banners, supporters)
+- Atmosphere of political intrigue
+- {era} era palace architecture
+- Rich but tense colors, dramatic lighting
+
+Style: Political drama painting, showing power struggle. No text or UI.
+
+Generate in 16:9 landscape aspect ratio for banner display.

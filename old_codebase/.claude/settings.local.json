@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gemini:*)",  
+      "Bash(cat:*)",
+      "Bash(python:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(del test_faction_manager.py test_inner_circle_manager.py)",
+      "Bash(run_all_phase3_tests.bat)",
+      "Bash(cmd:*)",
+      "Bash(if not exist data mkdir data)",
+      "Read(//c/**)",
+      "Bash(find:*)",
+      "Bash(if not exist \"engines\\world_modes\" mkdir \"engines\\world_modes\")",
+      "Bash(if not exist \"prompts\\trees\" mkdir \"prompts\\trees\")",
+      "Bash(if not exist \"prompts\\visuals\" mkdir \"prompts\\visuals\")",
+      "Bash(del test_crisis_parsing.py)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

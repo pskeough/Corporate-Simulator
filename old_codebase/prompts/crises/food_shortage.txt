@@ -1,0 +1,65 @@
+# FOOD SHORTAGE CRISIS PROMPT
+# Generates warning-tier food shortage crisis event.
+#
+# VARIABLES REQUIRED:
+# - civ_name: Civilization name (string)
+# - leader_name: Leader name (string)
+# - population: Population count (integer, will be formatted with comma separator)
+# - food: Food resources (integer)
+# - days_of_food: Calculated days remaining (integer)
+# - era: Current era (string)
+#
+# OUTPUT: JSON with title, narrative, investigation_options, decision_options, updates
+
+WARNING CRISIS: FOOD SHORTAGE
+
+**FORMATTING REQUIREMENT:** Use markdown for tension and emphasis:
+- Use **bold** for urgent warnings and key crisis points
+- Use *italics* for worried whispers and growing concerns
+
+**NARRATIVE PURPOSE:** Create tension and anxiety. The player should feel the gathering storm - not yet disaster, but the warning signs are clear. Evoke worry and preventive urgency.
+
+Civilization: {civ_name}
+Leader: {leader_name}
+Population: {population:,} (growing anxious)
+Food: {food} (dangerously low - approximately {days_of_food} days at current consumption)
+Era: {era}
+
+**EMOTIONAL TONE:** Tense, anxious, foreboding. Use imagery of worried merchants, thinner meals, nervous whispers in the market, families stretching provisions.
+
+Generate a food shortage event. When creating the decision options, you MUST adhere to the following constraints:
+
+<constraints>
+  <constraint>All decision options must result in a significant and immediate loss of either population, wealth, or faction approval.</constraint>
+  <constraint>Avoid simple solutions like "find more food." The choice must be between two difficult, morally ambiguous, or high-risk paths.</constraint>
+</constraints>
+
+The event should:
+- Show growing tension through specific details (markets with fewer goods, worried farmers reporting poor yields, families beginning to hoard)
+- Convey the sense that action NOW could prevent catastrophe
+- Offer 2 investigation options that reveal the scope of the problem (assess the harvest yields across the realm, investigate trade routes for potential relief)
+- Offer 2 preventive decision options that follow the rules in the constraints block.
+
+**REACTIVITY REQUIREMENT:**
+Reference specific concerns: "Will the granaries built during better times hold enough?" or "Can your {era} era infrastructure support emergency measures?"
+
+**MECHANICAL CONSEQUENCES REQUIREMENT:**
+You MUST include an `updates` block with direct mechanical consequences. Food shortages should cause moderate food depletion and potential small population impact.
+
+Example updates for food shortage:
+- Food depletion: "civilization.resources.food": -75 (increased consumption during shortage)
+- Minor population impact: "civilization.population": -50 (malnutrition-related deaths)
+
+Use the gemini-2.5-flash-lite model for generation.
+
+Output JSON:
+{{
+  "title": "Foreboding warning title (3-6 words)",
+  "narrative": "2-3 sentences about growing food concerns with specific, visible details. Address {leader_name}. Show the worry: thinner meals, fearful glances, nervous merchants.",
+  "investigation_options": ["Specific investigation revealing scope 1", "Specific investigation revealing scope 2"],
+  "decision_options": ["Preventive decision with real cost 1", "Preventive decision with real cost 2"],
+  "updates": {{
+    "civilization.resources.food": -75,
+    "civilization.population": -50
+  }}
+}}

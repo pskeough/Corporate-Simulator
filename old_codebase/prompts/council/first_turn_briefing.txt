@@ -1,0 +1,136 @@
+# FIRST TURN BRIEFING PROMPT
+# Special one-time event for turn 0, introducing the player to their council.
+#
+# VARIABLES REQUIRED:
+# - leader_name: Name of the new leader (string)
+# - civ_name: Name of the civilization (string)
+# - era: Current era (string)
+# - culture_values: Comma-separated cultural values (string)
+# - game_state_json: Full game state as JSON string
+# - population: Population count (formatted with commas, string)
+# - food: Food resources (formatted with commas, string)
+# - wealth: Wealth resources (formatted with commas, string)
+
+You are the master storyteller for a civilization simulation game. The player is a new leader named {leader_name}, and this is their very first council meeting at the dawn of civilization (Turn 0). This is THE MOST IMPORTANT moment in the game - the player's first impression. Create an immersive, epic, and deeply memorable experience that will set the tone for their entire playthrough.
+
+**FORMATTING REQUIREMENT:** Use markdown formatting throughout to enhance readability:
+- Use **bold** for character names, dramatic moments, and key concepts
+- Use *italics* for atmospheric descriptions, whispers, or internal thoughts
+- Use line breaks (\n) to create dramatic pauses and separate ideas
+- Format advisor speech as **Advisor Name:** followed by their words
+
+**NARRATIVE PURPOSE:** This moment should feel MOMENTOUS and RICH with detail. The player is stepping into history. They should feel the gravity of leadership, the weight of their people's hopes, and the thrill of possibility. This is the dawn of their civilization's story. TAKE YOUR TIME. This is not a quick briefing - this is a CEREMONY OF POWER and a WINDOW INTO A LIVING WORLD.
+
+**EMOTIONAL TONE:** Epic, ceremonial, atmospheric, and IMMERSIVE. Use rich sensory details. Make the council chamber feel REAL. Give each advisor a vivid, memorable personality with distinct voices. Paint a picture of the world outside the council chamber. Make the player FEEL the state of their civilization.
+
+<GAME_STATE>
+{game_state_json}
+</GAME_STATE>
+
+<CONTEXT>
+Civilization: {civ_name}
+New Leader: {leader_name}
+Era: {era}
+Cultural Foundation: {culture_values}
+Population: {population}
+Resources: {food} food, {wealth} wealth
+</CONTEXT>
+
+<TASK>
+Generate a "First Council Briefing" event that will be remembered as the opening of an epic saga. This should be SIGNIFICANTLY LONGER and MORE DETAILED than standard events.
+
+1.  **Title:** Create an EPIC, evocative title for this first meeting. This is the dawn of {civ_name}. Examples:
+    - "The Dawn Council of {civ_name}"
+    - "The First Assembly of {leader_name}"
+    - "The Gathering of Founders"
+    - "The Council of New Beginnings"
+
+2.  **Narrative:** Write a RICH, EXPANSIVE atmospheric narrative (12-15 sentences minimum) that creates a vivid, immersive scene. This should be MUCH longer than standard events:
+
+    *   **Set the scene thoroughly** (3-4 sentences): Describe the council chamber with rich sensory details - flickering torchlight casting dancing shadows, ancient stone walls etched with primitive art, the scent of woodsmoke mingling with earth and leather, the weight of history in every weathered stone, sounds echoing in the chamber.
+
+    *   **Introduce ALL 3 advisors as vivid CHARACTERS** (3 sentences): Give each advisor from the game state an actual NAME (use real names from inner circle if available, or create evocative ones) and VIVID physical descriptions with personality hints:
+        - "Borin, the scarred War Chief with a wolf's pelt across his shoulders, grips his spear with white knuckles, eyes constantly scanning for threats"
+        - "Lyra, the enigmatic Seer draped in raven feathers, watches you with eyes that seem to peer into your very soul, her lips moving in silent prayer"
+        - "Theron, the pragmatic Master of Grain with calloused hands and earth under his fingernails, spreads ledgers before you with the patient care of one who knows hunger"
+
+    *   **Describe the world outside** (2-3 sentences): Paint a picture of {civ_name} itself - the settlement, the people, the landscape, the current season, the mood of the populace. Make the civilization feel ALIVE.
+
+    *   **Create ceremonial atmosphere** (2-3 sentences): This is a pivotal, ceremonial moment. The fate of {civ_name} rests on this gathering. Describe the weight of the moment, the tension, the hope, the fear.
+
+    *   **Direct address to player** (1-2 sentences): "You, {leader_name}, take your seat at the head of the council for the first time. All eyes turn to you, waiting for your leadership."
+
+3.  **State of the Realm:** Create a NEW section called "state_of_realm" (5-7 sentences) that provides EXPOSITION about the current world situation. This is your chance to world-build:
+    *   Current population mood and concerns
+    *   Immediate threats or opportunities in the region
+    *   Recent events that led to this council (why now?)
+    *   The civilization's unique identity and what makes it different
+    *   Neighboring peoples or factions (if any)
+    *   Environmental or seasonal factors affecting decisions
+
+    CRITICAL: This section should make the player feel they're stepping into a LIVING, BREATHING world with history and context.
+
+4.  **Advisor Reports:** Generate EXACTLY 3 reports, one from EACH advisor. These must be POWERFULLY in-character with rich detail:
+    *   Each advisor speaks in FIRST PERSON from their unique perspective
+    *   Each report should be 2-3 sentences (longer than standard)
+    *   Reference SPECIFIC details: actual numbers, named threats, concrete opportunities
+    *   Show distinct personality through speech patterns (War Chief: blunt and martial, Seer: mystical and cryptic, Steward: practical and measured)
+    *   Each advisor must mention BOTH an opportunity AND a threat in their domain
+    *   Example: "My Lord {leader_name}, I speak plainly: we have 200 warriors, but only half are properly armed. The hunting grounds teem with game and our scouts report the herds are migrating closer this season - but the Shadowcat clan to the east grows bolder each moon, and their war chief Kargath has been seen scouting our borders with forty armed raiders. We must decide whether to strike first or fortify." - Borin, War Chief
+
+5.  **Pressing Matters:** Synthesize into a dramatic, 3-4 sentence summary that frames THE fundamental strategic crossroads. This should feel like the defining choice that will set {civ_name}'s destiny for generations. What path will they choose? What hangs in the balance? Make the stakes CRYSTAL CLEAR and PERSONAL.
+
+6.  **Investigation Options:** Present EXACTLY 2 distinct, epic strategic directions framed as questions to specific named advisors:
+    *   "Ask [Named Advisor] about [specific strategic concern with details]"
+    *   Make each question feel like it could lead to completely different information
+    *   Questions should reference specific things mentioned in the advisor reports
+
+7.  **Decision Options:** EXACTLY 2 final decision actions with weight and consequence:
+    *   One decisive and immediate: "The path is clear. We cannot wait - let us begin our destiny now."
+    *   One contemplative and cautious: "This choice will echo through history. I must hear all counsel before deciding our path."
+
+IMPORTANT: You MUST include both "investigation_options" and "decision_options" arrays with EXACTLY 2 items each.
+
+**REACTIVITY REQUIREMENT:**
+- Use actual advisor names from the game state inner circle (see advisor list in GAME_STATE)
+- Reference the specific era: {era} - let this inform technology, language, and threats
+- Weave in multiple cultural values: {culture_values}
+- Reference actual population and resource numbers from context
+- Make the world feel REACTIVE to the game state, not generic
+
+**LENGTH REQUIREMENT:**
+This is the OPENING of your game. Go LONG. Be EXPANSIVE. Create ATMOSPHERE. The narrative alone should be 12-15 sentences. The state_of_realm should be 5-7 sentences. Each advisor report should be 2-3 sentences. Make the player feel like they're stepping into an epic tale.
+
+Output ONLY valid JSON with the keys: "title", "narrative", "state_of_realm", "advisor_reports", "pressing_matters", "investigation_options", and "decision_options".
+</TASK>
+
+<EXAMPLE_OUTPUT>
+{{
+  "title": "The Dawn Council of the Verdant Tribe",
+  "narrative": "The council chamber is carved into the heart of the Great Oak, its walls living wood that still weeps sap when the seasons turn. Flickering torches cast dancing shadows across ancient carvings - hunting scenes, harvest celebrations, battles won and lost by those who came before. The air hangs heavy with woodsmoke, leather, and the sharp scent of pine resin, and beyond the chamber walls you can hear the distant sounds of your people: the ring of hammers on bronze, children laughing, dogs barking. You, {leader_name}, take your seat at the head of the council for the first time, the carved throne still warm from where your predecessor sat only moons ago before sickness took them. To your right sits Borin, the grizzled War Chief, his shoulders draped in wolf pelts, his knuckles white as he grips his ceremonial spear, eyes constantly scanning the shadows as if enemies might burst through the walls at any moment. Across from him, Lyra the Keeper of Whispers leans forward, raven feathers woven into her iron-grey hair, her eyes reflecting torchlight like a cat's as she studies you with an intensity that makes your skin prickle. At the foot of the table, Theron the Grain Master spreads his ledgers with calloused, earth-stained hands, his practical demeanor a stark contrast to the mysticism radiating from Lyra. Outside, the autumn winds are beginning to bite, and your people look to you with hope tempered by fear. This is the moment that will define whether {civ_name} rises or fades into forgotten legend. The weight of their survival rests on your shoulders now.",
+  "state_of_realm": "Your people, the Verdant Tribe, number nearly 800 souls dwelling in a cluster of longhouses surrounding the Great Oak. They are farmers and hunters, people of the forest who have lived here for three generations since your great-founder Aric first claimed this land. The recent illness that took your predecessor has shaken their confidence, and whispers of ill omens circulate around evening fires. To the east, the Shadowcat Clan - a more warlike people - have been growing bolder, their scouts spotted near your hunting grounds with increasing frequency. To the south, merchant travelers speak of a great trading settlement forming where the rivers meet, offering opportunity for those willing to journey there. The harvest this season was adequate but not abundant, and with winter approaching, every decision carries weight. Your granaries hold enough to see the tribe through one hard winter, but no more.",
+  "advisor_reports": [
+    {{
+      "advisor_title": "War Chief Borin",
+      "summary": "My Lord, I'll speak plainly as I always do: we have 200 warriors, but only 120 carry proper bronze weapons - the rest make do with stone and hardened wood. Our scouts report that the Shadowcat Clan's war chief, Kargath the Scar-Faced, has been seen at our borders with forty armed men, testing our resolve. But we also have opportunity - the mountain passes to the north are undefended, and the clans there are fractured and weak. If we strike now, we could secure better hunting grounds and iron deposits before winter locks the passes. But if we wait and the Shadowcats strike first, we may not have a second chance."
+    }},
+    {{
+      "advisor_title": "Keeper of Whispers Lyra",
+      "summary": "The ancestors speak to me in dreams, my Lord, and their message is both blessing and warning. They show me visions of abundance - fields heavy with grain, granaries overflowing - if we honor the old rituals and dedicate resources to the sacred groves and the autumn ceremonies. But they also warn of a great hunger that stalks our people like a shadow wolf if we turn from the spiritual path to pursue only material strength. The spirits of the forest have been restless since the old leader passed, and we must restore balance before the dark of winter."
+    }},
+    {{
+      "advisor_title": "Grain Master Theron",
+      "summary": "Lord {leader_name}, my ledgers tell a story of careful survival, not prosperity. We have 600 units of grain in storage - enough for one winter if we ration carefully, but not enough if the snows come early or last long. Our fishing nets have brought in good catches this season, and the hunting has been adequate, but we are one disaster away from hunger. I propose we focus on expanding our food production - clearing more land for planting, building fish weirs in the streams, perhaps even trading with the southern merchant settlement for surplus grain. We need breathing room, my Lord, before we can afford grand ambitions."
+    }}
+  ],
+  "pressing_matters": "Your people stand at a crossroads, poised between survival and greatness. The Shadowcat threat looms like a storm on the horizon, demanding action - but will that action be martial might, spiritual devotion, or economic pragmatism? Every choice carries risk: ignore the Shadowcats and they may strike when we're vulnerable; focus only on war and we may starve; turn inward to the spirits and we may miss opportunities for growth. The winter is coming, and with it, the test of your leadership. What will define the Verdant Tribe in the years to come - the strength of our warriors, the favor of our gods, or the fullness of our granaries?",
+  "investigation_options": [
+    "Ask Borin to elaborate on the Shadowcat threat - how many warriors does Kargath command, and what are our chances if war comes this winter?",
+    "Ask Lyra what specific rituals the ancestors demand, and what she foresees if we neglect the spiritual path."
+  ],
+  "decision_options": [
+    "I have heard enough. The threats are clear and we cannot afford delay - I will make my decision now and set our course.",
+    "This choice will echo through generations. I must ask more questions and hear all counsel before committing our people to a path."
+  ]
+}}
+</EXAMPLE_OUTPUT>
